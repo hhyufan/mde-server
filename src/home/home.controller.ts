@@ -9,6 +9,8 @@ const SITE_DIR = join(__dirname, '..', 'site');
 const HOME_HTML = readFileSync(join(SITE_DIR, 'index.html'), 'utf8');
 const HOME_CSS = readFileSync(join(SITE_DIR, 'home.css'), 'utf8');
 const HOME_JS = readFileSync(join(SITE_DIR, 'home.js'), 'utf8');
+const APP_ICON = readFileSync(join(SITE_DIR, 'app-icon.png'));
+const FAVICON = readFileSync(join(SITE_DIR, 'favicon.ico'));
 const SERVER_VERSION = process.env.MDE_SERVER_VERSION || '0.1.0';
 
 type DatabaseState = 'connected' | 'connecting' | 'disconnecting' | 'disconnected';
@@ -36,6 +38,20 @@ export class HomeController {
   @Header('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400')
   getScript(@Res() response: Response): void {
     response.status(200).send(HOME_JS);
+  }
+
+  @Get('assets/app-icon.png')
+  @Header('Content-Type', 'image/png')
+  @Header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+  getAppIcon(@Res() response: Response): void {
+    response.status(200).send(APP_ICON);
+  }
+
+  @Get('favicon.ico')
+  @Header('Content-Type', 'image/x-icon')
+  @Header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+  getFavicon(@Res() response: Response): void {
+    response.status(200).send(FAVICON);
   }
 
   @Get('health')
