@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f5f7" />
+    <meta name="description" content="MDE 是一款专注写作体验的跨平台 Markdown 编辑器，支持实时预览、工作区管理与可选云同步。" />
+    <title>MDE · 专注写作，清晰表达</title>
+    <link rel="stylesheet" href="/assets/home.css" />
+    <script src="/assets/home.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="MDE 首页">
+        <span class="brand__mark">M</span>
+        <span class="brand__name">MDE</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#demo">在线体验</a>
+        <a href="#features">核心能力</a>
+        <a href="#status">服务状态</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="切换深浅主题" title="切换主题">
+          <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg>
+        </button>
+        <a class="button button--quiet header-github" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell">
+        <div class="hero__copy">
+          <span class="eyebrow"><span class="eyebrow__dot"></span>为 Markdown 写作者而生</span>
+          <h1>写作应该专注于内容，<br /><span>其余交给 MDE。</span></h1>
+          <p>MDE 将本地优先的可靠性、顺滑的实时预览和克制的桌面体验放在同一个工作台里。</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#demo">立即体验</a>
+            <a class="button button--quiet" href="https://github.com/hhyufan/mde-tauri/releases" target="_blank" rel="noreferrer">获取桌面版</a>
+          </div>
+          <div class="hero__meta" aria-label="产品特性">
+            <span><i></i>本地优先</span><span><i></i>跨平台</span><span><i></i>开源</span>
+          </div>
+        </div>
+        <div class="hero__visual" aria-hidden="true">
+          <div class="document-stack document-stack--back"></div>
+          <div class="document-stack document-stack--middle"></div>
+          <div class="hero-card">
+            <div class="hero-card__bar"><span></span><span></span><span></span><b>随笔.md</b></div>
+            <div class="hero-card__body">
+              <span class="mini-h1"></span><span class="mini-line mini-line--long"></span><span class="mini-line"></span>
+              <div class="mini-quote"><span></span><span></span></div>
+              <span class="mini-line mini-line--short"></span><span class="mini-code"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo-section section-shell" id="demo">
+        <div class="section-heading">
+          <div><span class="section-kicker">TRY IT NOW</span><h2>一个真正可以编辑的 MDE</h2></div>
+          <p>切换文件、输入 Markdown 或拖动分隔条。这里的内容只在当前页面渲染，不会保存或上传。</p>
+        </div>
+
+        <div class="demo-frame" id="demo-frame">
+          <div class="demo-titlebar">
+            <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="demo-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <span>在工作区中搜索</span><kbd>Ctrl K</kbd>
+            </div>
+            <button class="demo-icon-button" id="demo-theme-toggle" type="button" title="切换主题" aria-label="切换演示主题">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+            </button>
+          </div>
+
+          <div class="demo-body">
+            <aside class="demo-sidebar" id="demo-sidebar">
+              <div class="demo-brand"><span class="brand__mark">M</span><strong>MDE</strong></div>
+              <div class="segment"><button class="active" type="button">文件</button><button type="button">大纲</button></div>
+              <div class="tree-heading"><span>我的工作区</span><button id="reset-demo" type="button" title="恢复演示内容" aria-label="恢复演示内容">↻</button></div>
+              <div class="file-tree" role="listbox" aria-label="演示文件">
+                <button class="file-item active" type="button" data-document="welcome"><span class="file-icon">M↓</span><span>欢迎.md</span></button>
+                <button class="file-item" type="button" data-document="features"><span class="file-icon">M↓</span><span>功能速览.md</span></button>
+                <button class="file-item" type="button" data-document="shortcuts"><span class="file-icon">M↓</span><span>快捷键.md</span></button>
+                <button class="file-item file-item--folder" type="button" tabindex="-1"><span>›</span><span>notes</span></button>
+              </div>
+              <div class="sidebar-note"><span class="privacy-icon">✓</span><span>演示内容不会离开浏览器</span></div>
+            </aside>
+
+            <div class="demo-main">
+              <div class="demo-tabbar">
+                <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="显示或隐藏侧栏">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+                </button>
+                <div class="demo-tab"><span class="file-icon">M↓</span><span id="tab-name">欢迎.md</span><i id="dirty-dot"></i><span class="tab-close">×</span></div>
+                <div class="mode-switcher" aria-label="视图模式">
+                  <button type="button" data-mode="edit" title="编辑">编辑</button>
+                  <button class="active" type="button" data-mode="split" title="分屏">分屏</button>
+                  <button type="button" data-mode="preview" title="预览">预览</button>
+                </div>
+              </div>
+
+              <div class="format-toolbar" aria-label="Markdown 格式工具栏">
+                <button type="button" data-format="heading" title="标题">H</button>
+                <button type="button" data-format="bold" title="粗体"><b>B</b></button>
+                <button type="button" data-format="italic" title="斜体"><em>I</em></button>
+                <button type="button" data-format="quote" title="引用">❞</button>
+                <button type="button" data-format="code" title="行内代码">&lt;/&gt;</button>
+                <button type="button" data-format="link" title="链接">↗</button>
+              </div>
+
+              <div class="workspace mode-split" id="workspace">
+                <div class="editor-pane">
+                  <div class="pane-label"><span>MARKDOWN</span><span id="save-state">已保存</span></div>
+                  <textarea id="markdown-input" aria-label="Markdown 编辑器" spellcheck="false"></textarea>
+                </div>
+                <div class="split-divider" id="split-divider" title="拖动调整分栏"></div>
+                <article class="preview-pane md-preview" id="markdown-preview" aria-label="Markdown 实时预览"></article>
+              </div>
+
+              <footer class="demo-footer">
+                <div><span class="sync-indicator"><i></i>本地演示</span><span>Markdown</span></div>
+                <div><span id="cursor-status">Ln 1, Col 1</span><span id="word-status">0 字符</span><span>UTF-8</span></div>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="features-section section-shell" id="features">
+        <div class="section-heading section-heading--center"><div><span class="section-kicker">BUILT FOR FOCUS</span><h2>从第一行到最后一次保存</h2></div><p>每项能力都服务于更可靠、更安静的写作过程。</p></div>
+        <div class="feature-grid">
+          <article class="feature-card feature-card--wide"><span class="feature-icon">⌁</span><h3>本地优先，不打断思路</h3><p>文件保留在你的工作区。原子保存与恢复快照共同保护每一次修改。</p><div class="feature-visual feature-visual--save"><i></i><span>writing-notes.md</span><b>保存完成</b></div></article>
+          <article class="feature-card"><span class="feature-icon">◫</span><h3>双编辑体验</h3><p>源码、所见即所得与实时预览随时切换。</p><div class="feature-chips"><span>源码</span><span class="active">分屏</span><span>预览</span></div></article>
+          <article class="feature-card"><span class="feature-icon">⌘</span><h3>为长文档准备</h3><p>大纲、搜索、代码块与 Mermaid 按需工作，复杂文档依旧轻快。</p><div class="feature-code"><span>## Roadmap</span><span>- [x] Draft</span><span>- [ ] Publish</span></div></article>
+          <article class="feature-card feature-card--wide"><span class="feature-icon">☁</span><h3>可选的安全同步</h3><p>需要跨设备时再开启。冲突可见、状态透明，始终由你决定保留哪个版本。</p><div class="sync-path"><span>桌面端</span><i></i><b>加密认证</b><i></i><span>云端</span></div></article>
+        </div>
+      </section>
+
+      <section class="status-section section-shell" id="status">
+        <div class="status-intro">
+          <span class="section-kicker">LIVE SERVICE</span>
+          <h2>同步服务，清晰可见</h2>
+          <p>页面实时检测公开服务状态，只呈现健康枚举和版本，不暴露数据库地址、凭据、用户数据或内部环境信息。</p>
+          <div class="status-actions"><button class="button button--primary" id="refresh-status" type="button">重新检测</button><button class="button button--quiet" id="copy-endpoint" type="button">复制服务地址</button></div>
+        </div>
+        <div class="status-panel">
+          <div class="status-panel__top"><div><span class="live-dot" id="overall-dot"></span><strong id="overall-status">正在检测</strong></div><span id="status-time">--:--:--</span></div>
+          <div class="status-list">
+            <div class="status-row"><span><i class="status-icon">↔</i><b>API 服务</b></span><strong id="api-status">检测中</strong></div>
+            <div class="status-row"><span><i class="status-icon">◉</i><b>MongoDB</b></span><strong id="database-status">检测中</strong></div>
+            <div class="status-row"><span><i class="status-icon">#</i><b>当前版本</b></span><strong id="version-status">—</strong></div>
+            <div class="status-row"><span><i class="status-icon">⌁</i><b>响应耗时</b></span><strong id="latency-status">—</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section section-shell">
+        <div><span class="brand__mark">M</span><h2>准备好写下下一篇了吗？</h2><p>下载 MDE，或者从源代码开始了解它。</p></div>
+        <div class="cta-actions"><a class="button button--primary" href="https://github.com/hhyufan/mde-tauri/releases" target="_blank" rel="noreferrer">获取 MDE</a><a class="button button--quiet" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">查看源代码</a></div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-shell"><div class="brand"><span class="brand__mark">M</span><span class="brand__name">MDE</span></div><p>专注、可靠的 Markdown 工作台。</p><div><a href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">桌面端</a><a href="https://github.com/hhyufan/mde-server" target="_blank" rel="noreferrer">服务端</a></div></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

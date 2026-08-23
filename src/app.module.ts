@@ -6,6 +6,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SyncModule } from './sync/sync.module';
+import { HomeController } from './home/home.controller';
 
 /**
  * 根模块，负责组装配置、数据库连接和各个业务模块。
@@ -32,6 +33,7 @@ import { SyncModule } from './sync/sync.module';
     AuthModule,
     SyncModule,
   ],
+  controllers: [HomeController],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}
