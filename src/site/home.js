@@ -29,7 +29,7 @@
     '全部折叠': 'Collapse all', '全部展开': 'Expand all', '统计': 'Statistics', '清空': 'Clear', '切换编辑器主题': 'Toggle editor theme', '检查更新': 'Check for updates', '设置': 'Settings',
     '显示或隐藏侧栏': 'Show or hide sidebar', '窗口控制': 'Window controls', '最小化': 'Minimize', '最大化': 'Maximize', '关闭': 'Close', '向左滚动': 'Scroll left', '向右滚动': 'Scroll right', '关闭标签': 'Close tab', '标签栏动作': 'Tab actions', '切换工具栏': 'Toggle toolbar', '书签': 'Bookmark',
     'Markdown 格式工具栏': 'Markdown formatting toolbar', '拖动工具栏': 'Drag toolbar', '粗体': 'Bold', '斜体': 'Italic', '删除线': 'Strikethrough', '标题': 'Heading', '引用': 'Quote', '表格': 'Table', '代码块': 'Code block', '链接': 'Link', '图片': 'Image', '任务列表': 'Task list', '分隔线': 'Divider', '收起工具栏': 'Hide toolbar',
-    'Markdown 实时预览': 'Markdown live preview', '拖动调整分栏': 'Drag to resize panes', '切换侧栏': 'Toggle sidebar', '切换代码/预览': 'Toggle source/preview', '切换到预览': 'Switch to preview', '返回源码编辑': 'Return to source',
+    'Markdown 实时预览': 'Markdown live preview', '拖动调整分栏': 'Drag to resize panes', '切换侧栏': 'Toggle sidebar', '关闭侧栏': 'Close sidebar', '切换代码/预览': 'Toggle source/preview', '切换到预览': 'Switch to preview', '返回源码编辑': 'Return to source',
     '切换语言': 'Switch language', '切换深浅主题': 'Toggle page theme', '切换主题': 'Toggle theme', '主导航': 'Main navigation', '产品特性': 'Product features', '侧栏视图': 'Sidebar views', '演示文件': 'Demo files',
     '当前文件夹中已存在同名文件': 'A file with this name already exists in this folder', '演示文档已在当前页面保存': 'The demo document was saved in this page', '桌面版会将本地文件移入回收站': 'The desktop app moves local files to the Recycle Bin', '产品演示会保留 mde-workspace': 'The product demo keeps mde-workspace open', '至少保留一个标签页': 'Keep at least one tab open', '搜索面板已在桌面版中提供': 'Search is available in the desktop app', '演示内容已恢复': 'Demo content restored', '服务地址已复制': 'Service URL copied',
   };
@@ -206,6 +206,9 @@
   const preview = document.querySelector('#markdown-preview');
   const workspace = document.querySelector('#workspace');
   const frame = document.querySelector('#demo-frame');
+  const sidebar = document.querySelector('#demo-sidebar');
+  const sidebarScrim = document.querySelector('#sidebar-scrim');
+  const mobileMedia = window.matchMedia('(max-width: 680px)');
   const footerFileName = document.querySelector('#footer-file-name');
   const cursorStatus = document.querySelector('#cursor-status');
   const wordStatus = document.querySelector('#word-status');
@@ -234,6 +237,11 @@
   let toastTimer = 0;
   let outlineAnimationTimer = 0;
   let editorThemeTransitioning = false;
+
+  function setSidebarHidden(hidden) {
+    sidebar.classList.toggle('hidden', hidden);
+    frame.classList.toggle('sidebar-open', mobileMedia.matches && !hidden);
+  }
 
   const escapeHtml = (value) => String(value)
     .replaceAll('&', '&amp;')
@@ -809,7 +817,10 @@
     const item = event.target.closest('.file-item');
     if (!item) return;
     if (item.dataset.folder) navigateFolder([...folderPath, item.dataset.folder]);
-    if (item.dataset.document) loadDocument(item.dataset.document);
+    if (item.dataset.document) {
+      loadDocument(item.dataset.document);
+      if (mobileMedia.matches) setSidebarHidden(true);
+    }
   });
   document.querySelector('#file-breadcrumb-path').addEventListener('click', (event) => {
     const part = event.target.closest('[data-breadcrumb-index]');
@@ -946,7 +957,9 @@
     updateOutline();
   });
   document.querySelector('.demo-search').addEventListener('click', () => notify('搜索面板已在桌面版中提供'));
-  document.querySelectorAll('.js-sidebar-toggle').forEach((button) => button.addEventListener('click', () => document.querySelector('#demo-sidebar').classList.toggle('hidden')));
+  document.querySelectorAll('.js-sidebar-toggle').forEach((button) => button.addEventListener('click', () => setSidebarHidden(!sidebar.classList.contains('hidden'))));
+  sidebarScrim.addEventListener('click', () => setSidebarHidden(true));
+  mobileMedia.addEventListener('change', (event) => setSidebarHidden(event.matches));
   document.querySelector('#reset-demo').addEventListener('click', () => {
     const resetCatalog = currentLocale === 'en' ? englishDemoDocuments : chineseDemoDocuments;
     Object.keys(originals).forEach((key) => { documents[key].content = resetCatalog[key].content; });
@@ -996,7 +1009,7 @@
     document.querySelector('meta[name="theme-color"]').content = '#121212';
   }
   setEditorTheme(document.documentElement.dataset.theme);
-  if (window.matchMedia('(max-width: 680px)').matches) document.querySelector('#demo-sidebar').classList.add('hidden');
+  setSidebarHidden(mobileMedia.matches);
   syncDemoDocumentLocale(currentLocale);
   translateDom();
   updateViewMode('split');
