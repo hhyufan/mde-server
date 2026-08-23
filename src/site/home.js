@@ -342,8 +342,13 @@
     } else if (type === 'quote') { replacement = `> ${selected || '引用内容'}`; cursorOffset = replacement.length; }
     else if (type === 'bold') { replacement = `**${selected || '粗体文字'}**`; cursorOffset = selected ? replacement.length : 2; }
     else if (type === 'italic') { replacement = `*${selected || '斜体文字'}*`; cursorOffset = selected ? replacement.length : 1; }
-    else if (type === 'code') { replacement = `\`${selected || 'code'}\``; cursorOffset = selected ? replacement.length : 1; }
+    else if (type === 'strike') { replacement = `~~${selected || '删除线文字'}~~`; cursorOffset = selected ? replacement.length : 2; }
+    else if (type === 'codeblock') { replacement = `\`\`\`javascript\n${selected || "console.log('MDE');"}\n\`\`\``; cursorOffset = replacement.length; }
+    else if (type === 'table') { replacement = '| 标题 | 内容 |\n| --- | --- |\n| MDE | Markdown |'; cursorOffset = replacement.length; }
     else if (type === 'link') { replacement = `[${selected || '链接文字'}](https://example.com)`; cursorOffset = replacement.length; }
+    else if (type === 'image') { replacement = `![${selected || '图片说明'}](https://example.com/image.png)`; cursorOffset = replacement.length; }
+    else if (type === 'task') { replacement = `- [ ] ${selected || '待办事项'}`; cursorOffset = replacement.length; }
+    else if (type === 'rule') { replacement = '---\n'; cursorOffset = replacement.length; }
     input.setRangeText(replacement, input.selectionStart, input.selectionEnd, 'end');
     if (cursorOffset) input.setSelectionRange(input.selectionStart, input.selectionStart);
     input.focus();
@@ -435,11 +440,17 @@
     const visible = formatToolbar.classList.toggle('ft--show');
     event.currentTarget.classList.toggle('active', visible);
   });
-  document.querySelectorAll('.format-toolbar button').forEach((button) => button.addEventListener('click', () => applyFormat(button.dataset.format)));
-  document.querySelectorAll('.segment button').forEach((button) => button.addEventListener('click', () => {
+  document.querySelector('#toolbar-collapse').addEventListener('click', (event) => {
+    event.stopPropagation();
+    formatToolbar.classList.remove('ft--show');
+    document.querySelector('#toolbar-toggle').classList.remove('active');
+  });
+  document.querySelectorAll('.format-toolbar button[data-format]').forEach((button) => button.addEventListener('click', () => applyFormat(button.dataset.format)));
+  document.querySelectorAll('.segment button').forEach((button, index) => button.addEventListener('click', () => {
     document.querySelectorAll('.segment button').forEach((item) => item.classList.remove('active'));
     button.classList.add('active');
-    if (button.textContent === '大纲') notify('完整桌面版会在这里生成文档大纲');
+    document.querySelector('.segment__slider').style.transform = `translateX(${index * 100}%)`;
+    if (index > 0) notify(index === 1 ? '完整桌面版会在这里生成文档大纲' : '完整桌面版会在这里显示最近文件');
   }));
   document.querySelectorAll('.js-sidebar-toggle').forEach((button) => button.addEventListener('click', () => document.querySelector('#demo-sidebar').classList.toggle('hidden')));
   document.querySelector('#reset-demo').addEventListener('click', () => {

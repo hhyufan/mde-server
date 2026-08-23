@@ -83,18 +83,26 @@
           <div class="demo-body">
             <aside class="demo-sidebar" id="demo-sidebar">
               <div class="demo-brand"><span class="brand__mark">M</span><strong>MDE</strong></div>
-              <div class="segment"><button class="active" type="button">文件</button><button type="button">大纲</button></div>
-              <div class="tree-heading"><span>我的工作区</span><button id="reset-demo" type="button" title="恢复演示内容" aria-label="恢复演示内容">↻</button></div>
+              <div class="segment" role="tablist" aria-label="侧栏视图">
+                <span class="segment__slider"></span>
+                <button class="active" type="button"><svg viewBox="0 0 24 24"><path d="M3 5h6l2 2h10v12H3z"/></svg><span>文件</span></button>
+                <button type="button"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg><span>大纲</span></button>
+                <button type="button"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span>最近</span></button>
+              </div>
+              <div class="tree-heading"><span>资源管理器</span><div class="tree-actions"><button type="button" title="排序"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h12M3 18h6"/></svg></button><button type="button" title="新建文件"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" title="保存"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg></button><i></i><button id="reset-demo" type="button" title="打开文件夹 / 恢复演示"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2Z"/><path d="M12 11v6M9 14h6"/></svg></button></div></div>
+              <div class="file-nav"><button type="button" disabled>‹</button><button type="button" disabled>›</button><button type="button">↑</button><button type="button">↻</button><span></span><button type="button">×</button></div>
+              <div class="file-breadcrumb"><svg viewBox="0 0 24 24"><path d="M3 5h6l2 2h10v12H3z"/></svg><span>mde-workspace</span></div>
               <div class="file-tree" role="listbox" aria-label="演示文件">
                 <button class="file-item active" type="button" data-document="welcome"><span class="file-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path class="file-icon__mark" d="M8.5 17v-6l2.5 3 2.5-3v6"/></svg></span><span>欢迎.md</span></button>
                 <button class="file-item" type="button" data-document="features"><span class="file-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path class="file-icon__mark" d="M8.5 17v-6l2.5 3 2.5-3v6"/></svg></span><span>功能速览.md</span></button>
                 <button class="file-item" type="button" data-document="shortcuts"><span class="file-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path class="file-icon__mark" d="M8.5 17v-6l2.5 3 2.5-3v6"/></svg></span><span>快捷键.md</span></button>
                 <button class="file-item file-item--folder" type="button" tabindex="-1"><span>›</span><span>notes</span></button>
               </div>
-              <div class="sidebar-note"><span class="privacy-icon">✓</span><span>演示内容不会离开浏览器</span></div>
               <div class="demo-sidebar-footer">
-                <button id="demo-theme-toggle" type="button" title="切换主题" aria-label="切换演示主题"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2"/></svg></button>
+                <button class="demo-user" type="button" title="本地用户"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button><span class="demo-version">v0.1.0</span><i class="demo-status-dot"></i>
                 <span></span>
+                <button id="demo-theme-toggle" type="button" title="切换主题" aria-label="切换演示主题"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
+                <button type="button" title="检查更新" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.5 15a9 9 0 1 1-2.1-9.4L23 10"/></svg></button>
                 <button type="button" title="设置" tabindex="-1"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></button>
               </div>
             </aside>
@@ -114,13 +122,17 @@
               </div>
 
               <div class="format-toolbar ft--show" id="format-toolbar" aria-label="Markdown 格式工具栏">
-                <span class="format-toolbar__grip">⠿</span><span class="format-toolbar__sep"></span>
-                <button type="button" data-format="heading" title="标题">H</button>
-                <button type="button" data-format="bold" title="粗体"><b>B</b></button>
-                <button type="button" data-format="italic" title="斜体"><em>I</em></button>
-                <button type="button" data-format="quote" title="引用">❞</button>
-                <button type="button" data-format="code" title="行内代码">&lt;/&gt;</button>
-                <button type="button" data-format="link" title="链接">↗</button>
+                <span class="format-toolbar__grip" title="拖动工具栏"><svg viewBox="0 0 16 24"><circle cx="5" cy="6" r="1.5"/><circle cx="11" cy="6" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="11" cy="12" r="1.5"/><circle cx="5" cy="18" r="1.5"/><circle cx="11" cy="18" r="1.5"/></svg></span><span class="format-toolbar__sep"></span>
+                <button type="button" data-format="bold" title="粗体"><b>B</b></button><button type="button" data-format="italic" title="斜体"><em>I</em></button><button type="button" data-format="strike" title="删除线"><s>S</s></button><span class="format-toolbar__sep"></span>
+                <button type="button" data-format="heading" title="标题"><b>H</b></button>
+                <button type="button" data-format="quote" title="引用"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.3-.8-2-2-2H4c-1.3 0-2 .8-2 2v6c0 1.3.8 2 2 2h1c0 3-1 4-3 4v4Zm12 0c3 0 7-1 7-8V5c0-1.3-.8-2-2-2h-4c-1.3 0-2 .8-2 2v6c0 1.3.8 2 2 2h1c0 3-1 4-3 4v4Z"/></svg></button>
+                <button type="button" data-format="table" title="表格"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></button>
+                <button type="button" data-format="codeblock" title="代码块"><svg viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></button><span class="format-toolbar__sep"></span>
+                <button type="button" data-format="link" title="链接"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.8 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.8-1.7"/></svg></button>
+                <button type="button" data-format="image" title="图片"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></button>
+                <button type="button" data-format="task" title="任务列表"><svg viewBox="0 0 24 24"><path d="m9 11 3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></button>
+                <button type="button" data-format="rule" title="分隔线"><svg viewBox="0 0 24 24"><path d="M2 12h20"/></svg></button>
+                <button class="format-toolbar__collapse" id="toolbar-collapse" type="button" title="收起工具栏"><svg viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg></button>
               </div>
 
               <div class="workspace mode-split" id="workspace">
