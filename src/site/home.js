@@ -32,6 +32,7 @@
     'Markdown 实时预览': 'Markdown live preview', '拖动调整分栏': 'Drag to resize panes', '切换侧栏': 'Toggle sidebar', '关闭侧栏': 'Close sidebar', '切换代码/预览': 'Toggle source/preview', '切换到预览': 'Switch to preview', '返回源码编辑': 'Return to source',
     '切换语言': 'Switch language', '切换深浅主题': 'Toggle page theme', '切换主题': 'Toggle theme', '主导航': 'Main navigation', '产品特性': 'Product features', '侧栏视图': 'Sidebar views', '演示文件': 'Demo files',
     '当前文件夹中已存在同名文件': 'A file with this name already exists in this folder', '演示文档已在当前页面保存': 'The demo document was saved in this page', '桌面版会将本地文件移入回收站': 'The desktop app moves local files to the Recycle Bin', '产品演示会保留 mde-workspace': 'The product demo keeps mde-workspace open', '至少保留一个标签页': 'Keep at least one tab open', '搜索面板已在桌面版中提供': 'Search is available in the desktop app', '演示内容已恢复': 'Demo content restored', '服务地址已复制': 'Service URL copied',
+    '窄屏空间不足，分屏模式已禁用，请使用源码或预览模式。': 'Split view is disabled on narrow screens. Use source or preview mode instead.',
   };
   const englishToChinese = new Map(Object.entries(staticEnglish).map(([zh, en]) => [en, zh]));
   let currentLocale = (() => {
@@ -241,6 +242,13 @@
   function setSidebarHidden(hidden) {
     sidebar.classList.toggle('hidden', hidden);
     frame.classList.toggle('sidebar-open', mobileMedia.matches && !hidden);
+  }
+
+  function syncResponsiveDemo(isMobile) {
+    setSidebarHidden(isMobile);
+    splitToggle.classList.toggle('is-disabled', isMobile);
+    splitToggle.setAttribute('aria-disabled', String(isMobile));
+    if (isMobile && viewMode === 'split') updateViewMode('edit');
   }
 
   const escapeHtml = (value) => String(value)
@@ -860,7 +868,13 @@
     }
     loadDocument(tab.dataset.tabDocument);
   });
-  splitToggle.addEventListener('click', () => updateViewMode(viewMode === 'split' ? 'edit' : 'split'));
+  splitToggle.addEventListener('click', () => {
+    if (mobileMedia.matches) {
+      notify('窄屏空间不足，分屏模式已禁用，请使用源码或预览模式。');
+      return;
+    }
+    updateViewMode(viewMode === 'split' ? 'edit' : 'split');
+  });
   modeToggle.addEventListener('click', () => updateViewMode(viewMode === 'preview' ? 'edit' : 'preview'));
   document.querySelector('#toolbar-toggle').addEventListener('click', (event) => {
     const visible = formatToolbar.classList.toggle('ft--show');
@@ -959,7 +973,7 @@
   document.querySelector('.demo-search').addEventListener('click', () => notify('搜索面板已在桌面版中提供'));
   document.querySelectorAll('.js-sidebar-toggle').forEach((button) => button.addEventListener('click', () => setSidebarHidden(!sidebar.classList.contains('hidden'))));
   sidebarScrim.addEventListener('click', () => setSidebarHidden(true));
-  mobileMedia.addEventListener('change', (event) => setSidebarHidden(event.matches));
+  mobileMedia.addEventListener('change', (event) => syncResponsiveDemo(event.matches));
   document.querySelector('#reset-demo').addEventListener('click', () => {
     const resetCatalog = currentLocale === 'en' ? englishDemoDocuments : chineseDemoDocuments;
     Object.keys(originals).forEach((key) => { documents[key].content = resetCatalog[key].content; });
@@ -1009,10 +1023,10 @@
     document.querySelector('meta[name="theme-color"]').content = '#121212';
   }
   setEditorTheme(document.documentElement.dataset.theme);
-  setSidebarHidden(mobileMedia.matches);
+  syncResponsiveDemo(mobileMedia.matches);
   syncDemoDocumentLocale(currentLocale);
   translateDom();
-  updateViewMode('split');
+  updateViewMode(mobileMedia.matches ? 'edit' : 'split');
   loadDocument('welcome');
   checkStatus();
 })();
