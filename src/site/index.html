@@ -65,14 +65,19 @@
 
         <div class="demo-frame" id="demo-frame">
           <div class="demo-titlebar">
-            <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
+            <button class="demo-titlebar__btn js-sidebar-toggle" type="button" aria-label="显示或隐藏侧栏">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+            </button>
             <div class="demo-search">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-              <span>在工作区中搜索</span><kbd>Ctrl K</kbd>
+              <span>按名称搜索文件</span>
             </div>
-            <button class="demo-icon-button" id="demo-theme-toggle" type="button" title="切换主题" aria-label="切换演示主题">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
-            </button>
+            <div class="demo-titlebar__drag"></div>
+            <div class="demo-window-actions" aria-label="窗口控制">
+              <button type="button" title="最小化" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+              <button type="button" title="最大化" tabindex="-1"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1"/></svg></button>
+              <button class="demo-window-close" type="button" title="关闭" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+            </div>
           </div>
 
           <div class="demo-body">
@@ -81,28 +86,35 @@
               <div class="segment"><button class="active" type="button">文件</button><button type="button">大纲</button></div>
               <div class="tree-heading"><span>我的工作区</span><button id="reset-demo" type="button" title="恢复演示内容" aria-label="恢复演示内容">↻</button></div>
               <div class="file-tree" role="listbox" aria-label="演示文件">
-                <button class="file-item active" type="button" data-document="welcome"><span class="file-icon">M↓</span><span>欢迎.md</span></button>
-                <button class="file-item" type="button" data-document="features"><span class="file-icon">M↓</span><span>功能速览.md</span></button>
-                <button class="file-item" type="button" data-document="shortcuts"><span class="file-icon">M↓</span><span>快捷键.md</span></button>
+                <button class="file-item active" type="button" data-document="welcome"><span class="file-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path class="file-icon__mark" d="M8.5 17v-6l2.5 3 2.5-3v6"/></svg></span><span>欢迎.md</span></button>
+                <button class="file-item" type="button" data-document="features"><span class="file-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path class="file-icon__mark" d="M8.5 17v-6l2.5 3 2.5-3v6"/></svg></span><span>功能速览.md</span></button>
+                <button class="file-item" type="button" data-document="shortcuts"><span class="file-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path class="file-icon__mark" d="M8.5 17v-6l2.5 3 2.5-3v6"/></svg></span><span>快捷键.md</span></button>
                 <button class="file-item file-item--folder" type="button" tabindex="-1"><span>›</span><span>notes</span></button>
               </div>
               <div class="sidebar-note"><span class="privacy-icon">✓</span><span>演示内容不会离开浏览器</span></div>
+              <div class="demo-sidebar-footer">
+                <button id="demo-theme-toggle" type="button" title="切换主题" aria-label="切换演示主题"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2"/></svg></button>
+                <span></span>
+                <button type="button" title="设置" tabindex="-1"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></button>
+              </div>
             </aside>
 
             <div class="demo-main">
               <div class="demo-tabbar">
-                <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="显示或隐藏侧栏">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
-                </button>
-                <div class="demo-tab"><span class="file-icon">M↓</span><span id="tab-name">欢迎.md</span><i id="dirty-dot"></i><span class="tab-close">×</span></div>
-                <div class="mode-switcher" aria-label="视图模式">
-                  <button type="button" data-mode="edit" title="编辑">编辑</button>
-                  <button class="active" type="button" data-mode="split" title="分屏">分屏</button>
-                  <button type="button" data-mode="preview" title="预览">预览</button>
+                <button class="tabbar-action" type="button" title="向左滚动" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+                <div class="demo-tab"><span class="file-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path class="file-icon__mark" d="M8.5 17v-6l2.5 3 2.5-3v6"/></svg></span><span id="tab-name">欢迎.md</span><i id="dirty-dot"></i><span class="tab-close">×</span></div>
+                <button class="tabbar-new" type="button" title="新建文件" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                <div class="tabbar-spacer"></div>
+                <div class="tabbar-actions" aria-label="标签栏动作">
+                  <button type="button" title="向右滚动" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+                  <button class="active" id="toolbar-toggle" type="button" title="切换工具栏"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15h18"/></svg></button>
+                  <button type="button" title="书签" tabindex="-1"><svg viewBox="0 0 24 24"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+                  <button class="active" id="split-toggle" type="button" title="分屏"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 3v18"/></svg></button>
                 </div>
               </div>
 
-              <div class="format-toolbar" aria-label="Markdown 格式工具栏">
+              <div class="format-toolbar ft--show" id="format-toolbar" aria-label="Markdown 格式工具栏">
+                <span class="format-toolbar__grip">⠿</span><span class="format-toolbar__sep"></span>
                 <button type="button" data-format="heading" title="标题">H</button>
                 <button type="button" data-format="bold" title="粗体"><b>B</b></button>
                 <button type="button" data-format="italic" title="斜体"><em>I</em></button>
@@ -114,15 +126,23 @@
               <div class="workspace mode-split" id="workspace">
                 <div class="editor-pane">
                   <div class="pane-label"><span>MARKDOWN</span><span id="save-state">已保存</span></div>
-                  <textarea id="markdown-input" aria-label="Markdown 编辑器" spellcheck="false"></textarea>
+                  <div class="monaco-surface" id="monaco-surface">
+                    <div class="monaco-gutter" aria-hidden="true"><div id="line-numbers"></div></div>
+                    <div class="monaco-stage">
+                      <div class="monaco-active-line" id="monaco-active-line"></div>
+                      <pre class="monaco-highlight" id="markdown-highlight" aria-hidden="true"></pre>
+                      <textarea id="markdown-input" aria-label="Markdown 编辑器" spellcheck="false" wrap="off"></textarea>
+                    </div>
+                  </div>
                 </div>
                 <div class="split-divider" id="split-divider" title="拖动调整分栏"></div>
                 <article class="preview-pane md-preview" id="markdown-preview" aria-label="Markdown 实时预览"></article>
               </div>
 
               <footer class="demo-footer">
-                <div><span class="sync-indicator"><i></i>本地演示</span><span>Markdown</span></div>
-                <div><span id="cursor-status">Ln 1, Col 1</span><span id="word-status">0 字符</span><span>UTF-8</span></div>
+                <div class="demo-footer__left"><button class="js-sidebar-toggle" type="button" title="切换侧栏"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg></button><i></i><button id="mode-toggle" type="button" title="切换代码/预览"><svg class="mode-icon mode-icon--eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg><svg class="mode-icon mode-icon--code" viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/></svg></button></div>
+                <div class="demo-footer__breadcrumb"><span>MDE</span><b>›</b><span id="footer-file-name">欢迎.md</span></div>
+                <div class="demo-footer__right"><span id="cursor-status">行 1, 列 1</span><i></i><span id="word-status">0 字符</span><i></i><span>UTF-8</span><i></i><span>LF</span><i></i><span class="sync-indicator"><b></b>本地</span></div>
               </footer>
             </div>
           </div>

@@ -79,10 +79,19 @@
   const dirtyDot = document.querySelector('#dirty-dot');
   const saveState = document.querySelector('#save-state');
   const tabName = document.querySelector('#tab-name');
+  const footerFileName = document.querySelector('#footer-file-name');
   const cursorStatus = document.querySelector('#cursor-status');
   const wordStatus = document.querySelector('#word-status');
+  const sourceHighlight = document.querySelector('#markdown-highlight');
+  const lineNumbers = document.querySelector('#line-numbers');
+  const activeLine = document.querySelector('#monaco-active-line');
+  const formatToolbar = document.querySelector('#format-toolbar');
+  const splitToggle = document.querySelector('#split-toggle');
+  const modeToggle = document.querySelector('#mode-toggle');
+  const demoFooter = document.querySelector('.demo-footer');
   const toast = document.querySelector('#toast');
   let currentDocument = 'welcome';
+  let viewMode = 'split';
   let renderTimer = 0;
   let saveTimer = 0;
   let toastTimer = 0;
@@ -93,6 +102,66 @@
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+
+  const codeKeywords = new Set(['as', 'async', 'await', 'break', 'case', 'catch', 'class', 'const', 'continue', 'default', 'delete', 'do', 'else', 'export', 'extends', 'finally', 'for', 'from', 'function', 'if', 'import', 'in', 'instanceof', 'let', 'new', 'of', 'return', 'static', 'switch', 'throw', 'try', 'typeof', 'var', 'void', 'while', 'with', 'yield']);
+  const codeConstants = new Set(['true', 'false', 'null', 'undefined', 'NaN', 'Infinity', 'this']);
+
+  function highlightCode(source) {
+    const matcher = /(["'`])(?:\\.|(?!\1).)*\1|\/\/.*|\/\*[\s\S]*?\*\/|\b[A-Za-z_$][\w$]*\b|\b(?:0x[\da-f]+|\d+(?:\.\d+)?)\b|(?:=>|===?|!==?|\+\+|--|&&|\|\||[+*/%<>?:~-])/gi;
+    let html = '';
+    let cursor = 0;
+    for (const match of source.matchAll(matcher)) {
+      html += escapeHtml(source.slice(cursor, match.index));
+      const token = match[0];
+      let kind = '';
+      if (/^(?:\/\/|\/\*)/.test(token)) kind = 'comment';
+      else if (/^["'`]/.test(token)) kind = 'string';
+      else if (/^(?:0x[\da-f]+|\d)/i.test(token)) kind = 'number';
+      else if (codeKeywords.has(token)) kind = 'keyword';
+      else if (codeConstants.has(token)) kind = 'constant';
+      else if (/^[A-Za-z_$]/.test(token)) {
+        const tail = source.slice((match.index || 0) + token.length);
+        kind = /^\s*\(/.test(tail) ? 'function' : 'name';
+      } else kind = 'operator';
+      html += `<span class="tok-${kind}">${escapeHtml(token)}</span>`;
+      cursor = (match.index || 0) + token.length;
+    }
+    return html + escapeHtml(source.slice(cursor));
+  }
+
+  function highlightMarkdownInline(source) {
+    const matcher = /`[^`]*`|\*\*[^*]+\*\*|__[^_]+__|\*[^*\n]+\*|\[[^\]]+\]\([^)]+\)/g;
+    let html = '';
+    let cursor = 0;
+    for (const match of source.matchAll(matcher)) {
+      html += escapeHtml(source.slice(cursor, match.index));
+      const token = match[0];
+      const kind = token.startsWith('`') ? 'code' : token.startsWith('[') ? 'link' : token.startsWith('**') || token.startsWith('__') ? 'strong' : 'emphasis';
+      html += `<span class="tok-${kind}">${escapeHtml(token)}</span>`;
+      cursor = (match.index || 0) + token.length;
+    }
+    return html + escapeHtml(source.slice(cursor));
+  }
+
+  function highlightMarkdownSource(source) {
+    let fenced = false;
+    return source.replace(/\r\n?/g, '\n').split('\n').map((line) => {
+      const fence = line.match(/^(\s*```)(.*)$/);
+      if (fence) {
+        fenced = !fenced;
+        return `<span class="tok-markup">${escapeHtml(fence[1])}</span><span class="tok-name">${escapeHtml(fence[2])}</span>`;
+      }
+      if (fenced) return highlightCode(line);
+      const heading = line.match(/^(\s*)(#{1,6}\s+)(.*)$/);
+      if (heading) return `${escapeHtml(heading[1])}<span class="tok-markup">${escapeHtml(heading[2])}</span><span class="tok-heading">${highlightMarkdownInline(heading[3])}</span>`;
+      const quote = line.match(/^(\s*)(>\s?)(.*)$/);
+      if (quote) return `${escapeHtml(quote[1])}<span class="tok-markup">${escapeHtml(quote[2])}</span><span class="tok-comment">${highlightMarkdownInline(quote[3])}</span>`;
+      const list = line.match(/^(\s*)((?:[-*+] |\d+\. )(?:\[[ xX]\]\s*)?)(.*)$/);
+      if (list) return `${escapeHtml(list[1])}<span class="tok-markup">${escapeHtml(list[2])}</span>${highlightMarkdownInline(list[3])}`;
+      if (/^\s*\|?\s*:?-{3,}/.test(line)) return `<span class="tok-punctuation">${escapeHtml(line)}</span>`;
+      return highlightMarkdownInline(line);
+    }).join('\n');
+  }
 
   function inlineMarkdown(value) {
     const codeTokens = [];
@@ -137,7 +206,9 @@
         index += 1;
         while (index < lines.length && !/^\s*```/.test(lines[index])) code.push(lines[index++]);
         if (index < lines.length) index += 1;
-        output.push(`<pre data-language="${escapeHtml(fence[1] || 'text')}"><code>${escapeHtml(code.join('\n'))}</code></pre>`);
+        const language = fence[1] || 'text';
+        const highlighted = /^(?:js|jsx|ts|tsx|javascript|typescript|json)$/i.test(language) ? highlightCode(code.join('\n')) : escapeHtml(code.join('\n'));
+        output.push(`<pre class="shiki" data-language="${escapeHtml(language)}"><code>${highlighted}</code></pre>`);
         continue;
       }
 
@@ -205,9 +276,22 @@
     const lines = before.split('\n');
     cursorStatus.textContent = `Ln ${lines.length}, Col ${lines.at(-1).length + 1}`;
     wordStatus.textContent = `${input.value.length} 字符`;
+    const activeIndex = lines.length - 1;
+    activeLine.style.transform = `translateY(${activeIndex * 21 - input.scrollTop}px)`;
+  }
+
+  function updateSourceLayer() {
+    const lines = input.value.replace(/\r\n?/g, '\n').split('\n');
+    sourceHighlight.innerHTML = `${highlightMarkdownSource(input.value)}\n`;
+    lineNumbers.innerHTML = lines.map((_, index) => `<span>${index + 1}</span>`).join('');
+    sourceHighlight.scrollTop = input.scrollTop;
+    sourceHighlight.scrollLeft = input.scrollLeft;
+    lineNumbers.style.transform = `translateY(${-input.scrollTop}px)`;
+    updateMetrics();
   }
 
   function queueRender() {
+    updateSourceLayer();
     window.clearTimeout(renderTimer);
     renderTimer = window.setTimeout(() => renderMarkdown(input.value), 60);
   }
@@ -229,11 +313,12 @@
     currentDocument = key;
     input.value = documents[key].content;
     tabName.textContent = documents[key].name;
+    footerFileName.textContent = documents[key].name;
     document.querySelectorAll('.file-item[data-document]').forEach((item) => item.classList.toggle('active', item.dataset.document === key));
     dirtyDot.classList.remove('visible');
     saveState.textContent = '已保存';
     renderMarkdown(input.value);
-    updateMetrics();
+    updateSourceLayer();
   }
 
   function notify(message) {
@@ -271,6 +356,15 @@
     const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
     document.querySelector('meta[name="theme-color"]').content = next === 'dark' ? '#121212' : '#f5f5f7';
+  }
+
+  function updateViewMode(nextMode) {
+    viewMode = nextMode;
+    workspace.className = `workspace mode-${viewMode}`;
+    splitToggle.classList.toggle('active', viewMode === 'split');
+    modeToggle.classList.toggle('active', viewMode === 'preview');
+    demoFooter.classList.toggle('previewing', viewMode === 'preview');
+    modeToggle.title = viewMode === 'preview' ? '返回源码编辑' : '切换到预览';
   }
 
   async function checkStatus() {
@@ -318,9 +412,15 @@
     element.className = healthy ? 'ok' : 'bad';
   }
 
-  input.addEventListener('input', () => { markEditing(); queueRender(); updateMetrics(); });
+  input.addEventListener('input', () => { markEditing(); queueRender(); });
   input.addEventListener('click', updateMetrics);
   input.addEventListener('keyup', updateMetrics);
+  input.addEventListener('scroll', () => {
+    sourceHighlight.scrollTop = input.scrollTop;
+    sourceHighlight.scrollLeft = input.scrollLeft;
+    lineNumbers.style.transform = `translateY(${-input.scrollTop}px)`;
+    updateMetrics();
+  });
   input.addEventListener('keydown', (event) => {
     if (!(event.ctrlKey || event.metaKey)) return;
     const shortcut = event.key.toLowerCase();
@@ -329,18 +429,19 @@
   });
 
   document.querySelectorAll('.file-item[data-document]').forEach((item) => item.addEventListener('click', () => loadDocument(item.dataset.document)));
-  document.querySelectorAll('.mode-switcher button').forEach((button) => button.addEventListener('click', () => {
-    document.querySelectorAll('.mode-switcher button').forEach((item) => item.classList.remove('active'));
-    button.classList.add('active');
-    workspace.className = `workspace mode-${button.dataset.mode}`;
-  }));
+  splitToggle.addEventListener('click', () => updateViewMode(viewMode === 'split' ? 'edit' : 'split'));
+  modeToggle.addEventListener('click', () => updateViewMode(viewMode === 'preview' ? 'edit' : 'preview'));
+  document.querySelector('#toolbar-toggle').addEventListener('click', (event) => {
+    const visible = formatToolbar.classList.toggle('ft--show');
+    event.currentTarget.classList.toggle('active', visible);
+  });
   document.querySelectorAll('.format-toolbar button').forEach((button) => button.addEventListener('click', () => applyFormat(button.dataset.format)));
   document.querySelectorAll('.segment button').forEach((button) => button.addEventListener('click', () => {
     document.querySelectorAll('.segment button').forEach((item) => item.classList.remove('active'));
     button.classList.add('active');
     if (button.textContent === '大纲') notify('完整桌面版会在这里生成文档大纲');
   }));
-  document.querySelector('#sidebar-toggle').addEventListener('click', () => document.querySelector('#demo-sidebar').classList.toggle('hidden'));
+  document.querySelectorAll('.js-sidebar-toggle').forEach((button) => button.addEventListener('click', () => document.querySelector('#demo-sidebar').classList.toggle('hidden')));
   document.querySelector('#reset-demo').addEventListener('click', () => {
     Object.keys(originals).forEach((key) => { documents[key].content = originals[key].content; });
     loadDocument(currentDocument);
@@ -376,6 +477,7 @@
 
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
   if (window.matchMedia('(max-width: 680px)').matches) document.querySelector('#demo-sidebar').classList.add('hidden');
+  updateViewMode('split');
   loadDocument('welcome');
   checkStatus();
 })();
