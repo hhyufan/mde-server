@@ -18,11 +18,6 @@
         <span class="brand__mark">M</span>
         <span class="brand__name">MDE</span>
       </a>
-      <nav class="site-nav" aria-label="主导航">
-        <a href="#demo">在线体验</a>
-        <a href="#features">核心能力</a>
-        <a href="#status">服务状态</a>
-      </nav>
       <div class="header-actions">
         <button class="language-button" id="language-toggle" type="button" aria-label="切换语言" title="切换语言"><svg class="language-icon" viewBox="0 0 28 24" aria-hidden="true"><text class="language-icon__glyph language-icon__glyph--zh" x="0" y="0">文</text><text class="language-icon__glyph language-icon__glyph--en" x="0" y="0">A</text></svg></button>
         <button class="icon-button" id="theme-toggle" type="button" aria-label="切换深浅主题" title="切换主题">
@@ -34,37 +29,16 @@
     </header>
 
     <main id="top">
-      <section class="hero section-shell">
-        <div class="hero__copy">
-          <span class="eyebrow"><span class="eyebrow__dot"></span>为 Markdown 写作者而生</span>
-          <h1>写作应该专注于内容，<br /><span>其余交给 MDE。</span></h1>
-          <p>MDE 将本地优先的可靠性、顺滑的实时预览和克制的桌面体验放在同一个工作台里。</p>
-          <div class="hero__actions">
-            <a class="button button--primary" href="#demo">立即体验</a>
-            <a class="button button--quiet" href="https://github.com/hhyufan/mde-tauri/releases" target="_blank" rel="noreferrer">获取桌面版</a>
-          </div>
-          <div class="hero__meta" aria-label="产品特性">
-            <span><i></i>本地优先</span><span><i></i>跨平台</span><span><i></i>开源</span>
-          </div>
-        </div>
-        <div class="hero__visual" aria-hidden="true">
-          <div class="document-stack document-stack--back"></div>
-          <div class="document-stack document-stack--middle"></div>
-          <div class="hero-card">
-            <div class="hero-card__bar"><span></span><span></span><span></span><b>随笔.md</b></div>
-            <div class="hero-card__body">
-              <span class="mini-h1"></span><span class="mini-line mini-line--long"></span><span class="mini-line"></span>
-              <div class="mini-quote"><span></span><span></span></div>
-              <span class="mini-line mini-line--short"></span><span class="mini-code"></span>
+      <section class="hero-demo section-shell" id="demo">
+        <div class="hero-demo__intro">
+          <div class="hero-demo__title"><span class="section-kicker">TRY IT NOW</span><h1>所见即所得的 Markdown 编辑器</h1></div>
+          <div class="hero-demo__details">
+            <p>这是 MDE 的轻量预览；桌面端提供完整的工作区与编辑体验。</p>
+            <div class="hero-demo__actions">
+              <a class="button button--primary" href="https://github.com/hhyufan/mde-tauri/releases" target="_blank" rel="noreferrer">获取桌面版</a>
+              <a class="button button--quiet" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">GitHub</a>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="demo-section section-shell" id="demo">
-        <div class="section-heading">
-          <div><span class="section-kicker">TRY IT NOW</span><h2>一个真正可以编辑的 MDE</h2></div>
-          <p>切换文件、输入 Markdown 或拖动分隔条。这里的内容只在当前页面渲染，不会保存或上传。</p>
         </div>
 
         <div class="demo-frame" id="demo-frame" data-editor-theme="light">
@@ -153,43 +127,53 @@
             </div>
           </div>
         </div>
+        <a class="scroll-cue" id="scroll-cue" href="#why-mde"><span>继续了解 MDE</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></a>
       </section>
 
-      <section class="features-section section-shell" id="features">
-        <div class="section-heading"><div><span class="section-kicker">BUILT FOR FOCUS</span><h2>从第一行到最后一次保存</h2></div><p>每项能力都服务于更可靠、更安静的写作过程。</p></div>
-        <div class="feature-grid">
-          <article class="feature-card feature-card--wide"><span class="feature-icon">⌁</span><h3>本地优先，不打断思路</h3><p>文件保留在你的工作区。原子保存与恢复快照共同保护每一次修改。</p><div class="feature-visual feature-visual--save"><i></i><span>writing-notes.md</span><b>保存完成</b></div></article>
-          <article class="feature-card"><span class="feature-icon">◫</span><h3>双编辑体验</h3><p>源码、所见即所得与实时预览随时切换。</p><div class="feature-chips"><span>源码</span><span class="active">分屏</span><span>预览</span></div></article>
-          <article class="feature-card"><span class="feature-icon">⌘</span><h3>为长文档准备</h3><p>大纲、搜索、代码块与 Mermaid 按需工作，复杂文档依旧轻快。</p><div class="feature-code"><span>## Roadmap</span><span>- [x] Draft</span><span>- [ ] Publish</span></div></article>
-          <article class="feature-card feature-card--wide"><span class="feature-icon">☁</span><h3>可选的安全同步</h3><p>需要跨设备时再开启。冲突可见、状态透明，始终由你决定保留哪个版本。</p><div class="sync-path"><span>桌面端</span><i></i><b>加密认证</b><i></i><span>云端</span></div></article>
+      <section class="product-story section-shell" id="why-mde" aria-labelledby="product-story-title">
+        <header class="story-intro reveal-block" data-reveal>
+          <div><span class="section-kicker">HOW MDE WORKS</span><h2 id="product-story-title">四个部分，都是 MDE 的真实能力。</h2></div>
+          <div class="story-intro__aside"><p>不包装概念：这里展示的编辑、文件与同步方式，都来自开源项目当前实现。</p><a class="story-source-link" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">查看源代码 <span>→</span></a></div>
+        </header>
+
+        <div class="story-grid">
+          <article class="story-card reveal-block" data-reveal>
+            <div class="story-card__index">TAURI / RUST</div>
+            <div class="story-card__body">
+              <h3>轻量化</h3>
+              <p>Tauri 2 以 Rust 和系统 WebView 承载桌面端；Monaco、Milkdown 与 Mermaid 按需加载，把资源留给正在编辑的内容。</p>
+              <div class="runtime-preview" aria-hidden="true"><div><span>MDE Desktop</span><b>Ready</b></div><div><span>Tauri 2 · Rust</span><i>System WebView</i></div><div><span>Editor modules</span><i>On demand</i></div></div>
+            </div>
+          </article>
+          <article class="story-card reveal-block" data-reveal>
+            <div class="story-card__index">MILKDOWN / MONACO</div>
+            <div class="story-card__body">
+              <h3>所见即所得</h3>
+              <p>在 Milkdown 中直接修改任务、表格、公式与代码块，也可随时回到 Monaco 源码或分屏预览，底层始终是 Markdown。</p>
+              <div class="wysiwyg-preview" aria-hidden="true"><div class="wysiwyg-preview__modes"><span>Source</span><span class="active">WYSIWYG</span><span>Split</span></div><strong>今日写作计划</strong><p><i>✓</i> 完成文章结构</p><p><i></i> 补充代码示例</p></div>
+            </div>
+          </article>
+          <article class="story-card reveal-block" data-reveal>
+            <div class="story-card__index">LOCAL FILESYSTEM</div>
+            <div class="story-card__body">
+              <h3>工作区即文件资源管理器</h3>
+              <p>打开真实文件夹后，文件树、多标签、大纲、最近文件、面包屑与搜索围绕同一目录工作，文章不会被锁进应用数据库。</p>
+              <div class="workspace-preview" aria-hidden="true"><div class="workspace-preview__path"><span>mde-workspace</span><i>›</i><span>docs</span></div><div><b>⌄</b><strong>docs</strong></div><div class="file"><b>M↓</b><span>使用指南.md</span></div><div class="file active"><b>M↓</b><span>欢迎.md</span></div></div>
+            </div>
+          </article>
+          <article class="story-card reveal-block" data-reveal>
+            <div class="story-card__index">OPTIONAL SYNC</div>
+            <div class="story-card__body">
+              <h3>云同步</h3>
+              <p>本地文件始终可以独立工作；登录后再同步文档与设置，增量队列、冲突对比和状态提示让跨设备变化保持可见。</p>
+              <div class="sync-preview" aria-hidden="true"><div><span class="sync-preview__device">L</span><small>本地文件</small></div><span class="sync-preview__flow"><i></i><b>同步完成</b></span><div><span class="sync-preview__device cloud">C</span><small>云端副本</small></div></div>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class="status-section section-shell" id="status">
-        <div class="status-intro">
-          <span class="section-kicker">LIVE SERVICE</span>
-          <h2>同步服务，清晰可见</h2>
-          <p>页面实时检测公开服务状态，只呈现健康枚举和版本，不暴露数据库地址、凭据、用户数据或内部环境信息。</p>
-          <div class="status-actions"><button class="button button--primary" id="refresh-status" type="button">重新检测</button><button class="button button--quiet" id="copy-endpoint" type="button">复制服务地址</button></div>
-        </div>
-        <div class="status-panel">
-          <div class="status-panel__top"><div><span class="live-dot" id="overall-dot"></span><strong id="overall-status">正在检测</strong></div><span id="status-time">--:--:--</span></div>
-          <div class="status-list">
-            <div class="status-row"><span><i class="status-icon">↔</i><b>API 服务</b></span><strong id="api-status">检测中</strong></div>
-            <div class="status-row"><span><i class="status-icon">◉</i><b>MongoDB</b></span><strong id="database-status">检测中</strong></div>
-            <div class="status-row"><span><i class="status-icon">#</i><b>当前版本</b></span><strong id="version-status">—</strong></div>
-            <div class="status-row"><span><i class="status-icon">⌁</i><b>响应耗时</b></span><strong id="latency-status">—</strong></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="cta-section section-shell">
-        <div><span class="brand__mark">M</span><h2>准备好写下下一篇了吗？</h2><p>下载 MDE，或者从源代码开始了解它。</p></div>
-        <div class="cta-actions"><a class="button button--primary" href="https://github.com/hhyufan/mde-tauri/releases" target="_blank" rel="noreferrer">获取 MDE</a><a class="button button--quiet" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">查看源代码</a></div>
-      </section>
     </main>
-
-    <footer class="site-footer section-shell"><div class="brand"><span class="brand__mark">M</span><span class="brand__name">MDE</span></div><p>专注、可靠的 Markdown 工作台。</p><div><a href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">桌面端</a><a href="https://github.com/hhyufan/mde-server" target="_blank" rel="noreferrer">服务端</a></div></footer>
+    <footer class="site-footer section-shell"><div class="brand"><span class="brand__mark">M</span><span class="brand__name">MDE</span></div><p>本地优先、所见即所得的 Markdown 写作工作台。</p><div><a href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">桌面端</a><a href="https://github.com/hhyufan/mde-server" target="_blank" rel="noreferrer">服务端</a></div></footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>

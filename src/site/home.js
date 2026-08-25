@@ -3,12 +3,27 @@
 
   const staticEnglish = {
     '在线体验': 'Live Demo', '核心能力': 'Features', '服务状态': 'Service Status',
+    '轻量、本地优先的 Markdown 工作台': 'A lightweight, local-first Markdown workspace',
+    '编辑、预览、管理文件，': 'Edit, preview, and manage files,', '都在一个工作台。': 'all in one workspace.',
+    'Monaco 源码与 Milkdown 所见即所得自由切换；本地文件优先，需要时再开启云同步。': 'Switch freely between Monaco source editing and Milkdown WYSIWYG. Keep files local and enable cloud sync only when needed.',
     '为 Markdown 写作者而生': 'Made for Markdown writers',
     '写作应该专注于内容，': 'Writing should stay focused on the content,', '其余交给 MDE。': 'leave the rest to MDE.',
     'MDE 将本地优先的可靠性、顺滑的实时预览和克制的桌面体验放在同一个工作台里。': 'MDE brings local-first reliability, fluid live preview, and a focused desktop experience into one workspace.',
     '立即体验': 'Try it now', '获取桌面版': 'Get the desktop app', '本地优先': 'Local first', '跨平台': 'Cross-platform', '开源': 'Open source', '随笔.md': 'Notes.md',
-    '一个真正可以编辑的 MDE': 'A genuinely interactive MDE',
-    '切换文件、输入 Markdown 或拖动分隔条。这里的内容只在当前页面渲染，不会保存或上传。': 'Switch files, type Markdown, or drag the divider. Everything renders locally in this page and is never saved or uploaded.',
+    '所见即所得的 Markdown 编辑器': 'WYSIWYG Markdown Editor',
+    '这是 MDE 的轻量预览；桌面端提供完整的工作区与编辑体验。': 'A lightweight preview of MDE. The desktop app provides the complete workspace and editing experience.',
+    '继续了解 MDE': 'Explore MDE',
+    '四个部分，都是 MDE 的真实能力。': 'Four parts, all implemented in MDE.',
+    '不包装概念：这里展示的编辑、文件与同步方式，都来自开源项目当前实现。': 'No abstract claims: the editing, file, and sync behavior shown here comes from the current open-source implementation.',
+    '查看源代码': 'View source',
+    '轻量化': 'Lightweight',
+    'Tauri 2 以 Rust 和系统 WebView 承载桌面端；Monaco、Milkdown 与 Mermaid 按需加载，把资源留给正在编辑的内容。': 'Tauri 2 runs the desktop app with Rust and the system WebView. Monaco, Milkdown, and Mermaid load on demand so resources stay focused on the document being edited.',
+    '所见即所得': 'WYSIWYG', '今日写作计划': 'Today’s writing plan', '完成文章结构': 'Finish the article outline', '补充代码示例': 'Add a code example',
+    '在 Milkdown 中直接修改任务、表格、公式与代码块，也可随时回到 Monaco 源码或分屏预览，底层始终是 Markdown。': 'Edit tasks, tables, math, and code blocks directly in Milkdown, or return to Monaco source and split preview at any time. The underlying format remains Markdown.',
+    '工作区即文件资源管理器': 'The workspace is a file explorer',
+    '打开真实文件夹后，文件树、多标签、大纲、最近文件、面包屑与搜索围绕同一目录工作，文章不会被锁进应用数据库。': 'Open a real folder and the file tree, tabs, outline, recent files, breadcrumbs, and search all work around that directory. Your writing is not locked into an app database.',
+    '云同步': 'Cloud sync', '本地文件': 'Local file', '同步完成': 'Synced', '云端副本': 'Cloud copy',
+    '本地文件始终可以独立工作；登录后再同步文档与设置，增量队列、冲突对比和状态提示让跨设备变化保持可见。': 'Local files always work on their own. Sign in to sync documents and settings; incremental queues, conflict comparison, and status indicators keep cross-device changes visible.',
     'Markdown 编辑器': 'Markdown Editor', '文件': 'Files', '大纲': 'Outline', '最近': 'Recent', '最近文件': 'Recent Files',
     '登录': 'Sign in', '搜索文件...': 'Search files...', '欢迎.md': 'Welcome.md', '功能速览.md': 'Feature Tour.md', '快捷键.md': 'Shortcuts.md',
     '使用指南.md': 'Guide.md', '代码高亮.md': 'Code Highlighting.md', '表格示例.md': 'Table Example.md', '每日记录.md': 'Daily Notes.md', '灵感.md': 'Ideas.md',
@@ -21,7 +36,7 @@
     '页面实时检测公开服务状态，只呈现健康枚举和版本，不暴露数据库地址、凭据、用户数据或内部环境信息。': 'This page checks public service health in real time and shows only safe status and version data—never database addresses, credentials, user data, or internal environment details.',
     '重新检测': 'Check again', '复制服务地址': 'Copy service URL', '正在检测': 'Checking', '检测中': 'Checking', 'API 服务': 'API Service', '当前版本': 'Current Version', '响应耗时': 'Response Time',
     '准备好写下下一篇了吗？': 'Ready to write the next one?', '下载 MDE，或者从源代码开始了解它。': 'Download MDE or explore it from the source.', '获取 MDE': 'Get MDE', '查看源代码': 'View source',
-    '专注、可靠的 Markdown 工作台。': 'A focused, reliable Markdown workspace.', '服务端': 'Server',
+    '本地优先、所见即所得的 Markdown 写作工作台。': 'A local-first, WYSIWYG Markdown writing workspace.', '服务端': 'Server',
     '本地': 'Local', '未找到标题。': 'No headings found.', '输入文件名并回车': 'Enter a file name and press Enter', '新文件名': 'New file name',
     '所有公开服务运行正常': 'All public services are operational', '部分服务状态异常': 'Some services are degraded', '暂时无法连接服务': 'Service is temporarily unavailable',
     '运行正常': 'Operational', '不可用': 'Unavailable', '未知': 'Unknown', '连接正常': 'Connected', '正在连接': 'Connecting', '正在断开': 'Disconnecting', '未连接': 'Disconnected',
@@ -224,6 +239,26 @@
   const modeToggle = document.querySelector('#mode-toggle');
   const demoFooter = document.querySelector('.demo-footer');
   const toast = document.querySelector('#toast');
+  const scrollCue = document.querySelector('#scroll-cue');
+
+  const updateScrollCue = () => {
+    const hidden = window.scrollY > 16;
+    scrollCue?.classList.toggle('is-hidden', hidden);
+    scrollCue?.setAttribute('aria-hidden', String(hidden));
+    if (scrollCue) scrollCue.tabIndex = hidden ? -1 : 0;
+  };
+  window.addEventListener('scroll', updateScrollCue, { passive: true });
+  updateScrollCue();
+
+  const revealBlocks = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-visible', entry.isIntersecting));
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealBlocks.forEach((block) => revealObserver.observe(block));
+  } else {
+    revealBlocks.forEach((block) => block.classList.add('is-visible'));
+  }
   let currentDocument = 'welcome';
   let untitledCount = 1;
   let isCreatingFile = false;
@@ -758,51 +793,6 @@
     modeToggle.title = localize(viewMode === 'preview' ? '返回源码编辑' : '切换到预览');
   }
 
-  async function checkStatus() {
-    const overall = document.querySelector('#overall-status');
-    const dot = document.querySelector('#overall-dot');
-    const button = document.querySelector('#refresh-status');
-    button.disabled = true;
-    button.textContent = localize('检测中');
-    dot.className = 'live-dot';
-    overall.textContent = localize('正在检测');
-    const started = performance.now();
-    try {
-      const response = await fetch('/health', { cache: 'no-store', headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('status request failed');
-      const data = await response.json();
-      const latency = Math.max(1, Math.round(performance.now() - started));
-      const healthy = data.status === 'operational';
-      dot.className = `live-dot ${healthy ? 'online' : 'offline'}`;
-      overall.textContent = localize(healthy ? '所有公开服务运行正常' : '部分服务状态异常');
-      setStatusValue('api-status', localize(data.services?.api === 'operational' ? '运行正常' : '不可用'), data.services?.api === 'operational');
-      setStatusValue('database-status', databaseLabel(data.services?.database), data.services?.database === 'connected');
-      document.querySelector('#version-status').textContent = `v${String(data.version || '—')}`;
-      document.querySelector('#latency-status').textContent = `${latency} ms`;
-      document.querySelector('#status-time').textContent = new Date(data.checkedAt || Date.now()).toLocaleTimeString(currentLocale === 'zh' ? 'zh-CN' : 'en-US', { hour12: false });
-    } catch {
-      dot.className = 'live-dot offline';
-      overall.textContent = localize('暂时无法连接服务');
-      setStatusValue('api-status', localize('不可用'), false);
-      setStatusValue('database-status', localize('未知'), false);
-      document.querySelector('#latency-status').textContent = '—';
-      document.querySelector('#status-time').textContent = new Date().toLocaleTimeString(currentLocale === 'zh' ? 'zh-CN' : 'en-US', { hour12: false });
-    } finally {
-      button.disabled = false;
-      button.textContent = localize('重新检测');
-    }
-  }
-
-  function databaseLabel(state) {
-    return localize(({ connected: '连接正常', connecting: '正在连接', disconnecting: '正在断开', disconnected: '未连接' })[state] || '未知');
-  }
-
-  function setStatusValue(id, label, healthy) {
-    const element = document.querySelector(`#${id}`);
-    element.textContent = label;
-    element.className = healthy ? 'ok' : 'bad';
-  }
-
   input.addEventListener('input', () => { markEditing(); queueRender(); });
   input.addEventListener('click', updateMetrics);
   input.addEventListener('keyup', updateMetrics);
@@ -993,12 +983,6 @@
     setLocale(currentLocale === 'zh' ? 'en' : 'zh');
     window.setTimeout(() => button.classList.remove('is-switching'), 520);
   });
-  document.querySelector('#refresh-status').addEventListener('click', checkStatus);
-  document.querySelector('#copy-endpoint').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(window.location.origin); notify('服务地址已复制'); }
-    catch { notify(`${currentLocale === 'zh' ? '服务地址' : 'Service URL'}: ${window.location.origin}`); }
-  });
-
   const divider = document.querySelector('#split-divider');
   divider.addEventListener('pointerdown', (event) => {
     divider.setPointerCapture(event.pointerId);
@@ -1028,5 +1012,4 @@
   translateDom();
   updateViewMode(mobileMedia.matches ? 'edit' : 'split');
   loadDocument('welcome');
-  checkStatus();
 })();
