@@ -14,16 +14,18 @@
     '这是 MDE 的轻量预览；桌面端提供完整的工作区与编辑体验。': 'A lightweight preview of MDE. The desktop app provides the complete workspace and editing experience.',
     '继续了解 MDE': 'Explore MDE',
     '四个部分，都是 MDE 的真实能力。': 'Four parts, all implemented in MDE.',
-    '不包装概念：这里展示的编辑、文件与同步方式，都来自开源项目当前实现。': 'No abstract claims: the editing, file, and sync behavior shown here comes from the current open-source implementation.',
     '查看源代码': 'View source',
     '轻量化': 'Lightweight',
-    'Tauri 2 以 Rust 和系统 WebView 承载桌面端；Monaco、Milkdown 与 Mermaid 按需加载，把资源留给正在编辑的内容。': 'Tauri 2 runs the desktop app with Rust and the system WebView. Monaco, Milkdown, and Mermaid load on demand so resources stay focused on the document being edited.',
-    '所见即所得': 'WYSIWYG', '今日写作计划': 'Today’s writing plan', '完成文章结构': 'Finish the article outline', '补充代码示例': 'Add a code example',
-    '在 Milkdown 中直接修改任务、表格、公式与代码块，也可随时回到 Monaco 源码或分屏预览，底层始终是 Markdown。': 'Edit tasks, tables, math, and code blocks directly in Milkdown, or return to Monaco source and split preview at any time. The underlying format remains Markdown.',
+    'Tauri 2 的 Rust 桌面壳直接使用系统 WebView；编辑器、图表和高亮模块只在需要时载入，让启动路径保持简洁。': 'The Tauri 2 desktop shell uses Rust and the system WebView. Editor, diagram, and highlighting modules load only when needed, keeping the startup path simple.',
+    '系统内置': 'Built in', '核心界面': 'Core UI', '按需载入': 'On demand', '源码编辑': 'Source editing', '已载入': 'Loaded', '按需': 'On demand', '图表渲染': 'Diagram rendering',
+    '桌面壳先启动，重型能力随后按需进入。': 'The desktop shell starts first; heavier capabilities join only when needed.',
+    '所见即所得': 'WYSIWYG', '今日写作计划': 'Today’s writing plan', '完成文章结构': 'Finish the article outline', '直接编辑': 'Edit the', '排版结果': 'rendered result', '，内容仍然保存为 Markdown。': ', while keeping Markdown as the source.',
+    '直接在排版后的内容中写作，标题、列表、任务、表格与代码块所见即所得；需要源码时再切回 Monaco 或分屏。': 'Write directly in the formatted document. Headings, lists, tasks, tables, and code blocks appear exactly as they will read; switch to Monaco or split view only when you need the source.',
     '工作区即文件资源管理器': 'The workspace is a file explorer',
-    '打开真实文件夹后，文件树、多标签、大纲、最近文件、面包屑与搜索围绕同一目录工作，文章不会被锁进应用数据库。': 'Open a real folder and the file tree, tabs, outline, recent files, breadcrumbs, and search all work around that directory. Your writing is not locked into an app database.',
-    '云同步': 'Cloud sync', '本地文件': 'Local file', '同步完成': 'Synced', '云端副本': 'Cloud copy',
-    '本地文件始终可以独立工作；登录后再同步文档与设置，增量队列、冲突对比和状态提示让跨设备变化保持可见。': 'Local files always work on their own. Sign in to sync documents and settings; incremental queues, conflict comparison, and status indicators keep cross-device changes visible.',
+    '文件、标签、大纲、最近记录和搜索都围绕你打开的真实目录工作。': 'Files, tabs, outlines, recent history, and search all work around the real folder you opened.',
+    '欢迎使用 MDE': 'Welcome to MDE', '开始写作': 'Start writing', '工作区': 'Workspace', '文件与大纲': 'Files and outline',
+    '云同步': 'Cloud sync', '本地文件': 'Local file', '全部同步': 'All synced', '刚刚': 'Just now', '云端副本': 'Cloud copy', '文档与设置': 'Docs and settings', '冲突可见': 'Visible conflicts', '按需启用': 'Opt in',
+    '默认写入本地文件。登录后，文档与设置才进入增量同步；冲突会明确展示，不在后台替你覆盖。': 'Files are written locally by default. After sign-in, documents and settings enter incremental sync; conflicts are shown explicitly and never overwritten silently.',
     'Markdown 编辑器': 'Markdown Editor', '文件': 'Files', '大纲': 'Outline', '最近': 'Recent', '最近文件': 'Recent Files',
     '登录': 'Sign in', '搜索文件...': 'Search files...', '欢迎.md': 'Welcome.md', '功能速览.md': 'Feature Tour.md', '快捷键.md': 'Shortcuts.md',
     '使用指南.md': 'Guide.md', '代码高亮.md': 'Code Highlighting.md', '表格示例.md': 'Table Example.md', '每日记录.md': 'Daily Notes.md', '灵感.md': 'Ideas.md',
@@ -45,8 +47,8 @@
     '显示或隐藏侧栏': 'Show or hide sidebar', '窗口控制': 'Window controls', '最小化': 'Minimize', '最大化': 'Maximize', '关闭': 'Close', '向左滚动': 'Scroll left', '向右滚动': 'Scroll right', '关闭标签': 'Close tab', '标签栏动作': 'Tab actions', '切换工具栏': 'Toggle toolbar', '书签': 'Bookmark',
     'Markdown 格式工具栏': 'Markdown formatting toolbar', '拖动工具栏': 'Drag toolbar', '粗体': 'Bold', '斜体': 'Italic', '删除线': 'Strikethrough', '标题': 'Heading', '引用': 'Quote', '表格': 'Table', '代码块': 'Code block', '链接': 'Link', '图片': 'Image', '任务列表': 'Task list', '分隔线': 'Divider', '收起工具栏': 'Hide toolbar',
     'Markdown 实时预览': 'Markdown live preview', '拖动调整分栏': 'Drag to resize panes', '切换侧栏': 'Toggle sidebar', '关闭侧栏': 'Close sidebar', '切换代码/预览': 'Toggle source/preview', '切换到预览': 'Switch to preview', '返回源码编辑': 'Return to source',
-    '切换语言': 'Switch language', '切换深浅主题': 'Toggle page theme', '切换主题': 'Toggle theme', '主导航': 'Main navigation', '产品特性': 'Product features', '侧栏视图': 'Sidebar views', '演示文件': 'Demo files',
-    '当前文件夹中已存在同名文件': 'A file with this name already exists in this folder', '演示文档已在当前页面保存': 'The demo document was saved in this page', '桌面版会将本地文件移入回收站': 'The desktop app moves local files to the Recycle Bin', '产品演示会保留 mde-workspace': 'The product demo keeps mde-workspace open', '至少保留一个标签页': 'Keep at least one tab open', '搜索面板已在桌面版中提供': 'Search is available in the desktop app', '演示内容已恢复': 'Demo content restored', '服务地址已复制': 'Service URL copied',
+    '切换语言': 'Switch language', '切换深浅主题': 'Toggle page theme', '切换主题': 'Toggle theme', '主导航': 'Main navigation', '产品特性': 'Product features', '侧栏视图': 'Sidebar views', '编辑模式': 'Editor modes', '折叠': 'Collapse', '展开': 'Expand', '演示文件': 'Demo files',
+    '当前文件夹中已存在同名文件': 'A file with this name already exists in this folder', '演示文档已在当前页面保存': 'The demo document was saved in this page', '桌面版会将本地文件移入回收站': 'The desktop app moves local files to the Recycle Bin', '产品演示会保留 mde-workspace': 'The product demo keeps mde-workspace open', '至少保留一个标签页': 'Keep at least one tab open', '搜索面板已在桌面版中提供': 'Search is available in the desktop app', '演示内容已恢复': 'Demo content restored', '服务地址已复制': 'Service URL copied', '展开完整路径': 'Expand full path', '折叠路径': 'Collapse path',
     '窄屏空间不足，分屏模式已禁用，请使用源码或预览模式。': 'Split view is disabled on narrow screens. Use source or preview mode instead.',
   };
   const englishToChinese = new Map(Object.entries(staticEnglish).map(([zh, en]) => [en, zh]));
@@ -99,11 +101,12 @@
     renderFileTree();
     renderFooterBreadcrumb();
     updateOutline();
+    renderStoryFolder(storyFolder);
   }
 
   const originals = {
     welcome: {
-      name: '欢迎.md',
+      name: 'README.md',
       content: [
         '# 欢迎使用 MDE',
         '',
@@ -173,29 +176,24 @@
 
   const documents = JSON.parse(JSON.stringify(originals));
   Object.assign(documents, {
-    guide: { name: '使用指南.md', content: '# 使用指南\n\n## 工作区\n\n通过侧栏浏览文件夹与 Markdown 文档。\n\n## 写作模式\n\n使用标签栏切换源码、分屏和预览。' },
-    codeSample: { name: '代码高亮.md', content: '# 代码高亮\n\n```typescript\ninterface Note {\n  title: string;\n  saved: boolean;\n}\n\nconst note: Note = { title: \'MDE\', saved: true };\n```' },
-    tableSample: { name: '表格示例.md', content: '# 表格示例\n\n| 功能 | 状态 |\n| --- | --- |\n| Monaco | 已启用 |\n| Shiki | 已启用 |' },
-    daily: { name: '每日记录.md', content: '# 每日记录\n\n## 上午\n\n- [x] 整理工作区\n\n## 下午\n\n- [ ] 完成文章' },
-    ideas: { name: '灵感.md', content: '# 灵感\n\n> 好的工具应该安静地消失在内容背后。' },
+    appJsx: { name: 'App.jsx', content: "import { useState } from 'react';\nimport Editor from './Editor.jsx';\n\nexport default function App() {\n  const [mode, setMode] = useState('split');\n\n  return (\n    <main data-mode={mode}>\n      <Editor mode={mode} onModeChange={setMode} />\n    </main>\n  );\n}" },
+    editorJs: { name: 'editor.js', content: "export const editorModes = ['source', 'split', 'preview'];\n\nexport function selectMode(mode) {\n  return editorModes.includes(mode) ? mode : 'source';\n}" },
+    mainRs: { name: 'main.rs', content: "#![cfg_attr(not(debug_assertions), windows_subsystem = \"windows\")]\n\nfn main() {\n    mde_lib::run();\n}" },
+    mainKt: { name: 'MainActivity.kt', content: "package xyz.miaogu.mde\n\nimport android.os.Bundle\nimport androidx.activity.ComponentActivity\n\nclass MainActivity : ComponentActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n    }\n}" },
   });
   const workspaceTree = {
-    docs: { type: 'folder', children: { guide: { type: 'document', key: 'guide' } } },
-    examples: { type: 'folder', children: { code: { type: 'document', key: 'codeSample' }, table: { type: 'document', key: 'tableSample' } } },
-    welcome: { type: 'document', key: 'welcome' },
-    features: { type: 'document', key: 'features' },
-    shortcuts: { type: 'document', key: 'shortcuts' },
-    notes: { type: 'folder', children: { daily: { type: 'document', key: 'daily' }, ideas: { type: 'document', key: 'ideas' } } },
+    src: { type: 'folder', children: { app: { type: 'document', key: 'appJsx' }, editor: { type: 'document', key: 'editorJs' } } },
+    'src-tauri': { type: 'folder', children: {
+      src: { type: 'folder', children: { main: { type: 'document', key: 'mainRs' } } },
+      gen: { type: 'folder', children: { android: { type: 'folder', children: { app: { type: 'folder', children: { src: { type: 'folder', children: { main: { type: 'folder', children: { java: { type: 'folder', children: { activity: { type: 'document', key: 'mainKt' } } } } } } } } } } } } },
+    } },
+    readme: { type: 'document', key: 'welcome' },
   };
   const englishDemoDocuments = {
-    welcome: { name: 'Welcome.md', content: '# Welcome to MDE\n\n> This is a genuinely interactive mini workspace. Edit the source and watch the preview update instantly.\n\n## Writing starts with focus\n\nMDE brings **reliable saving**, *live preview*, and `Markdown` tools into a quiet workspace.\n\n- [x] Write safely on your device\n- [x] Check layout in split view\n- [ ] Publish the next article\n\n```javascript\nconst idea = \'Keep it simple, keep writing\';\nconsole.log(idea);\n```\n\nUse the controls above to switch between **source / split / preview**.' },
+    welcome: { name: 'README.md', content: '# Welcome to MDE\n\n> This is a genuinely interactive mini workspace. Edit the source and watch the preview update instantly.\n\n## Writing starts with focus\n\nMDE brings **reliable saving**, *live preview*, and `Markdown` tools into a quiet workspace.\n\n- [x] Write safely on your device\n- [x] Check layout in split view\n- [ ] Publish the next article\n\n```javascript\nconst idea = \'Keep it simple, keep writing\';\nconsole.log(idea);\n```\n\nUse the controls above to switch between **source / split / preview**.' },
     features: { name: 'Feature Tour.md', content: '# Feature Tour\n\nMDE provides a complete yet focused toolkit for everyday Markdown work.\n\n| Capability | Experience |\n| --- | --- |\n| Workspace | File tree and multiple tabs |\n| Preview | GFM, code blocks, tables, and diagrams |\n| Safety | Atomic saves and recovery snapshots |\n| Sync | Optional cloud sync with conflict handling |\n\n## Design principles\n\n1. Your content always belongs to you\n2. Complex features appear only when needed\n3. Every state remains visible' },
     shortcuts: { name: 'Shortcuts.md', content: '# Common Shortcuts\n\n| Action | Windows / Linux | macOS |\n| --- | --- | --- |\n| Bold | Ctrl + B | ⌘ + B |\n| Italic | Ctrl + I | ⌘ + I |\n| Save | Ctrl + S | ⌘ + S |\n| Search | Ctrl + K | ⌘ + K |\n\n> The demo supports bold, italic, and simulated save shortcuts.\n\n## Today\n\n- [x] Organize sources\n- [ ] Finish the draft\n- [ ] Review and publish' },
-    guide: { name: 'Guide.md', content: '# Guide\n\n## Workspace\n\nBrowse folders and Markdown documents from the sidebar.\n\n## Writing modes\n\nUse the tab bar to switch between source, split, and preview.' },
-    codeSample: { name: 'Code Highlighting.md', content: '# Code Highlighting\n\n```typescript\ninterface Note {\n  title: string;\n  saved: boolean;\n}\n\nconst note: Note = { title: \'MDE\', saved: true };\n```' },
-    tableSample: { name: 'Table Example.md', content: '# Table Example\n\n| Feature | Status |\n| --- | --- |\n| Monaco | Enabled |\n| Shiki | Enabled |' },
-    daily: { name: 'Daily Notes.md', content: '# Daily Notes\n\n## Morning\n\n- [x] Organize workspace\n\n## Afternoon\n\n- [ ] Finish article' },
-    ideas: { name: 'Ideas.md', content: '# Ideas\n\n> A good tool should quietly disappear behind the content.' },
+    appJsx: { ...documents.appJsx }, editorJs: { ...documents.editorJs }, mainRs: { ...documents.mainRs }, mainKt: { ...documents.mainKt },
   };
   const chineseDemoDocuments = Object.fromEntries(Object.entries(documents).map(([key, value]) => [key, { ...value }]));
   let demoDocumentLocale = 'zh';
@@ -259,6 +257,171 @@
   } else {
     revealBlocks.forEach((block) => block.classList.add('is-visible'));
   }
+
+  const storyWorkspacePreview = document.querySelector('#story-workspace-preview');
+  const storySidebarTabs = [...document.querySelectorAll('[data-story-sidebar-view]')];
+  const storySidebarPanels = [...document.querySelectorAll('[data-story-sidebar-panel]')];
+  storySidebarTabs.forEach((tab, index) => tab.addEventListener('click', () => {
+    storyWorkspacePreview.dataset.active = String(index);
+    storySidebarTabs.forEach((item) => {
+      const active = item === tab;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
+    storySidebarPanels.forEach((panel) => panel.classList.toggle('active', panel.dataset.storySidebarPanel === tab.dataset.storySidebarView));
+  }));
+
+  const storyFilePanel = document.querySelector('[data-story-sidebar-panel="files"]');
+  const storyFileHeading = storyFilePanel?.querySelector('.story-sidebar-heading');
+  const storyFileNav = storyFilePanel?.querySelector('.story-sidebar-nav');
+  if (storyFileHeading) storyFileHeading.innerHTML = '<strong>文件</strong><span><button type="button" aria-label="排序"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h12M3 18h6"/></svg></button><button type="button" aria-label="新建文件"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" aria-label="保存"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></button><i></i><button type="button" aria-label="打开文件夹 / 恢复演示"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></button></span>';
+  if (storyFileNav) storyFileNav.innerHTML = '<button type="button" aria-label="后退" class="is-disabled"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button><button type="button" aria-label="前进" class="is-disabled"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button><button type="button" aria-label="上一级" data-story-folder-up><svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button><i></i><button type="button" aria-label="刷新"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><button type="button" aria-label="在资源管理器中打开"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></button><i></i><button type="button" aria-label="关闭文件夹"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  const storyFileTree = document.querySelector('.story-file-tree');
+  const storyFolderBreadcrumb = document.querySelector('.story-sidebar-path');
+  const storyFolderUp = document.querySelector('[data-story-folder-up]');
+  const storyFolderBack = storyFileNav?.querySelector('button[aria-label="后退"]');
+  const storyFolderForward = storyFileNav?.querySelector('button[aria-label="前进"]');
+  const storyFolderContents = {
+    '': { folders: ['src'], files: ['README.md', 'vite.config.js'] },
+    src: { folders: [], files: ['App.jsx', 'editor.js'] },
+  };
+  const storyFolderIcon = '<svg class="story-folder-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="#8d6e63" d="m13.844 7.536-1.288-1.072A2 2 0 0 0 11.276 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H15.124a2 2 0 0 1-1.28-.464"/><rect width="18" height="6" x="14" y="22" fill="#d7ccc8" rx="1"/></svg>';
+  const storyMarkdownIcon = '<svg class="story-md-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="#42a5f5" d="m14 10-4 3.5L6 10H4v12h4v-6l2 2 2-2v6h4V10zm12 6v-6h-4v6h-4l6 8 6-8z"/></svg>';
+  const storyJavascriptIcon = '<svg class="story-code-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="#ffca28" d="M2 2v12h12V2zm6 6h1v4a1.003 1.003 0 0 1-1 1H7a1.003 1.003 0 0 1-1-1v-1h1v1h1zm3 0h2v1h-2v1h1a1.003 1.003 0 0 1 1 1v1a1.003 1.003 0 0 1-1 1h-2v-1h2v-1h-1a1.003 1.003 0 0 1-1-1V9a1.003 1.003 0 0 1 1-1"/></svg>';
+  const storyReactIcon = '<svg class="story-code-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="#00bcd4" d="M16 12c7.444 0 12 2.59 12 4s-4.556 4-12 4-12-2.59-12-4 4.556-4 12-4m0-2c-7.732 0-14 2.686-14 6s6.268 6 14 6 14-2.686 14-6-6.268-6-14-6"/><path fill="#00bcd4" d="M16 14a2 2 0 1 0 2 2 2 2 0 0 0-2-2"/><path fill="#00bcd4" d="M10.458 5.507c2.017 0 5.937 3.177 9.006 8.493 3.722 6.447 3.757 11.687 2.536 12.392a.9.9 0 0 1-.457.1c-2.017 0-5.938-3.176-9.007-8.492C8.814 11.553 8.779 6.313 10 5.608a.9.9 0 0 1 .458-.1m-.001-2A2.87 2.87 0 0 0 9 3.875C6.13 5.532 6.938 12.304 10.804 19c3.284 5.69 7.72 9.493 10.74 9.493A2.87 2.87 0 0 0 23 28.124c2.87-1.656 2.062-8.428-1.804-15.124-3.284-5.69-7.72-9.493-10.74-9.493Z"/><path fill="#00bcd4" d="M21.543 5.507a.9.9 0 0 1 .457.1c1.221.706 1.186 5.946-2.536 12.393-3.07 5.316-6.99 8.493-9.007 8.493a.9.9 0 0 1-.457-.1C8.779 25.686 8.814 20.446 12.536 14c3.07-5.316 6.99-8.493 9.007-8.493m0-2c-3.02 0-7.455 3.804-10.74 9.493C6.939 19.696 6.13 26.468 9 28.124a2.87 2.87 0 0 0 1.457.369c3.02 0 7.455-3.804 10.74-9.493C25.061 12.304 25.87 5.532 23 3.876a2.87 2.87 0 0 0-1.457-.369"/></svg>';
+  const storyFileIcon = (fileName) => fileName.endsWith('.jsx') ? storyReactIcon : fileName.endsWith('.js') ? storyJavascriptIcon : storyMarkdownIcon;
+  const storyRecentList = document.querySelector('.story-recent-list');
+  if (storyRecentList) storyRecentList.innerHTML = [
+    ['README.md', 'mde-workspace'], ['App.jsx', 'src'], ['vite.config.js', 'mde-workspace'],
+  ].map(([file, path]) => `<div><span class="story-recent-icon">${storyFileIcon(file)}</span><span><strong>${file}</strong><small>${path}</small></span></div>`).join('');
+  const storyWorkspaceIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>';
+  const storyChevronIcon = '<svg class="story-breadcrumb-chevron" viewBox="0 0 1024 1024" aria-hidden="true"><path d="M704 514.368a52.864 52.864 0 0 1-15.808 37.888L415.872 819.2a55.296 55.296 0 0 1-73.984-2.752 52.608 52.608 0 0 1-2.816-72.512l233.6-228.928-233.6-228.992a52.736 52.736 0 0 1-17.536-53.056 53.952 53.952 0 0 1 40.192-39.424c19.904-4.672 40.832 1.92 54.144 17.216l272.32 266.88c9.92 9.792 15.616 23.04 15.808 36.8z" fill="currentColor"/></svg>';
+  let storyFolder = '';
+  let storyFolderHistory = [''];
+  let storyFolderHistoryIndex = 0;
+
+  function navigateStoryFolder(nextFolder, record = true) {
+    const target = Object.hasOwn(storyFolderContents, nextFolder) ? nextFolder : '';
+    if (record && target !== storyFolder) {
+      storyFolderHistory = storyFolderHistory.slice(0, storyFolderHistoryIndex + 1);
+      storyFolderHistory.push(target);
+      storyFolderHistoryIndex = storyFolderHistory.length - 1;
+    }
+    renderStoryFolder(target);
+  }
+
+  function renderStoryFolder(nextFolder = '') {
+    if (!storyFileTree || !storyFolderBreadcrumb) return;
+    storyFolder = Object.hasOwn(storyFolderContents, nextFolder) ? nextFolder : '';
+    const content = storyFolderContents[storyFolder];
+    storyFolderBreadcrumb.innerHTML = `${storyWorkspaceIcon}<button type="button" data-story-folder-root>mde-workspace</button>${storyFolder ? `${storyChevronIcon}<button type="button" aria-current="page">${storyFolder}</button>` : ''}`;
+    storyFileTree.innerHTML = [
+      ...content.folders.map((folder) => `<button type="button" data-story-folder="${folder}">${storyFolderIcon}<span>${folder}</span></button>`),
+      ...content.files.map((file, index) => `<button type="button" data-story-file class="${index === 0 ? 'active' : ''}">${storyFileIcon(file)}<span>${localize(file)}</span></button>`),
+    ].join('');
+    storyFolderBreadcrumb.querySelector('[data-story-folder-root]')?.addEventListener('click', () => navigateStoryFolder(''));
+    storyFileTree.querySelectorAll('[data-story-folder]').forEach((button) => button.addEventListener('click', () => navigateStoryFolder(button.dataset.storyFolder)));
+    storyFileTree.querySelectorAll('[data-story-file]').forEach((button) => button.addEventListener('click', () => {
+      storyFileTree.querySelectorAll('[data-story-file]').forEach((item) => item.classList.toggle('active', item === button));
+    }));
+    if (storyFolderUp) {
+      storyFolderUp.classList.toggle('is-disabled', !storyFolder);
+      storyFolderUp.setAttribute('aria-disabled', String(!storyFolder));
+      storyFolderUp.tabIndex = storyFolder ? 0 : -1;
+    }
+    storyFolderBack?.classList.toggle('is-disabled', storyFolderHistoryIndex === 0);
+    storyFolderBack?.setAttribute('aria-disabled', String(storyFolderHistoryIndex === 0));
+    storyFolderForward?.classList.toggle('is-disabled', storyFolderHistoryIndex >= storyFolderHistory.length - 1);
+    storyFolderForward?.setAttribute('aria-disabled', String(storyFolderHistoryIndex >= storyFolderHistory.length - 1));
+  }
+  storyFolderBack?.addEventListener('click', () => {
+    if (storyFolderHistoryIndex === 0) return;
+    storyFolderHistoryIndex -= 1;
+    navigateStoryFolder(storyFolderHistory[storyFolderHistoryIndex], false);
+  });
+  storyFolderForward?.addEventListener('click', () => {
+    if (storyFolderHistoryIndex >= storyFolderHistory.length - 1) return;
+    storyFolderHistoryIndex += 1;
+    navigateStoryFolder(storyFolderHistory[storyFolderHistoryIndex], false);
+  });
+  storyFolderUp?.addEventListener('click', () => { if (storyFolder) navigateStoryFolder(''); });
+  renderStoryFolder();
+
+  const runtimeModules = [...document.querySelectorAll('[data-runtime-module]')];
+  runtimeModules.forEach((moduleButton) => moduleButton.addEventListener('click', () => {
+    runtimeModules.forEach((item) => {
+      const active = item === moduleButton;
+      item.classList.toggle('active', active);
+      const status = item.querySelector('em');
+      if (status) status.textContent = localize(active ? '已载入' : '按需');
+    });
+  }));
+
+  const storyFormatToolbar = document.querySelector('.story-format-toolbar');
+  if (storyFormatToolbar) storyFormatToolbar.innerHTML = '<span class="story-format-toolbar__grip"><svg viewBox="0 0 16 24"><circle cx="5" cy="6" r="1.5"/><circle cx="11" cy="6" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="11" cy="12" r="1.5"/><circle cx="5" cy="18" r="1.5"/><circle cx="11" cy="18" r="1.5"/></svg></span><span class="story-format-sep" data-story-format-action></span><button type="button" data-story-format-action aria-label="粗体"><b>B</b></button><button type="button" data-story-format-action aria-label="斜体"><i>I</i></button><button type="button" data-story-format-action aria-label="删除线"><s>S</s></button><span class="story-format-sep" data-story-format-action></span><button type="button" data-story-format-action aria-label="标题"><b>H</b></button><button type="button" data-story-format-action aria-label="引用"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 .001 0 1.003 1 1.003z"/></svg></button><button type="button" data-story-format-action aria-label="表格"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></button><button type="button" data-story-format-action aria-label="代码块"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></button><span class="story-format-sep" data-story-format-action></span><button type="button" data-story-format-collapse aria-label="收起工具栏"><svg viewBox="0 0 24 24"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>';
+  storyFormatToolbar?.querySelectorAll('button[data-story-format-action]').forEach((button) => button.addEventListener('click', () => button.classList.toggle('active')));
+  storyFormatToolbar?.querySelector('[data-story-format-collapse]')?.addEventListener('click', (event) => {
+    const collapsed = storyFormatToolbar.classList.toggle('is-collapsed');
+    event.currentTarget.setAttribute('aria-expanded', String(!collapsed));
+  });
+
+  const storyEditorPreview = document.querySelector('#story-editor-preview');
+  const storyEditorTabs = [...document.querySelectorAll('[data-story-editor-mode]')];
+  const storyEditorPanels = [...document.querySelectorAll('[data-story-editor-panel]')];
+  storyEditorTabs.forEach((tab) => tab.addEventListener('click', () => {
+    storyEditorPreview.dataset.editorMode = tab.dataset.storyEditorMode;
+    storyEditorTabs.forEach((item) => {
+      const active = item === tab;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
+    storyEditorPanels.forEach((panel) => panel.classList.toggle('active', panel.dataset.storyEditorPanel === tab.dataset.storyEditorMode));
+  }));
+
+  const storySplit = document.querySelector('.split-mini');
+  const storySplitSource = storySplit?.querySelector('.source-mini');
+  if (storySplit && storySplitSource && !storySplit.querySelector('.split-mini__divider')) {
+    storySplitSource.insertAdjacentHTML('afterend', '<button class="split-mini__divider" type="button" aria-label="拖动调整分栏"><i></i></button>');
+  }
+  const storySplitDivider = storySplit?.querySelector('.split-mini__divider');
+  const setStorySplit = (percentage) => storySplit?.style.setProperty('--story-split', `${Math.min(72, Math.max(28, percentage))}%`);
+  storySplitDivider?.addEventListener('pointerdown', (event) => {
+    storySplitDivider.setPointerCapture(event.pointerId);
+    storySplitDivider.classList.add('dragging');
+  });
+  storySplitDivider?.addEventListener('pointermove', (event) => {
+    if (!storySplitDivider.hasPointerCapture(event.pointerId)) return;
+    const bounds = storySplit.getBoundingClientRect();
+    setStorySplit(((event.clientX - bounds.left) / bounds.width) * 100);
+  });
+  const stopStorySplitDrag = (event) => {
+    if (storySplitDivider?.hasPointerCapture(event.pointerId)) storySplitDivider.releasePointerCapture(event.pointerId);
+    storySplitDivider?.classList.remove('dragging');
+  };
+  storySplitDivider?.addEventListener('pointerup', stopStorySplitDrag);
+  storySplitDivider?.addEventListener('pointercancel', stopStorySplitDrag);
+  storySplitDivider?.addEventListener('keydown', (event) => {
+    if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    const current = Number.parseFloat(storySplit.style.getPropertyValue('--story-split')) || 50;
+    setStorySplit(current + (event.key === 'ArrowRight' ? 4 : -4));
+  });
+
+  const storyOutlineList = document.querySelector('.story-outline-list');
+  const storyRootToggle = document.querySelector('[data-story-outline-toggle=""]');
+  const storyWorkspaceToggle = document.querySelector('[data-story-outline-toggle="workspace"]');
+  const setStoryOutlineCollapsed = (scope, collapsed) => {
+    const root = scope === 'root';
+    storyOutlineList.classList.toggle(root ? 'root-collapsed' : 'workspace-collapsed', collapsed);
+    (root ? storyRootToggle : storyWorkspaceToggle)?.classList.toggle('collapsed', collapsed);
+  };
+  storyRootToggle?.addEventListener('click', () => setStoryOutlineCollapsed('root', !storyOutlineList.classList.contains('root-collapsed')));
+  storyWorkspaceToggle?.addEventListener('click', () => setStoryOutlineCollapsed('workspace', !storyOutlineList.classList.contains('workspace-collapsed')));
+  document.querySelector('[data-story-outline-action="collapse"]')?.addEventListener('click', () => setStoryOutlineCollapsed('root', true));
+  document.querySelector('[data-story-outline-action="expand"]')?.addEventListener('click', () => {
+    setStoryOutlineCollapsed('root', false);
+    setStoryOutlineCollapsed('workspace', false);
+  });
   let currentDocument = 'welcome';
   let untitledCount = 1;
   let isCreatingFile = false;
@@ -266,8 +429,10 @@
   let folderPath = [];
   let folderHistory = [[]];
   let folderHistoryIndex = 0;
+  let breadcrumbExpanded = false;
   const collapsedOutlineLines = new Set();
   let viewMode = 'split';
+  let markdownViewMode = 'split';
   let renderTimer = 0;
   let saveTimer = 0;
   let toastTimer = 0;
@@ -281,9 +446,16 @@
 
   function syncResponsiveDemo(isMobile) {
     setSidebarHidden(isMobile);
+    frame.classList.toggle('mobile-layout', isMobile);
+    input.setAttribute('wrap', isMobile ? 'soft' : 'off');
     splitToggle.classList.toggle('is-disabled', isMobile);
     splitToggle.setAttribute('aria-disabled', String(isMobile));
-    if (isMobile && viewMode === 'split') updateViewMode('edit');
+    if (isMobile) {
+      formatToolbar.classList.remove('ft--show');
+      document.querySelector('#toolbar-toggle').classList.remove('active');
+    }
+    if (isMobile && viewMode === 'split') updateViewMode('edit', false);
+    if (!isMobile && documentLanguage() === 'markdown' && viewMode !== markdownViewMode) updateViewMode(markdownViewMode, false);
   }
 
   const escapeHtml = (value) => String(value)
@@ -293,14 +465,44 @@
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
 
-  const markdownFileIcon = '<span class="file-icon"><svg viewBox="0 0 32 32"><path d="m14 10-4 3.5L6 10H4v12h4v-6l2 2 2-2v6h4V10zm12 6v-6h-4v6h-4l6 8 6-8z"/></svg></span>';
+  const markdownFileSvg = '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#42a5f5" d="m14 10-4 3.5L6 10H4v12h4v-6l2 2 2-2v6h4V10zm12 6v-6h-4v6h-4l6 8 6-8z"/></svg>';
+  const javascriptFileSvg = '<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="#ffca28" d="M2 2v12h12V2zm6 6h1v4a1.003 1.003 0 0 1-1 1H7a1.003 1.003 0 0 1-1-1v-1h1v1h1zm3 0h2v1h-2v1h1a1.003 1.003 0 0 1 1 1v1a1.003 1.003 0 0 1-1 1h-2v-1h2v-1h-1a1.003 1.003 0 0 1-1-1V9a1.003 1.003 0 0 1 1-1"/></svg>';
+  const kotlinFileSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="mde-kotlin-gradient" x1="1.725" x2="22.185" y1="22.67" y2="1.982" gradientTransform="translate(1.306 1.129)scale(.89324)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7c4dff"/><stop offset=".5" stop-color="#d500f9"/><stop offset="1" stop-color="#ef5350"/></linearGradient></defs><path fill="url(#mde-kotlin-gradient)" d="M2.975 2.976v18.048h18.05v-.03l-4.478-4.511-4.48-4.515 4.48-4.515 4.443-4.477z"/></svg>';
+  const rustFileSvg = '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#ff7043" d="m30 12-4-2V6h-4l-2-4-4 2-4-2-2 4H6v4l-4 2 2 4-2 4 4 2v4h4l2 4 4-2 4 2 2-4h4v-4l4-2-2-4ZM6 16a9.9 9.9 0 0 1 .842-4H10v8H6.842A9.9 9.9 0 0 1 6 16m10 10a9.98 9.98 0 0 1-7.978-4H16v-2h-2v-2h4c.819.819.297 2.308 1.179 3.37a1.89 1.89 0 0 0 1.46.63h3.34A9.98 9.98 0 0 1 16 26m-2-12v-2h4a1 1 0 0 1 0 2Zm11.158 6H24a2.006 2.006 0 0 1-2-2 2 2 0 0 0-2-2 3 3 0 0 0 3-3q0-.08-.004-.161A3.115 3.115 0 0 0 19.83 10H8.022a9.986 9.986 0 0 1 17.136 10"/></svg>';
+  const reactFileSvg = '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#00bcd4" d="M16 12c7.444 0 12 2.59 12 4s-4.556 4-12 4-12-2.59-12-4 4.556-4 12-4m0-2c-7.732 0-14 2.686-14 6s6.268 6 14 6 14-2.686 14-6-6.268-6-14-6"/><path fill="#00bcd4" d="M16 14a2 2 0 1 0 2 2 2 2 0 0 0-2-2"/><path fill="#00bcd4" d="M10.458 5.507c2.017 0 5.937 3.177 9.006 8.493 3.722 6.447 3.757 11.687 2.536 12.392a.9.9 0 0 1-.457.1c-2.017 0-5.938-3.176-9.007-8.492C8.814 11.553 8.779 6.313 10 5.608a.9.9 0 0 1 .458-.1m-.001-2A2.87 2.87 0 0 0 9 3.875C6.13 5.532 6.938 12.304 10.804 19c3.284 5.69 7.72 9.493 10.74 9.493A2.87 2.87 0 0 0 23 28.124c2.87-1.656 2.062-8.428-1.804-15.124-3.284-5.69-7.72-9.493-10.74-9.493Z"/><path fill="#00bcd4" d="M21.543 5.507a.9.9 0 0 1 .457.1c1.221.706 1.186 5.946-2.536 12.393-3.07 5.316-6.99 8.493-9.007 8.493a.9.9 0 0 1-.457-.1C8.779 25.686 8.814 20.446 12.536 14c3.07-5.316 6.99-8.493 9.007-8.493m0-2c-3.02 0-7.455 3.804-10.74 9.493C6.939 19.696 6.13 26.468 9 28.124a2.87 2.87 0 0 0 1.457.369c3.02 0 7.455-3.804 10.74-9.493C25.061 12.304 25.87 5.532 23 3.876a2.87 2.87 0 0 0-1.457-.369"/></svg>';
+  function fileIconForName(fileName, wrapperClass = 'file-icon') {
+    const lowerName = String(fileName).toLowerCase();
+    const svg = lowerName.endsWith('.jsx') || lowerName.endsWith('.tsx') ? reactFileSvg
+      : lowerName.endsWith('.js') || lowerName.endsWith('.mjs') || lowerName.endsWith('.cjs') ? javascriptFileSvg
+        : lowerName.endsWith('.kt') || lowerName.endsWith('.kts') ? kotlinFileSvg
+          : lowerName.endsWith('.rs') ? rustFileSvg : markdownFileSvg;
+    return `<span class="${wrapperClass}">${svg}</span>`;
+  }
+  const markdownFileIcon = fileIconForName('README.md');
   const folderFileIcon = '<span class="folder-icon"><svg viewBox="0 0 32 32"><path class="folder-icon__body" d="m13.844 7.536-1.288-1.072A2 2 0 0 0 11.276 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H15.124a2 2 0 0 1-1.28-.464"/><rect class="folder-icon__label" width="18" height="6" x="14" y="22" rx="1"/></svg></span>';
   const breadcrumbChevron = '<svg class="breadcrumb-chevron" viewBox="0 0 1024 1024" aria-hidden="true"><path d="M704 514.368a52.864 52.864 0 0 1-15.808 37.888L415.872 819.2a55.296 55.296 0 0 1-73.984-2.752 52.608 52.608 0 0 1-2.816-72.512l233.6-228.928-233.6-228.992a52.736 52.736 0 0 1-17.536-53.056 53.952 53.952 0 0 1 40.192-39.424c19.904-4.672 40.832 1.92 54.144 17.216l272.32 266.88c9.92 9.792 15.616 23.04 15.808 36.8z" fill="currentColor"/></svg>';
+  const demoRecentList = document.querySelector('.recent-list');
+  if (demoRecentList) demoRecentList.innerHTML = [
+    ['appJsx', 'src'], ['mainRs', 'src-tauri/src'], ['mainKt', 'src-tauri/gen/android/app/src/main/java'],
+  ].map(([key, path]) => `<button class="recent-item" type="button" data-document="${key}">${fileIconForName(documents[key].name, 'recent-icon')}<span><strong>${escapeHtml(documents[key].name)}</strong><small>${path}</small></span></button>`).join('');
 
-  const codeKeywords = new Set(['as', 'async', 'await', 'break', 'case', 'catch', 'class', 'const', 'continue', 'default', 'delete', 'do', 'else', 'export', 'extends', 'finally', 'for', 'from', 'function', 'if', 'import', 'in', 'instanceof', 'let', 'new', 'of', 'return', 'static', 'switch', 'throw', 'try', 'typeof', 'var', 'void', 'while', 'with', 'yield']);
+  const codeKeywordsByLanguage = {
+    javascript: new Set(['as', 'async', 'await', 'break', 'case', 'catch', 'class', 'const', 'continue', 'default', 'delete', 'do', 'else', 'export', 'extends', 'finally', 'for', 'from', 'function', 'if', 'import', 'in', 'instanceof', 'let', 'new', 'of', 'return', 'static', 'switch', 'throw', 'try', 'typeof', 'var', 'void', 'while', 'with', 'yield']),
+    kotlin: new Set(['as', 'break', 'class', 'continue', 'do', 'else', 'false', 'for', 'fun', 'if', 'import', 'in', 'interface', 'is', 'null', 'object', 'override', 'package', 'return', 'super', 'this', 'throw', 'true', 'try', 'typealias', 'val', 'var', 'when', 'while']),
+    rust: new Set(['as', 'async', 'await', 'break', 'const', 'continue', 'crate', 'dyn', 'else', 'enum', 'extern', 'false', 'fn', 'for', 'if', 'impl', 'in', 'let', 'loop', 'match', 'mod', 'move', 'mut', 'pub', 'ref', 'return', 'self', 'Self', 'static', 'struct', 'super', 'trait', 'true', 'type', 'unsafe', 'use', 'where', 'while']),
+  };
   const codeConstants = new Set(['true', 'false', 'null', 'undefined', 'NaN', 'Infinity', 'this']);
 
-  function highlightCode(source) {
+  function documentLanguage(key = currentDocument) {
+    const name = documents[key]?.name?.toLowerCase() || '';
+    if (/\.jsx?$/.test(name) || /\.mjs$/.test(name) || /\.cjs$/.test(name)) return 'javascript';
+    if (/\.kts?$/.test(name)) return 'kotlin';
+    if (name.endsWith('.rs')) return 'rust';
+    return 'markdown';
+  }
+
+  function highlightCode(source, language = 'javascript') {
+    const codeKeywords = codeKeywordsByLanguage[language] || codeKeywordsByLanguage.javascript;
     const matcher = /(["'`])(?:\\.|(?!\1).)*\1|\/\/.*|\/\*[\s\S]*?\*\/|\b[A-Za-z_$][\w$]*\b|\b(?:0x[\da-f]+|\d+(?:\.\d+)?)\b|(?:=>|===?|!==?|\+\+|--|&&|\|\||[+*/%<>?:~-])/gi;
     let html = '';
     let cursor = 0;
@@ -338,14 +540,14 @@
   }
 
   function highlightMarkdownSource(source) {
-    let fenced = false;
+    let fencedLanguage = '';
     return source.replace(/\r\n?/g, '\n').split('\n').map((line) => {
       const fence = line.match(/^(\s*```)(.*)$/);
       if (fence) {
-        fenced = !fenced;
+        fencedLanguage = fencedLanguage ? '' : (fence[2].trim().toLowerCase() || 'javascript');
         return `<span class="tok-markup">${escapeHtml(fence[1])}</span><span class="tok-name">${escapeHtml(fence[2])}</span>`;
       }
-      if (fenced) return highlightCode(line);
+      if (fencedLanguage) return highlightCode(line, /^(?:kt|kotlin)$/.test(fencedLanguage) ? 'kotlin' : /^(?:rs|rust)$/.test(fencedLanguage) ? 'rust' : 'javascript');
       const heading = line.match(/^(\s*)(#{1,6}\s+)(.*)$/);
       if (heading) return `${escapeHtml(heading[1])}<span class="tok-markup">${escapeHtml(heading[2])}</span><span class="tok-heading">${highlightMarkdownInline(heading[3])}</span>`;
       const quote = line.match(/^(\s*)(>\s?)(.*)$/);
@@ -386,6 +588,11 @@
   const cells = (line) => line.trim().replace(/^\||\|$/g, '').split('|').map((cell) => cell.trim());
 
   function renderMarkdown(source) {
+    const activeLanguage = documentLanguage();
+    if (activeLanguage !== 'markdown') {
+      preview.innerHTML = `<pre class="shiki shiki--document" data-language="${activeLanguage}"><code>${highlightCode(source, activeLanguage)}</code></pre>`;
+      return;
+    }
     const lines = source.replace(/\r\n?/g, '\n').split('\n');
     const output = [];
     let index = 0;
@@ -401,7 +608,8 @@
         while (index < lines.length && !/^\s*```/.test(lines[index])) code.push(lines[index++]);
         if (index < lines.length) index += 1;
         const language = fence[1] || 'text';
-        const highlighted = /^(?:js|jsx|ts|tsx|javascript|typescript|json)$/i.test(language) ? highlightCode(code.join('\n')) : escapeHtml(code.join('\n'));
+        const normalizedLanguage = /^(?:kt|kotlin)$/i.test(language) ? 'kotlin' : /^(?:rs|rust)$/i.test(language) ? 'rust' : 'javascript';
+        const highlighted = /^(?:js|jsx|ts|tsx|javascript|typescript|json|kt|kotlin|rs|rust)$/i.test(language) ? highlightCode(code.join('\n'), normalizedLanguage) : escapeHtml(code.join('\n'));
         output.push(`<pre class="shiki" data-language="${escapeHtml(language)}"><code>${highlighted}</code></pre>`);
         continue;
       }
@@ -476,7 +684,8 @@
 
   function updateSourceLayer() {
     const lines = input.value.replace(/\r\n?/g, '\n').split('\n');
-    sourceHighlight.innerHTML = `${highlightMarkdownSource(input.value)}\n`;
+    const activeLanguage = documentLanguage();
+    sourceHighlight.innerHTML = `${activeLanguage === 'markdown' ? highlightMarkdownSource(input.value) : highlightCode(input.value, activeLanguage)}\n`;
     lineNumbers.innerHTML = lines.map((_, index) => `<span>${index + 1}</span>`).join('');
     sourceHighlight.scrollTop = input.scrollTop;
     sourceHighlight.scrollLeft = input.scrollLeft;
@@ -498,12 +707,22 @@
       if (entry.type === 'folder') return `<button class="file-item file-item--folder" type="button" data-folder="${escapeHtml(name)}">${folderFileIcon}<span>${escapeHtml(name)}</span></button>`;
       const document = documents[entry.key];
       const active = entry.key === currentDocument ? ' active' : '';
-      return `<button class="file-item${active}" type="button" data-document="${entry.key}">${markdownFileIcon}<span>${escapeHtml(localize(document.name))}</span><i class="file-delete">×</i></button>`;
+      return `<button class="file-item${active}" type="button" data-document="${entry.key}">${fileIconForName(document.name)}<span>${escapeHtml(localize(document.name))}</span><i class="file-delete">×</i></button>`;
     }).join('') + (isCreatingFile
       ? `<div class="file-item file-item--creating">${markdownFileIcon}<input class="file-item-input" value="${escapeHtml(creatingFileName)}" placeholder="${localize('输入文件名并回车')}" aria-label="${localize('新文件名')}"></div>`
       : '');
     const breadcrumbParts = ['mde-workspace', ...folderPath];
-    document.querySelector('#file-breadcrumb-path').innerHTML = breadcrumbParts.map((part, index) => `<span class="file-breadcrumb__item">${index > 0 ? breadcrumbChevron : ''}<span class="file-breadcrumb__part" data-breadcrumb-index="${index}">${escapeHtml(part)}</span></span>`).join('');
+    const breadcrumbPath = document.querySelector('#file-breadcrumb-path');
+    const shouldCollapseBreadcrumb = breadcrumbParts.length > 3 && !breadcrumbExpanded;
+    const breadcrumbPart = (part, index, withChevron = index > 0) => `<span class="file-breadcrumb__item">${withChevron ? breadcrumbChevron : ''}<span class="file-breadcrumb__part" data-breadcrumb-index="${index}">${escapeHtml(part)}</span></span>`;
+    breadcrumbPath.innerHTML = shouldCollapseBreadcrumb
+      ? `${breadcrumbPart(breadcrumbParts[0], 0, false)}<span class="file-breadcrumb__item">${breadcrumbChevron}<button class="file-breadcrumb__ellipsis" type="button" data-breadcrumb-expand aria-label="${localize('展开完整路径')}">…</button></span>${breadcrumbPart(breadcrumbParts.at(-1), breadcrumbParts.length - 1)}`
+      : breadcrumbParts.map((part, index) => breadcrumbPart(part, index)).join('');
+    const breadcrumb = breadcrumbPath.closest('.file-breadcrumb');
+    breadcrumb.querySelector('.file-breadcrumb__collapse')?.remove();
+    if (breadcrumbParts.length > 3 && breadcrumbExpanded) {
+      breadcrumb.insertAdjacentHTML('beforeend', `<button class="file-breadcrumb__collapse" type="button" data-breadcrumb-collapse aria-label="${localize('折叠路径')}" title="${localize('折叠路径')}"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M704 514.368a52.864 52.864 0 0 1-15.808 37.888L415.872 819.2a55.296 55.296 0 0 1-73.984-2.752 52.608 52.608 0 0 1-2.816-72.512l233.6-228.928-233.6-228.992a52.736 52.736 0 0 1-17.536-53.056 53.952 53.952 0 0 1 40.192-39.424c19.904-4.672 40.832 1.92 54.144 17.216l272.32 266.88c9.92 9.792 15.616 23.04 15.808 36.8z" fill="currentColor"/></svg></button>`);
+    }
     const back = document.querySelector('#file-nav-back');
     const forward = document.querySelector('#file-nav-forward');
     const up = document.querySelector('#file-nav-up');
@@ -525,6 +744,7 @@
   function navigateFolder(nextPath, record = true) {
     isCreatingFile = false;
     creatingFileName = '';
+    breadcrumbExpanded = false;
     folderPath = [...nextPath];
     if (record) {
       folderHistory = folderHistory.slice(0, folderHistoryIndex + 1);
@@ -575,11 +795,16 @@
 
   function ensureTab(key) {
     let tab = document.querySelector(`.demo-tab[data-tab-document="${key}"]`);
-    if (tab) return tab;
+    if (tab) {
+      tab.querySelector('.file-icon')?.replaceWith(document.createRange().createContextualFragment(fileIconForName(documents[key].name)));
+      const tabName = tab.querySelector('.tab-name');
+      if (tabName) tabName.textContent = localize(documents[key].name);
+      return tab;
+    }
     tab = document.createElement('div');
     tab.className = 'demo-tab';
     tab.dataset.tabDocument = key;
-    tab.innerHTML = `${markdownFileIcon}<span class="tab-name">${escapeHtml(localize(documents[key].name))}</span><i></i><button class="tab-close" type="button" title="${localize('关闭标签')}"><svg viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></svg></button>`;
+    tab.innerHTML = `${fileIconForName(documents[key].name)}<span class="tab-name">${escapeHtml(localize(documents[key].name))}</span><i></i><button class="tab-close" type="button" title="${localize('关闭标签')}"><svg viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></svg></button>`;
     document.querySelector('.tabbar-new').before(tab);
     requestAnimationFrame(updateTabScrollButtons);
     return tab;
@@ -654,6 +879,15 @@
 
   function loadDocument(key) {
     currentDocument = key;
+    const isMarkdown = documentLanguage(key) === 'markdown';
+    frame.classList.toggle('code-document', !isMarkdown);
+    if (isMarkdown) {
+      updateViewMode(mobileMedia.matches && markdownViewMode === 'split' ? 'edit' : markdownViewMode, false);
+    } else {
+      formatToolbar.classList.remove('ft--show');
+      document.querySelector('#toolbar-toggle').classList.remove('active');
+      updateViewMode('edit', false);
+    }
     const tab = ensureTab(key);
     input.value = documents[key].content;
     document.querySelectorAll('.demo-tab').forEach((item) => item.classList.toggle('active', item === tab));
@@ -783,14 +1017,23 @@
     ));
   }
 
-  function updateViewMode(nextMode) {
+  function setControlTooltip(element, label) {
+    if (!element) return;
+    element.dataset.tooltipSource = label;
+    element.removeAttribute('title');
+  }
+
+  function updateViewMode(nextMode, rememberMarkdownMode = true) {
+    if (documentLanguage() !== 'markdown') nextMode = 'edit';
+    if (mobileMedia.matches && nextMode === 'split') nextMode = 'edit';
     viewMode = nextMode;
+    if (rememberMarkdownMode && documentLanguage() === 'markdown') markdownViewMode = nextMode;
     workspace.classList.remove('mode-edit', 'mode-split', 'mode-preview');
     workspace.classList.add(`mode-${viewMode}`);
     splitToggle.classList.toggle('active', viewMode === 'split');
     modeToggle.classList.toggle('active', viewMode === 'preview');
     demoFooter.classList.toggle('previewing', viewMode === 'preview');
-    modeToggle.title = localize(viewMode === 'preview' ? '返回源码编辑' : '切换到预览');
+    setControlTooltip(modeToggle, localize(viewMode === 'preview' ? '返回源码编辑' : '切换到预览'));
   }
 
   input.addEventListener('input', () => { markEditing(); queueRender(); });
@@ -820,7 +1063,17 @@
       if (mobileMedia.matches) setSidebarHidden(true);
     }
   });
-  document.querySelector('#file-breadcrumb-path').addEventListener('click', (event) => {
+  document.querySelector('.file-breadcrumb').addEventListener('click', (event) => {
+    if (event.target.closest('[data-breadcrumb-expand]')) {
+      breadcrumbExpanded = true;
+      renderFileTree();
+      return;
+    }
+    if (event.target.closest('[data-breadcrumb-collapse]')) {
+      breadcrumbExpanded = false;
+      renderFileTree();
+      return;
+    }
     const part = event.target.closest('[data-breadcrumb-index]');
     if (!part) return;
     const index = Number(part.dataset.breadcrumbIndex);
@@ -867,6 +1120,7 @@
   });
   modeToggle.addEventListener('click', () => updateViewMode(viewMode === 'preview' ? 'edit' : 'preview'));
   document.querySelector('#toolbar-toggle').addEventListener('click', (event) => {
+    if (mobileMedia.matches || documentLanguage() !== 'markdown') return;
     const visible = formatToolbar.classList.toggle('ft--show');
     event.currentTarget.classList.toggle('active', visible);
   });
@@ -924,6 +1178,62 @@
   window.addEventListener('pointerup', stopToolbarDrag);
   window.addEventListener('pointercancel', stopToolbarDrag);
   document.querySelectorAll('.format-toolbar button[data-format]').forEach((button) => button.addEventListener('click', () => applyFormat(button.dataset.format)));
+
+  // Reproduce MDE's compact Ant Design tooltip instead of relying on native browser titles.
+  const tooltip = document.createElement('div');
+  tooltip.className = 'mde-tooltip';
+  tooltip.setAttribute('role', 'tooltip');
+  tooltip.innerHTML = '<span></span><i></i>';
+  document.body.appendChild(tooltip);
+  let tooltipTarget = null;
+  let tooltipTimer = 0;
+  const tooltipSelector = '[title], button[aria-label], a[aria-label], [data-tooltip-source]';
+  const tooltipText = (target) => {
+    const source = target.dataset.tooltipSource || target.getAttribute('title') || target.getAttribute('aria-label');
+    return source ? localize(source) : '';
+  };
+  function hideTooltip() {
+    window.clearTimeout(tooltipTimer);
+    tooltip.classList.remove('visible');
+    tooltipTarget = null;
+  }
+  function showTooltip(target) {
+    const label = tooltipText(target);
+    if (!label || target.disabled) return;
+    if (target.hasAttribute('title')) {
+      target.dataset.tooltipSource = target.getAttribute('title');
+      target.removeAttribute('title');
+    }
+    tooltipTarget = target;
+    window.clearTimeout(tooltipTimer);
+    tooltipTimer = window.setTimeout(() => {
+      if (tooltipTarget !== target || !target.isConnected) return;
+      tooltip.querySelector('span').textContent = label;
+      tooltip.classList.remove('visible', 'below');
+      const rect = target.getBoundingClientRect();
+      tooltip.style.left = `${Math.min(innerWidth - 8, Math.max(8, rect.left + rect.width / 2))}px`;
+      tooltip.style.top = `${rect.top}px`;
+      if (rect.top < 44) {
+        tooltip.classList.add('below');
+        tooltip.style.top = `${rect.bottom}px`;
+      }
+      tooltip.classList.add('visible');
+    }, 300);
+  }
+  document.addEventListener('pointerover', (event) => {
+    const target = event.target.closest?.(tooltipSelector);
+    if (target && target !== tooltipTarget) showTooltip(target);
+  });
+  document.addEventListener('pointerout', (event) => {
+    if (tooltipTarget && !tooltipTarget.contains(event.relatedTarget)) hideTooltip();
+  });
+  document.addEventListener('focusin', (event) => {
+    const target = event.target.closest?.(tooltipSelector);
+    if (target) showTooltip(target);
+  });
+  document.addEventListener('focusout', hideTooltip);
+  window.addEventListener('scroll', hideTooltip, { passive: true, capture: true });
+
   document.querySelectorAll('.segment button').forEach((button, index) => button.addEventListener('click', () => {
     document.querySelectorAll('.segment button').forEach((item) => item.classList.remove('active'));
     button.classList.add('active');
@@ -1010,6 +1320,6 @@
   syncResponsiveDemo(mobileMedia.matches);
   syncDemoDocumentLocale(currentLocale);
   translateDom();
-  updateViewMode(mobileMedia.matches ? 'edit' : 'split');
+  updateViewMode(mobileMedia.matches ? 'edit' : 'split', !mobileMedia.matches);
   loadDocument('welcome');
 })();
