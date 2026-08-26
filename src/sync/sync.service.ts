@@ -23,6 +23,7 @@ import {
  * 视为重复记录，导致从第二次插入开始就触发 E11000。
  */
 const LEGACY_DOC_INDEXES = ['userId_1_relativePath_1'];
+const CURRENT_SYNC_PROTOCOL_VERSION = 3;
 
 /**
  * 同步核心服务。
@@ -477,7 +478,7 @@ export class SyncService implements OnModuleInit {
     await this.configModel.updateOne(
       { userId: userObjectId },
       {
-        $set: { protocolVersion: 2 },
+        $set: { protocolVersion: CURRENT_SYNC_PROTOCOL_VERSION },
         $unset: {
           recentFiles: '',
           bookmarks: '',
@@ -490,16 +491,27 @@ export class SyncService implements OnModuleInit {
 
   /** 读取用户同步配置，不存在时自动初始化默认配置。 */
   async getConfig(userId: string) {
+    const userObjectId = this.userObjectId(userId);
     let config = await this.configModel
-      .findOne({ userId: this.userObjectId(userId) })
+      .findOne({ userId: userObjectId })
       .lean<Record<string, any>>();
     if (!config) {
       const created = await this.configModel.create({
-        userId: this.userObjectId(userId),
-        protocolVersion: 2,
+        userId: userObjectId,
+        protocolVersion: CURRENT_SYNC_PROTOCOL_VERSION,
         updatedAtMs: 0,
       });
       config = created.toObject();
+    } else if (Number(config.protocolVersion || 0) < CURRENT_SYNC_PROTOCOL_VERSION) {
+      // 协议升级只迁移配置版本，绝不能由客户端或服务端清空用户文档。
+      await this.configModel.updateOne(
+        { userId: userObjectId },
+        { $set: { protocolVersion: CURRENT_SYNC_PROTOCOL_VERSION } },
+      );
+      config = {
+        ...config,
+        protocolVersion: CURRENT_SYNC_PROTOCOL_VERSION,
+      };
     }
     const { _id, userId: uid, __v, ...rest } = config;
     return this.pickConfigFields(rest);
@@ -509,7 +521,7 @@ export class SyncService implements OnModuleInit {
   async updateConfig(userId: string, data: UpdateConfigDto) {
     const sanitized = this.pickConfigFields({
       ...data,
-      protocolVersion: 2,
+      protocolVersion: CURRENT_SYNC_PROTOCOL_VERSION,
     });
     await this.configModel.updateOne(
       { userId: this.userObjectId(userId) },

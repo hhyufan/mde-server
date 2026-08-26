@@ -25,12 +25,27 @@ export class UsersService {
   }
 
   async addRefreshToken(userId: string, tokenHash: string, expiresAt: Date): Promise<void> {
+    const createdAt = new Date();
     await this.userModel.updateOne(
       { _id: userId },
-      {
-        $pull: { refreshTokens: { expiresAt: { $lte: new Date() } } },
-        $push: { refreshTokens: { tokenHash, expiresAt, createdAt: new Date() } },
-      },
+      [
+        {
+          $set: {
+            refreshTokens: {
+              $concatArrays: [
+                {
+                  $filter: {
+                    input: { $ifNull: ['$refreshTokens', []] },
+                    as: 'token',
+                    cond: { $gt: ['$$token.expiresAt', '$$NOW'] },
+                  },
+                },
+                [{ tokenHash, expiresAt, createdAt }],
+              ],
+            },
+          },
+        },
+      ],
     );
   }
 
@@ -40,12 +55,32 @@ export class UsersService {
     newHash: string,
     expiresAt: Date,
   ): Promise<boolean> {
+    const createdAt = new Date();
     const result = await this.userModel.updateOne(
       { _id: userId, 'refreshTokens.tokenHash': oldHash },
-      {
-        $pull: { refreshTokens: { tokenHash: oldHash } },
-        $push: { refreshTokens: { tokenHash: newHash, expiresAt, createdAt: new Date() } },
-      },
+      [
+        {
+          $set: {
+            refreshTokens: {
+              $concatArrays: [
+                {
+                  $filter: {
+                    input: { $ifNull: ['$refreshTokens', []] },
+                    as: 'token',
+                    cond: {
+                      $and: [
+                        { $ne: ['$$token.tokenHash', oldHash] },
+                        { $gt: ['$$token.expiresAt', '$$NOW'] },
+                      ],
+                    },
+                  },
+                },
+                [{ tokenHash: newHash, expiresAt, createdAt }],
+              ],
+            },
+          },
+        },
+      ],
     );
     return result.modifiedCount === 1;
   }
