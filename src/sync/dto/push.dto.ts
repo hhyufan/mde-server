@@ -152,6 +152,11 @@ export class UpdateConfigDto {
   @IsInt()
   fontSize?: number;
 
+  /** 预览区字号。 */
+  @IsOptional()
+  @IsInt()
+  previewFontSize?: number;
+
   /** 编辑器字体族。 */
   @IsOptional()
   @IsString()
@@ -161,6 +166,16 @@ export class UpdateConfigDto {
   @IsOptional()
   @IsInt()
   lineHeight?: number;
+
+  /** 预览区行高。 */
+  @IsOptional()
+  @IsInt()
+  previewLineHeight?: number;
+
+  /** 预览区是否跟随编辑器缩放。 */
+  @IsOptional()
+  @IsBoolean()
+  previewZoomSync?: boolean;
 
   /** Tab 宽度。 */
   @IsOptional()

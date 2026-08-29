@@ -45,4 +45,31 @@ describe('SyncService protocol migration', () => {
     expect(config.protocolVersion).toBe(4);
     expect(updateOne).not.toHaveBeenCalled();
   });
+
+  it('persists the complete client preview settings contract', async () => {
+    const updateOne = jest.fn().mockResolvedValue({ modifiedCount: 1 });
+    const service = new SyncService({} as any, { updateOne } as any);
+
+    await service.updateConfig('507f1f77bcf86cd799439011', {
+      fontSize: 15,
+      previewFontSize: 17,
+      lineHeight: 25,
+      previewLineHeight: 29,
+      previewZoomSync: false,
+      protocolVersion: 3,
+      updatedAt: 456,
+    });
+
+    const update = updateOne.mock.calls[0][1].$set;
+    expect(update).toMatchObject({
+      fontSize: 15,
+      previewFontSize: 17,
+      lineHeight: 25,
+      previewLineHeight: 29,
+      previewZoomSync: false,
+      protocolVersion: 3,
+      updatedAt: 456,
+      updatedAtMs: 456,
+    });
+  });
 });

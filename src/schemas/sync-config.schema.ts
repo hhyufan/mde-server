@@ -20,6 +20,10 @@ export class SyncConfig extends Document {
   @Prop({ default: 14 })
   fontSize: number;
 
+  /** 预览区字号。 */
+  @Prop({ default: 14 })
+  previewFontSize: number;
+
   /** 字体族。 */
   @Prop({ default: 'JetBrains Mono' })
   fontFamily: string;
@@ -27,6 +31,14 @@ export class SyncConfig extends Document {
   /** 行高。 */
   @Prop({ default: 24 })
   lineHeight: number;
+
+  /** 预览区行高。 */
+  @Prop({ default: 24 })
+  previewLineHeight: number;
+
+  /** 预览区是否跟随编辑器缩放。 */
+  @Prop({ default: true })
+  previewZoomSync: boolean;
 
   /** Tab 宽度。 */
   @Prop({ default: 2 })
@@ -57,7 +69,7 @@ export class SyncConfig extends Document {
   editorState: Record<string, any>;
 
   /** 当前同步协议版本。 */
-  @Prop({ default: 2 })
+  @Prop({ default: 3 })
   protocolVersion: number;
 
   /** 最近一次配置更新时间，单位毫秒。 */
