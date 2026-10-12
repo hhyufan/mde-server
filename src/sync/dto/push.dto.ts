@@ -221,6 +221,11 @@ export class UpdateConfigDto {
   @IsOptional()
   @IsInt()
   updatedAt?: number;
+  /** 人物与主题卡显示偏好（welcome | hidden）。 */
+  @IsOptional()
+  @IsString()
+  @MaxLength(16)
+  mokiDisplay?: string;
 }
 
 /** 兼容旧版接口的批量推送请求体。 */
