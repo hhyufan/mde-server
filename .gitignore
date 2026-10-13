@@ -8,5 +8,8 @@ coverage/
 *.log
 .DS_Store
 
+# 本地站点预览服务（开发辅助，不随仓库分发）
+.preview/
+
 .vercel
 .env*

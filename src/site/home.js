@@ -7,13 +7,13 @@
     '编辑、预览、管理文件，': 'Edit, preview, and manage files,', '都在一个工作台。': 'all in one workspace.',
     'Monaco 源码与 Milkdown 所见即所得自由切换；本地文件优先，需要时再开启云同步。': 'Switch freely between Monaco source editing and Milkdown WYSIWYG. Keep files local and enable cloud sync only when needed.',
     '为 Markdown 写作者而生': 'Made for Markdown writers',
-    '写作应该专注于内容，': 'Writing should stay focused on the content,', '其余交给 MDE。': 'leave the rest to MDE.',
-    'MDE 将本地优先的可靠性、顺滑的实时预览和克制的桌面体验放在同一个工作台里。': 'MDE brings local-first reliability, fluid live preview, and a focused desktop experience into one workspace.',
+    '写作应该专注于内容，': 'Writing should stay focused on the content,', '其余交给 MokiDown。': 'leave the rest to MokiDown.',
+    'MokiDown 将本地优先的可靠性、顺滑的实时预览和克制的桌面体验放在同一个工作台里。': 'MokiDown brings local-first reliability, fluid live preview, and a focused desktop experience into one workspace.',
     '立即体验': 'Try it now', '获取桌面版': 'Get the desktop app', '本地优先': 'Local first', '跨平台': 'Cross-platform', '开源': 'Open source', '随笔.md': 'Notes.md',
     '所见即所得的 Markdown 编辑器': 'WYSIWYG Markdown Editor',
-    '这是 MDE 的轻量预览；桌面端提供完整的工作区与编辑体验。': 'A lightweight preview of MDE. The desktop app provides the complete workspace and editing experience.',
-    '继续了解 MDE': 'Explore MDE',
-    '四个部分，都是 MDE 的真实能力。': 'Four parts, all implemented in MDE.',
+    '这是 MokiDown 的轻量预览；桌面端提供完整的工作区与编辑体验。': 'A lightweight preview of MokiDown. The desktop app provides the complete workspace and editing experience.',
+    '继续了解 MokiDown': 'Explore MokiDown',
+    '四个部分，都是 MokiDown 的真实能力。': 'Four parts, all implemented in MokiDown.',
     '查看源代码': 'View source',
     '轻量化': 'Lightweight',
     'Tauri 2 的 Rust 桌面壳直接使用系统 WebView；编辑器、图表和高亮模块只在需要时载入，让启动路径保持简洁。': 'The Tauri 2 desktop shell uses Rust and the system WebView. Editor, diagram, and highlighting modules load only when needed, keeping the startup path simple.',
@@ -23,7 +23,7 @@
     '直接在排版后的内容中写作，标题、列表、任务、表格与代码块所见即所得；需要源码时再切回 Monaco 或分屏。': 'Write directly in the formatted document. Headings, lists, tasks, tables, and code blocks appear exactly as they will read; switch to Monaco or split view only when you need the source.',
     '工作区即文件资源管理器': 'The workspace is a file explorer',
     '文件、标签、大纲、最近记录和搜索都围绕你打开的真实目录工作。': 'Files, tabs, outlines, recent history, and search all work around the real folder you opened.',
-    '欢迎使用 MDE': 'Welcome to MDE', '开始写作': 'Start writing', '工作区': 'Workspace', '文件与大纲': 'Files and outline',
+    '欢迎使用 MokiDown': 'Welcome to MokiDown', '开始写作': 'Start writing', '工作区': 'Workspace', '文件与大纲': 'Files and outline',
     '云同步': 'Cloud sync', '本地文件': 'Local file', '全部同步': 'All synced', '刚刚': 'Just now', '云端副本': 'Cloud copy', '文档与设置': 'Docs and settings', '冲突可见': 'Visible conflicts', '按需启用': 'Opt in',
     '默认写入本地文件。登录后，文档与设置才进入增量同步；冲突会明确展示，不在后台替你覆盖。': 'Files are written locally by default. After sign-in, documents and settings enter incremental sync; conflicts are shown explicitly and never overwritten silently.',
     'Markdown 编辑器': 'Markdown Editor', '文件': 'Files', '大纲': 'Outline', '最近': 'Recent', '最近文件': 'Recent Files',
@@ -37,7 +37,7 @@
     '桌面端': 'Desktop', '加密认证': 'Secure auth', '云端': 'Cloud', '同步服务，清晰可见': 'A sync service you can inspect',
     '页面实时检测公开服务状态，只呈现健康枚举和版本，不暴露数据库地址、凭据、用户数据或内部环境信息。': 'This page checks public service health in real time and shows only safe status and version data—never database addresses, credentials, user data, or internal environment details.',
     '重新检测': 'Check again', '复制服务地址': 'Copy service URL', '正在检测': 'Checking', '检测中': 'Checking', 'API 服务': 'API Service', '当前版本': 'Current Version', '响应耗时': 'Response Time',
-    '准备好写下下一篇了吗？': 'Ready to write the next one?', '下载 MDE，或者从源代码开始了解它。': 'Download MDE or explore it from the source.', '获取 MDE': 'Get MDE', '查看源代码': 'View source',
+    '准备好写下下一篇了吗？': 'Ready to write the next one?', '下载 MokiDown，或者从源代码开始了解它。': 'Download MokiDown or explore it from the source.', '获取 MokiDown': 'Get MokiDown', '查看源代码': 'View source',
     '本地优先、所见即所得的 Markdown 写作工作台。': 'A local-first, WYSIWYG Markdown writing workspace.', '服务端': 'Server',
     '本地': 'Local', '未找到标题。': 'No headings found.', '输入文件名并回车': 'Enter a file name and press Enter', '新文件名': 'New file name',
     '所有公开服务运行正常': 'All public services are operational', '部分服务状态异常': 'Some services are degraded', '暂时无法连接服务': 'Service is temporarily unavailable',
@@ -48,12 +48,12 @@
     'Markdown 格式工具栏': 'Markdown formatting toolbar', '拖动工具栏': 'Drag toolbar', '粗体': 'Bold', '斜体': 'Italic', '删除线': 'Strikethrough', '标题': 'Heading', '引用': 'Quote', '表格': 'Table', '代码块': 'Code block', '链接': 'Link', '图片': 'Image', '任务列表': 'Task list', '分隔线': 'Divider', '收起工具栏': 'Hide toolbar',
     'Markdown 实时预览': 'Markdown live preview', '拖动调整分栏': 'Drag to resize panes', '切换侧栏': 'Toggle sidebar', '关闭侧栏': 'Close sidebar', '切换代码/预览': 'Toggle source/preview', '切换到预览': 'Switch to preview', '返回源码编辑': 'Return to source',
     '切换语言': 'Switch language', '切换深浅主题': 'Toggle page theme', '切换主题': 'Toggle theme', '主导航': 'Main navigation', '产品特性': 'Product features', '侧栏视图': 'Sidebar views', '编辑模式': 'Editor modes', '折叠': 'Collapse', '展开': 'Expand', '演示文件': 'Demo files',
-    '当前文件夹中已存在同名文件': 'A file with this name already exists in this folder', '演示文档已在当前页面保存': 'The demo document was saved in this page', '桌面版会将本地文件移入回收站': 'The desktop app moves local files to the Recycle Bin', '产品演示会保留 mde-workspace': 'The product demo keeps mde-workspace open', '至少保留一个标签页': 'Keep at least one tab open', '搜索面板已在桌面版中提供': 'Search is available in the desktop app', '演示内容已恢复': 'Demo content restored', '服务地址已复制': 'Service URL copied', '展开完整路径': 'Expand full path', '折叠路径': 'Collapse path',
+    '当前文件夹中已存在同名文件': 'A file with this name already exists in this folder', '演示文档已在当前页面保存': 'The demo document was saved in this page', '桌面版会将本地文件移入回收站': 'The desktop app moves local files to the Recycle Bin', '产品演示会保留 mokidown-workspace': 'The product demo keeps mokidown-workspace open', '至少保留一个标签页': 'Keep at least one tab open', '搜索面板已在桌面版中提供': 'Search is available in the desktop app', '演示内容已恢复': 'Demo content restored', '服务地址已复制': 'Service URL copied', '展开完整路径': 'Expand full path', '折叠路径': 'Collapse path',
     '窄屏空间不足，分屏模式已禁用，请使用源码或预览模式。': 'Split view is disabled on narrow screens. Use source or preview mode instead.',
   };
   const englishToChinese = new Map(Object.entries(staticEnglish).map(([zh, en]) => [en, zh]));
   let currentLocale = (() => {
-    try { return localStorage.getItem('mde-home-locale') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); }
+    try { return localStorage.getItem('mokidown-home-locale') || (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'); }
     catch { return navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'; }
   })();
   if (!['zh', 'en'].includes(currentLocale)) currentLocale = 'zh';
@@ -62,10 +62,10 @@
 
   function translateDom() {
     document.documentElement.lang = currentLocale === 'zh' ? 'zh-CN' : 'en';
-    document.title = currentLocale === 'zh' ? 'MDE · 专注写作，清晰表达' : 'MDE · Focused writing, clearly expressed';
+    document.title = currentLocale === 'zh' ? 'MokiDown · 专注写作，清晰表达' : 'MokiDown · Focused writing, clearly expressed';
     document.querySelector('meta[name="description"]').content = currentLocale === 'zh'
-      ? 'MDE 是一款专注写作体验的跨平台 Markdown 编辑器，支持实时预览、工作区管理与可选云同步。'
-      : 'MDE is a focused cross-platform Markdown editor with live preview, workspace management, and optional cloud sync.';
+      ? 'MokiDown 是一款专注写作体验的跨平台 Markdown 编辑器，支持实时预览、工作区管理与可选云同步。'
+      : 'MokiDown is a focused cross-platform Markdown editor with live preview, workspace management, and optional cloud sync.';
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
@@ -92,7 +92,7 @@
 
   function setLocale(nextLocale) {
     currentLocale = nextLocale;
-    try { localStorage.setItem('mde-home-locale', currentLocale); } catch { /* Locale persistence is optional. */ }
+    try { localStorage.setItem('mokidown-home-locale', currentLocale); } catch { /* Locale persistence is optional. */ }
     const activeContentChanged = syncDemoDocumentLocale(currentLocale);
     if (activeContentChanged) input.value = documents[currentDocument].content;
     translateDom();
@@ -108,13 +108,13 @@
     welcome: {
       name: 'README.md',
       content: [
-        '# 欢迎使用 MDE',
+        '# 欢迎使用 MokiDown',
         '',
         '> 这是一个可以真正编辑的迷你工作台。试着修改左侧内容，预览会立即更新。',
         '',
         '## 写作，从专注开始',
         '',
-        'MDE 把 **可靠保存**、*实时预览* 和 `Markdown` 工具放进一个安静的工作区。',
+        'MokiDown 把 **可靠保存**、*实时预览* 和 `Markdown` 工具放进一个安静的工作区。',
         '',
         '- [x] 在本地安心写作',
         '- [x] 用分屏确认排版',
@@ -133,7 +133,7 @@
       content: [
         '# 功能速览',
         '',
-        'MDE 为日常 Markdown 工作流提供一套完整但克制的工具。',
+        'MokiDown 为日常 Markdown 工作流提供一套完整但克制的工具。',
         '',
         '| 能力 | 体验 |',
         '| --- | --- |',
@@ -179,7 +179,7 @@
     appJsx: { name: 'App.jsx', content: "import { useState } from 'react';\nimport Editor from './Editor.jsx';\n\nexport default function App() {\n  const [mode, setMode] = useState('split');\n\n  return (\n    <main data-mode={mode}>\n      <Editor mode={mode} onModeChange={setMode} />\n    </main>\n  );\n}" },
     editorJs: { name: 'editor.js', content: "export const editorModes = ['source', 'split', 'preview'];\n\nexport function selectMode(mode) {\n  return editorModes.includes(mode) ? mode : 'source';\n}" },
     mainRs: { name: 'main.rs', content: "#![cfg_attr(not(debug_assertions), windows_subsystem = \"windows\")]\n\nfn main() {\n    mde_lib::run();\n}" },
-    mainKt: { name: 'MainActivity.kt', content: "package xyz.miaogu.mde\n\nimport android.os.Bundle\nimport androidx.activity.ComponentActivity\n\nclass MainActivity : ComponentActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n    }\n}" },
+    mainKt: { name: 'MainActivity.kt', content: "package com.mokidown.app\n\nimport android.os.Bundle\nimport androidx.activity.ComponentActivity\n\nclass MainActivity : ComponentActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n    }\n}" },
   });
   const workspaceTree = {
     src: { type: 'folder', children: { app: { type: 'document', key: 'appJsx' }, editor: { type: 'document', key: 'editorJs' } } },
@@ -190,8 +190,8 @@
     readme: { type: 'document', key: 'welcome' },
   };
   const englishDemoDocuments = {
-    welcome: { name: 'README.md', content: '# Welcome to MDE\n\n> This is a genuinely interactive mini workspace. Edit the source and watch the preview update instantly.\n\n## Writing starts with focus\n\nMDE brings **reliable saving**, *live preview*, and `Markdown` tools into a quiet workspace.\n\n- [x] Write safely on your device\n- [x] Check layout in split view\n- [ ] Publish the next article\n\n```javascript\nconst idea = \'Keep it simple, keep writing\';\nconsole.log(idea);\n```\n\nUse the controls above to switch between **source / split / preview**.' },
-    features: { name: 'Feature Tour.md', content: '# Feature Tour\n\nMDE provides a complete yet focused toolkit for everyday Markdown work.\n\n| Capability | Experience |\n| --- | --- |\n| Workspace | File tree and multiple tabs |\n| Preview | GFM, code blocks, tables, and diagrams |\n| Safety | Atomic saves and recovery snapshots |\n| Sync | Optional cloud sync with conflict handling |\n\n## Design principles\n\n1. Your content always belongs to you\n2. Complex features appear only when needed\n3. Every state remains visible' },
+    welcome: { name: 'README.md', content: '# Welcome to MokiDown\n\n> This is a genuinely interactive mini workspace. Edit the source and watch the preview update instantly.\n\n## Writing starts with focus\n\nMokiDown brings **reliable saving**, *live preview*, and `Markdown` tools into a quiet workspace.\n\n- [x] Write safely on your device\n- [x] Check layout in split view\n- [ ] Publish the next article\n\n```javascript\nconst idea = \'Keep it simple, keep writing\';\nconsole.log(idea);\n```\n\nUse the controls above to switch between **source / split / preview**.' },
+    features: { name: 'Feature Tour.md', content: '# Feature Tour\n\nMokiDown provides a complete yet focused toolkit for everyday Markdown work.\n\n| Capability | Experience |\n| --- | --- |\n| Workspace | File tree and multiple tabs |\n| Preview | GFM, code blocks, tables, and diagrams |\n| Safety | Atomic saves and recovery snapshots |\n| Sync | Optional cloud sync with conflict handling |\n\n## Design principles\n\n1. Your content always belongs to you\n2. Complex features appear only when needed\n3. Every state remains visible' },
     shortcuts: { name: 'Shortcuts.md', content: '# Common Shortcuts\n\n| Action | Windows / Linux | macOS |\n| --- | --- | --- |\n| Bold | Ctrl + B | ⌘ + B |\n| Italic | Ctrl + I | ⌘ + I |\n| Save | Ctrl + S | ⌘ + S |\n| Search | Ctrl + K | ⌘ + K |\n\n> The demo supports bold, italic, and simulated save shortcuts.\n\n## Today\n\n- [x] Organize sources\n- [ ] Finish the draft\n- [ ] Review and publish' },
     appJsx: { ...documents.appJsx }, editorJs: { ...documents.editorJs }, mainRs: { ...documents.mainRs }, mainKt: { ...documents.mainKt },
   };
@@ -292,7 +292,7 @@
   const storyFileIcon = (fileName) => fileName.endsWith('.jsx') ? storyReactIcon : fileName.endsWith('.js') ? storyJavascriptIcon : storyMarkdownIcon;
   const storyRecentList = document.querySelector('.story-recent-list');
   if (storyRecentList) storyRecentList.innerHTML = [
-    ['README.md', 'mde-workspace'], ['App.jsx', 'src'], ['vite.config.js', 'mde-workspace'],
+    ['README.md', 'mokidown-workspace'], ['App.jsx', 'src'], ['vite.config.js', 'mokidown-workspace'],
   ].map(([file, path]) => `<div><span class="story-recent-icon">${storyFileIcon(file)}</span><span><strong>${file}</strong><small>${path}</small></span></div>`).join('');
   const storyWorkspaceIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>';
   const storyChevronIcon = '<svg class="story-breadcrumb-chevron" viewBox="0 0 1024 1024" aria-hidden="true"><path d="M704 514.368a52.864 52.864 0 0 1-15.808 37.888L415.872 819.2a55.296 55.296 0 0 1-73.984-2.752 52.608 52.608 0 0 1-2.816-72.512l233.6-228.928-233.6-228.992a52.736 52.736 0 0 1-17.536-53.056 53.952 53.952 0 0 1 40.192-39.424c19.904-4.672 40.832 1.92 54.144 17.216l272.32 266.88c9.92 9.792 15.616 23.04 15.808 36.8z" fill="currentColor"/></svg>';
@@ -314,7 +314,7 @@
     if (!storyFileTree || !storyFolderBreadcrumb) return;
     storyFolder = Object.hasOwn(storyFolderContents, nextFolder) ? nextFolder : '';
     const content = storyFolderContents[storyFolder];
-    storyFolderBreadcrumb.innerHTML = `${storyWorkspaceIcon}<button type="button" data-story-folder-root>mde-workspace</button>${storyFolder ? `${storyChevronIcon}<button type="button" aria-current="page">${storyFolder}</button>` : ''}`;
+    storyFolderBreadcrumb.innerHTML = `${storyWorkspaceIcon}<button type="button" data-story-folder-root>mokidown-workspace</button>${storyFolder ? `${storyChevronIcon}<button type="button" aria-current="page">${storyFolder}</button>` : ''}`;
     storyFileTree.innerHTML = [
       ...content.folders.map((folder) => `<button type="button" data-story-folder="${folder}">${storyFolderIcon}<span>${folder}</span></button>`),
       ...content.files.map((file, index) => `<button type="button" data-story-file class="${index === 0 ? 'active' : ''}">${storyFileIcon(file)}<span>${localize(file)}</span></button>`),
@@ -711,7 +711,7 @@
     }).join('') + (isCreatingFile
       ? `<div class="file-item file-item--creating">${markdownFileIcon}<input class="file-item-input" value="${escapeHtml(creatingFileName)}" placeholder="${localize('输入文件名并回车')}" aria-label="${localize('新文件名')}"></div>`
       : '');
-    const breadcrumbParts = ['mde-workspace', ...folderPath];
+    const breadcrumbParts = ['mokidown-workspace', ...folderPath];
     const breadcrumbPath = document.querySelector('#file-breadcrumb-path');
     const shouldCollapseBreadcrumb = breadcrumbParts.length > 3 && !breadcrumbExpanded;
     const breadcrumbPart = (part, index, withChevron = index > 0) => `<span class="file-breadcrumb__item">${withChevron ? breadcrumbChevron : ''}<span class="file-breadcrumb__part" data-breadcrumb-index="${index}">${escapeHtml(part)}</span></span>`;
@@ -822,7 +822,7 @@
   }
 
   function renderFooterBreadcrumb() {
-    const parts = ['mde-workspace', ...findDocumentPath(currentDocument), localize(documents[currentDocument].name)];
+    const parts = ['mokidown-workspace', ...findDocumentPath(currentDocument), localize(documents[currentDocument].name)];
     footerFileName.innerHTML = parts.map((part, index) => `<span class="demo-footer__breadcrumb-item">${index > 0 ? breadcrumbChevron : ''}<span class="demo-footer__breadcrumb-segment">${escapeHtml(part)}</span></span>`).join('');
   }
 
@@ -925,8 +925,8 @@
     else if (type === 'bold') { replacement = `**${selected || '粗体文字'}**`; cursorOffset = selected ? replacement.length : 2; }
     else if (type === 'italic') { replacement = `*${selected || '斜体文字'}*`; cursorOffset = selected ? replacement.length : 1; }
     else if (type === 'strike') { replacement = `~~${selected || '删除线文字'}~~`; cursorOffset = selected ? replacement.length : 2; }
-    else if (type === 'codeblock') { replacement = `\`\`\`javascript\n${selected || "console.log('MDE');"}\n\`\`\``; cursorOffset = replacement.length; }
-    else if (type === 'table') { replacement = '| 标题 | 内容 |\n| --- | --- |\n| MDE | Markdown |'; cursorOffset = replacement.length; }
+    else if (type === 'codeblock') { replacement = `\`\`\`javascript\n${selected || "console.log('MokiDown');"}\n\`\`\``; cursorOffset = replacement.length; }
+    else if (type === 'table') { replacement = '| 标题 | 内容 |\n| --- | --- |\n| MokiDown | Markdown |'; cursorOffset = replacement.length; }
     else if (type === 'link') { replacement = `[${selected || '链接文字'}](https://example.com)`; cursorOffset = replacement.length; }
     else if (type === 'image') { replacement = `![${selected || '图片说明'}](https://example.com/image.png)`; cursorOffset = replacement.length; }
     else if (type === 'task') { replacement = `- [ ] ${selected || '待办事项'}`; cursorOffset = replacement.length; }
@@ -1091,8 +1091,8 @@
   });
   document.querySelector('#file-nav-up').addEventListener('click', () => navigateFolder(folderPath.slice(0, -1)));
   document.querySelector('#file-nav-refresh').addEventListener('click', renderFileTree);
-  document.querySelector('#file-nav-reveal').addEventListener('click', () => notify(`${currentLocale === 'zh' ? '工作区' : 'Workspace'}: ${['mde-workspace', ...folderPath].join(' / ')}`));
-  document.querySelector('#file-nav-close').addEventListener('click', () => notify('产品演示会保留 mde-workspace'));
+  document.querySelector('#file-nav-reveal').addEventListener('click', () => notify(`${currentLocale === 'zh' ? '工作区' : 'Workspace'}: ${['mokidown-workspace', ...folderPath].join(' / ')}`));
+  document.querySelector('#file-nav-close').addEventListener('click', () => notify('产品演示会保留 mokidown-workspace'));
   document.querySelector('.tabbar-new').addEventListener('click', startCreatingFile);
   document.querySelector('.tree-actions button[title="新建文件"]').addEventListener('click', startCreatingFile);
   document.querySelector('.demo-tabbar').addEventListener('click', (event) => {
@@ -1179,7 +1179,7 @@
   window.addEventListener('pointercancel', stopToolbarDrag);
   document.querySelectorAll('.format-toolbar button[data-format]').forEach((button) => button.addEventListener('click', () => applyFormat(button.dataset.format)));
 
-  // Reproduce MDE's compact Ant Design tooltip instead of relying on native browser titles.
+  // Reproduce MokiDown's compact Ant Design tooltip instead of relying on native browser titles.
   const tooltip = document.createElement('div');
   tooltip.className = 'mde-tooltip';
   tooltip.setAttribute('role', 'tooltip');
