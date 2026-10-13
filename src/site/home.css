@@ -324,6 +324,75 @@ html[data-theme='dark'] .mde-tooltip { border-color: var(--border); box-shadow: 
   .demo-sidebar { width: 280px; min-width: 280px; }
 }
 
+/* ==========================================================================
+   Moki 角色
+   --------------------------------------------------------------------------
+   形象素材来自桌面的双格图集（浅色挥手 / 深色托腮读书），预先裁成两张 WebP
+   （1834KB → 178KB）。两帧同时铺在同一个定位盒里，靠 opacity 交叉淡入完成
+   “换装”，比直接换图更接近人物换状态的感觉——与 MokiSprite.jsx 的做法一致。
+
+   定位固定在下缘，因此不参与文档流、不会顶开 hero 里的演示编辑器；窄屏只
+   缩小不隐藏（它是这个页面的形象担当）。
+   ========================================================================== */
+.moki {
+  position: fixed;
+  right: max(10px, env(safe-area-inset-right, 0px));
+  bottom: 0;
+  z-index: 10;
+  width: clamp(150px, 17vw, 250px);
+  aspect-ratio: 1;
+  /* 纯装饰：不能挡住下面的按钮与链接。 */
+  pointer-events: none;
+  user-select: none;
+}
+
+.moki__art {
+  position: absolute;
+  inset: 0;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 12px 30px rgba(42, 48, 61, 0.18));
+  /* 换装 + 浮动两段过渡：末段给浮动，避免换装时也跟着弹。 */
+  transition: opacity 0.45s ease, transform 0.5s ease;
+}
+
+.moki__art--light {
+  background-image: url('/assets/moki-light.webp');
+  opacity: 1;
+}
+
+.moki__art--dark {
+  background-image: url('/assets/moki-dark.webp');
+  opacity: 0;
+}
+
+html[data-theme='dark'] .moki__art--light { opacity: 0; }
+html[data-theme='dark'] .moki__art--dark { opacity: 1; }
+
+/* 深色底上浅色投影会发灰，换成更深的落影。 */
+html[data-theme='dark'] .moki__art {
+  filter: drop-shadow(0 14px 34px rgba(0, 0, 0, 0.5));
+}
+
+/* 缓慢浮动：让角色有一点存在感，但幅度刻意压小，不抢正文。
+   全局 prefers-reduced-motion 规则会把动画时长压到 0.01ms。 */
+@keyframes moki-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-9px); }
+}
+
+.moki__art {
+  animation: moki-float 5.5s ease-in-out infinite alternate;
+}
+
+/* 小屏：素材换成更轻的 @sm 版本，同时收窄占位，避免压到演示编辑器。 */
+@media (max-width: 680px) {
+  .moki { width: clamp(108px, 26vw, 156px); }
+  .moki__art--light { background-image: url('/assets/moki-light@sm.webp'); }
+  .moki__art--dark { background-image: url('/assets/moki-dark@sm.webp'); }
+}
+
 @media (max-width: 680px) {
   body { overflow-x: hidden; font-size: 13px; }
   .section-shell { width: min(100% - 24px, 1180px); }
