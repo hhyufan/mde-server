@@ -156,14 +156,14 @@
       content: [
         '# 常用快捷键',
         '',
-        '| 操作 | Windows / Linux | macOS |',
-        '| --- | --- | --- |',
-        '| 粗体 | Ctrl + B | ⌘ + B |',
-        '| 斜体 | Ctrl + I | ⌘ + I |',
-        '| 保存 | Ctrl + S | ⌘ + S |',
-        '| 搜索 | Ctrl + K | ⌘ + K |',
+        '| 操作 | 快捷键 |',
+        '| --- | --- |',
+        '| 搜索文件 | Ctrl + P |',
+        '| 打开文件 | Ctrl + O |',
+        '| 运行控制台 | Ctrl + J |',
+        '| 预览 / 源码切换 | Ctrl + Shift + / |',
         '',
-        '> 提示：这个演示编辑器已经支持粗体、斜体和模拟保存快捷键。',
+        '> 提示：快捷键以桌面端实际绑定为准；编辑 → 预览的切换支持在两者间往返。',
         '',
         '## 今日计划',
         '',
@@ -192,7 +192,7 @@
   const englishDemoDocuments = {
     welcome: { name: 'README.md', content: '# Welcome to MokiDown\n\n> This is a genuinely interactive mini workspace. Edit the source and watch the preview update instantly.\n\n## Writing starts with focus\n\nMokiDown brings **reliable saving**, *live preview*, and `Markdown` tools into a quiet workspace.\n\n- [x] Write safely on your device\n- [x] Check layout in split view\n- [ ] Publish the next article\n\n```javascript\nconst idea = \'Keep it simple, keep writing\';\nconsole.log(idea);\n```\n\nUse the controls above to switch between **source / split / preview**.' },
     features: { name: 'Feature Tour.md', content: '# Feature Tour\n\nMokiDown provides a complete yet focused toolkit for everyday Markdown work.\n\n| Capability | Experience |\n| --- | --- |\n| Workspace | File tree and multiple tabs |\n| Preview | GFM, code blocks, tables, and diagrams |\n| Safety | Atomic saves and recovery snapshots |\n| Sync | Optional cloud sync with conflict handling |\n\n## Design principles\n\n1. Your content always belongs to you\n2. Complex features appear only when needed\n3. Every state remains visible' },
-    shortcuts: { name: 'Shortcuts.md', content: '# Common Shortcuts\n\n| Action | Windows / Linux | macOS |\n| --- | --- | --- |\n| Bold | Ctrl + B | ⌘ + B |\n| Italic | Ctrl + I | ⌘ + I |\n| Save | Ctrl + S | ⌘ + S |\n| Search | Ctrl + K | ⌘ + K |\n\n> The demo supports bold, italic, and simulated save shortcuts.\n\n## Today\n\n- [x] Organize sources\n- [ ] Finish the draft\n- [ ] Review and publish' },
+    shortcuts: { name: 'Shortcuts.md', content: '# Common Shortcuts\n\n| Action | Shortcut |\n| --- | --- |\n| Search files | Ctrl + P |\n| Open file | Ctrl + O |\n| Run console | Ctrl + J |\n| Toggle preview / source | Ctrl + Shift + / |\n\n> Shortcuts follow the desktop app’s actual bindings.\n\n## Today\n\n- [x] Organize sources\n- [ ] Finish the draft\n- [ ] Review and publish' },
     appJsx: { ...documents.appJsx }, editorJs: { ...documents.editorJs }, mainRs: { ...documents.mainRs }, mainKt: { ...documents.mainKt },
   };
   const chineseDemoDocuments = Object.fromEntries(Object.entries(documents).map(([key, value]) => [key, { ...value }]));
