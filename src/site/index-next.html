@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f5f7" />
+    <meta
+      name="description"
+      content="MokiDown 是一款专注写作体验的跨平台 Markdown 编辑器，支持实时预览、工作区管理与可选云同步。"
+    />
+    <title>MokiDown · 专注写作，清晰表达</title>
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/app-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/assets/app-icon.png" />
+    <link rel="stylesheet" href="/assets/home.css" />
+    <link rel="stylesheet" href="/assets/moki-site.css" />
+    <script>
+      // Some bundled editor dependencies read the bare Node global while their
+      // modules initialise; the site runs in a browser, so provide the shim.
+      window.process = { env: { NODE_ENV: 'production' } };
+    </script>
+    <script src="/assets/moki-site.js" defer></script>
+    <script src="/assets/home-next.js" defer></script>
+    <style>
+      /* The live editor replaces the old simulated window but keeps the hero
+         frame's rounded surface and size. */
+      .demo-frame--live {
+        display: flex;
+        align-items: stretch;
+        padding: 0;
+      }
+      .moki-live-editor {
+        flex: 1 1 auto;
+        min-width: 0;
+        height: 100%;
+      }
+      .moki-live-editor .demo-body {
+        height: 100%;
+      }
+      .moki-live-editor .demo-brand__text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.25;
+      }
+      .moki-live-editor .demo-brand__text strong {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .moki-live-editor .demo-brand__text small {
+        color: var(--text-sec);
+        font-size: 10px;
+        font-weight: 400;
+      }
+      .moki-live-editor .workspace {
+        flex: 1;
+        min-height: 0;
+      }
+      .moki-live-pane {
+        flex: 1;
+        min-width: 0;
+        min-height: 0;
+        overflow: auto;
+      }
+      .moki-live-pane > .md-preview {
+        min-height: 100%;
+        padding: 24px 34px;
+      }
+      .moki-split {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+      .moki-split__editor,
+      .moki-split .preview-pane {
+        flex: 1;
+        min-width: 0;
+        overflow: auto;
+      }
+      .moki-split .preview-pane {
+        border-left: 1px solid var(--border);
+      }
+      .moki-source {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        outline: 0;
+        resize: none;
+        padding: 18px 22px;
+        background: var(--surface);
+        color: var(--text);
+        font: 13px/1.75 'JetBrains Mono', monospace;
+        white-space: pre;
+      }
+      .moki-live-editor .demo-github {
+        width: 26px;
+        height: 26px;
+        flex: 0 0 26px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        color: var(--text-sec);
+        transition: color 0.15s, background 0.15s;
+      }
+      .moki-live-editor .demo-github:hover {
+        color: var(--text);
+        background: var(--hover);
+      }
+      .moki-live-editor .demo-github svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+      .demo-app-frame {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        background: var(--surface);
+      }
+      .product-story .feature-sections {
+        margin-top: 34px;
+      }
+      .feature-block-host {
+        scroll-margin-top: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="MokiDown 首页">
+        <span class="brand__mark">M</span>
+        <span class="brand__name">MokiDown</span>
+      </a>
+      <nav class="header-nav" aria-label="主导航">
+        <a href="#demo">TRY IT NOW</a><a href="#why-mde">HOW MokiDown WORKS</a>
+      </nav>
+      <div class="header-actions">
+        <button class="language-button" id="language-toggle" type="button" aria-label="切换语言" title="切换语言">
+          <svg class="language-icon" viewBox="0 0 28 24" aria-hidden="true">
+            <text class="language-icon__glyph language-icon__glyph--zh" x="0" y="0">文</text>
+            <text class="language-icon__glyph language-icon__glyph--en" x="0" y="0">A</text>
+          </svg>
+        </button>
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="切换深浅主题" title="切换主题">
+          <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41" />
+          </svg>
+          <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z" />
+          </svg>
+        </button>
+        <a class="header-github" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.24c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.1-.75.4-1.27.74-1.56-2.57-.29-5.28-1.29-5.28-5.68 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.05 0 0 .97-.31 3.16 1.18A10.9 10.9 0 0 1 12 6.12c.98 0 1.95.13 2.87.38 2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.4-2.71 5.38-5.29 5.67.42.36.78 1.06.78 2.14v3.28c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .7Z" />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero-demo section-shell" id="demo">
+        <div class="hero-demo__intro">
+          <div class="hero-demo__title">
+            <span class="section-kicker">TRY IT NOW</span>
+            <h1>所见即所得的 Markdown 编辑器</h1>
+          </div>
+          <div class="hero-demo__details">
+            <p>这是 MokiDown 的轻量预览；桌面端提供完整的工作区与编辑体验。</p>
+            <div class="hero-demo__actions">
+              <a class="button button--primary" href="https://github.com/hhyufan/mde-tauri/releases" target="_blank" rel="noreferrer">获取桌面版</a>
+              <a class="button button--quiet" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-frame demo-frame--live"><iframe class="demo-app-frame" src="/app/index.html" title="MokiDown 实时预览"></iframe></div>
+
+        <a class="scroll-cue" id="scroll-cue" href="#why-mde">
+          <span>继续了解 MokiDown</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
+        </a>
+      </section>
+
+      <section class="product-story section-shell" id="why-mde" aria-labelledby="product-story-title">
+        <header class="story-intro reveal-block" data-reveal>
+          <div>
+            <span class="section-kicker">HOW MokiDown WORKS</span>
+            <h2 id="product-story-title">五个部分，都是 MokiDown 的真实能力。</h2>
+          </div>
+          <div class="story-intro__aside">
+            <a class="story-source-link" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">查看源代码 <span>→</span></a>
+          </div>
+        </header>
+
+        <div data-moki-features></div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-shell">
+      <div class="brand"><span class="brand__mark">M</span><span class="brand__name">MokiDown</span></div>
+      <p>本地优先、所见即所得的 Markdown 写作工作台。</p>
+      <div>
+        <a href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">桌面端</a>
+        <a href="https://github.com/hhyufan/mde-server" target="_blank" rel="noreferrer">服务端</a>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+  
+  </body>
+</html>

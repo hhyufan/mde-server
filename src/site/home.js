@@ -27,7 +27,7 @@
     '云同步': 'Cloud sync', '本地文件': 'Local file', '全部同步': 'All synced', '刚刚': 'Just now', '云端副本': 'Cloud copy', '文档与设置': 'Docs and settings', '冲突可见': 'Visible conflicts', '按需启用': 'Opt in',
     '默认写入本地文件。登录后，文档与设置才进入增量同步；冲突会明确展示，不在后台替你覆盖。': 'Files are written locally by default. After sign-in, documents and settings enter incremental sync; conflicts are shown explicitly and never overwritten silently.',
     'Markdown 编辑器': 'Markdown Editor', '文件': 'Files', '大纲': 'Outline', '最近': 'Recent', '最近文件': 'Recent Files',
-    '登录': 'Sign in', '搜索文件...': 'Search files...', '欢迎.md': 'Welcome.md', '功能速览.md': 'Feature Tour.md', '快捷键.md': 'Shortcuts.md',
+    '登录': 'Sign in', '搜索文件...': 'Search files...', '没有匹配的文档': 'No matching documents', '文件名': 'Name', '内容': 'Content', '欢迎.md': 'Welcome.md', '功能速览.md': 'Feature Tour.md', '快捷键.md': 'Shortcuts.md',
     '使用指南.md': 'Guide.md', '代码高亮.md': 'Code Highlighting.md', '表格示例.md': 'Table Example.md', '每日记录.md': 'Daily Notes.md', '灵感.md': 'Ideas.md',
     '从第一行到最后一次保存': 'From the first line to the final save', '每项能力都服务于更可靠、更安静的写作过程。': 'Every feature serves a calmer, more reliable writing process.',
     '本地优先，不打断思路': 'Local first, without breaking your flow', '文件保留在你的工作区。原子保存与恢复快照共同保护每一次修改。': 'Files stay in your workspace. Atomic saves and recovery snapshots protect every edit.',
@@ -903,6 +903,141 @@
     });
   }
 
+  /**
+   * 演示区搜索面板。
+   *
+   * 桌面端有完整的搜索面板（文件名 / 内容双模式、范围选择、大小写开关）；
+   * 演示里此前点击搜索框只弹一句“已在桌面版中提供”，是明显的功能缺口。
+   * 这里用演示现有的文档集合做一次轻量过滤——在草稿文本里搜关键词并跳转，
+   * 足以说明搜索能力，同时不引入后端索引。
+   */
+  const searchPanel = document.createElement('div');
+  searchPanel.id = 'demo-search-panel';
+  searchPanel.className = 'demo-search-panel';
+  searchPanel.hidden = true;
+  searchPanel.setAttribute('role', 'listbox');
+  searchPanel.setAttribute('aria-label', '搜索结果');
+  frame.appendChild(searchPanel);
+
+  const searchInput = document.querySelector('#demo-search-input');
+  const searchClear = document.querySelector('#demo-search-clear');
+  let searchActive = 0;
+
+  /** 面板贴住输入框下沿；用视口坐标，滚动或缩放后重新定位。 */
+  function placeSearchPanel() {
+    const box = searchInput.getBoundingClientRect();
+    searchPanel.style.position = 'fixed';
+    searchPanel.style.left = `${Math.round(box.left)}px`;
+    searchPanel.style.top = `${Math.round(box.bottom + 6)}px`;
+    searchPanel.style.width = `${Math.round(box.width)}px`;
+  }
+
+  function hideSearchPanel() {
+    searchPanel.hidden = true;
+    if (searchClear) searchClear.hidden = !searchInput.value;
+  }
+
+  /** 文件名命中优先，其次内容命中。 */
+  function searchDocuments(query) {
+    const needle = query.trim().toLowerCase();
+    if (!needle) return [];
+    const hits = [];
+    for (const [key, doc] of Object.entries(documents)) {
+      const name = localize(doc.name).toLowerCase();
+      const content = String(doc.content || '').toLowerCase();
+      const inName = name.includes(needle);
+      const inContent = !inName && content.includes(needle);
+      if (inName || inContent) {
+        // 命中同一标签页时避免重复列出（当前文档也会出现在 documents 里）。
+        hits.push({ key, name: localize(doc.name), where: inName ? 'name' : 'content' });
+      }
+      if (hits.length >= 8) break;
+    }
+    return hits;
+  }
+
+  function renderSearchResults() {
+    const query = searchInput.value;
+    searchActive = 0;
+    if (!query.trim()) {
+      searchPanel.hidden = true;
+      return;
+    }
+    const hits = searchDocuments(query);
+    const emptyText = localize('没有匹配的文档');
+    searchPanel.innerHTML = hits.length
+      ? hits.map((hit, index) => `
+          <button type="button" class="demo-search-panel__item${index === 0 ? ' active' : ''}" role="option" aria-selected="${index === 0}" data-search-key="${hit.key}">
+            <span class="demo-search-panel__name">${hit.name}</span>
+            <span class="demo-search-panel__where">${hit.where === 'name' ? localize('文件名') : localize('内容')}</span>
+          </button>`).join('')
+      : `<div class="demo-search-panel__empty" role="status">${emptyText}</div>`;
+    placeSearchPanel();
+    searchPanel.hidden = false;
+  }
+
+  /** 键盘上下移动选中项。 */
+  function moveSearchActive(step) {
+    const items = [...searchPanel.querySelectorAll('.demo-search-panel__item')];
+    if (!items.length) return;
+    searchActive = (searchActive + step + items.length) % items.length;
+    items.forEach((item, index) => {
+      const on = index === searchActive;
+      item.classList.toggle('active', on);
+      item.setAttribute('aria-selected', String(on));
+    });
+    items[searchActive].scrollIntoView({ block: 'nearest' });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      if (searchClear) searchClear.hidden = !searchInput.value;
+      renderSearchResults();
+    });
+    searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) renderSearchResults(); });
+    searchInput.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown') { event.preventDefault(); moveSearchActive(1); }
+      else if (event.key === 'ArrowUp') { event.preventDefault(); moveSearchActive(-1); }
+      else if (event.key === 'Enter') {
+        event.preventDefault();
+        const item = searchPanel.querySelectorAll('.demo-search-panel__item')[searchActive];
+        if (item) { loadDocument(item.dataset.searchKey); searchInput.blur(); hideSearchPanel(); }
+      } else if (event.key === 'Escape') {
+        searchInput.value = '';
+        if (searchClear) searchClear.hidden = true;
+        hideSearchPanel();
+        searchInput.blur();
+      }
+    });
+  }
+
+  if (searchClear) {
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClear.hidden = true;
+      hideSearchPanel();
+      searchInput.focus();
+    });
+  }
+
+  searchPanel.addEventListener('click', (event) => {
+    const item = event.target.closest('.demo-search-panel__item');
+    if (!item) return;
+    loadDocument(item.dataset.searchKey);
+    hideSearchPanel();
+    searchInput.blur();
+  });
+
+  // 点击面板外部才收起。注意必须判断 event.target：
+  // pointerdown 先于 click 触发，若无条件隐藏，结果项的 click 会落空。
+  document.addEventListener('pointerdown', (event) => {
+    if (searchPanel.hidden) return;
+    if (searchPanel.contains(event.target) || event.target === searchInput) return;
+    hideSearchPanel();
+  });
+  window.addEventListener('resize', () => { if (!searchPanel.hidden) placeSearchPanel(); });
+  window.addEventListener('scroll', () => { if (!searchPanel.hidden) placeSearchPanel(); }, { passive: true, capture: true });
+
   function notify(message) {
     toast.textContent = localize(message);
     toast.classList.add('visible');
@@ -1270,7 +1405,13 @@
     collapsedOutlineLines.clear();
     updateOutline();
   });
-  document.querySelector('.demo-search').addEventListener('click', () => notify('搜索面板已在桌面版中提供'));
+  // 搜索框现在是真实输入框；点击即聚焦，不再弹“已在桌面版提供”。
+  // 同时支持 Ctrl/Cmd + P 聚焦——与桌面端的实际绑定保持一致。
+  document.addEventListener('keydown', (event) => {
+    if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'p') return;
+    event.preventDefault();
+    searchInput?.focus();
+  });
   document.querySelectorAll('.js-sidebar-toggle').forEach((button) => button.addEventListener('click', () => setSidebarHidden(!sidebar.classList.contains('hidden'))));
   sidebarScrim.addEventListener('click', () => setSidebarHidden(true));
   mobileMedia.addEventListener('change', (event) => syncResponsiveDemo(event.matches));
