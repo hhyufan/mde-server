@@ -1,20 +1,27 @@
 import { Controller, Get, Header, Req, Res } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Request, Response } from 'express';
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { Connection } from 'mongoose';
 import { extname, join } from 'path';
 
 const SITE_DIR = join(__dirname, '..', 'site');
+// Vercel compiles anything under src/ as CommonJS, which corrupts the ESM
+// demo bundle. public/ is copied verbatim by `includeFiles` and served first.
+const PUBLIC_DIR = join(process.cwd(), 'public');
+const readPublicFirst = (name: string): string => {
+  const publicFile = join(PUBLIC_DIR, name);
+  return readFileSync(existsSync(publicFile) ? publicFile : join(SITE_DIR, name), 'utf8');
+};
 const HOME_HTML = readFileSync(join(SITE_DIR, 'index.html'), 'utf8');
 const HOME_CSS = readFileSync(join(SITE_DIR, 'home.css'), 'utf8');
 const HOME_JS = readFileSync(join(SITE_DIR, 'home.js'), 'utf8');
-const MOKI_SITE_JS = readFileSync(join(SITE_DIR, 'moki-site.js'), 'utf8');
-const MOKI_SITE_CSS = readFileSync(join(SITE_DIR, 'moki-site.css'), 'utf8');
-const HOME_NEXT_JS = readFileSync(join(SITE_DIR, 'home-next.js'), 'utf8');
+const MOKI_SITE_JS = readPublicFirst('moki-site.js');
+const MOKI_SITE_CSS = readPublicFirst('moki-site.css');
+const HOME_NEXT_JS = readPublicFirst('home-next.js');
 const APP_ICON = readFileSync(join(SITE_DIR, 'app-icon.png'));
 const FAVICON = readFileSync(join(SITE_DIR, 'favicon.ico'));
-const APP_DIR = join(SITE_DIR, 'app');
+const APP_DIR = existsSync(join(PUBLIC_DIR, 'app')) ? join(PUBLIC_DIR, 'app') : join(SITE_DIR, 'app');
 const SERVER_VERSION = process.env.MDE_SERVER_VERSION || '0.1.0';
 
 const CONTENT_TYPES: Record<string, string> = {
