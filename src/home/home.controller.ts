@@ -20,6 +20,8 @@ const MOKI_SITE_JS = readPublicFirst('moki-site.js');
 const MOKI_SITE_CSS = readPublicFirst('moki-site.css');
 const HOME_NEXT_JS = readPublicFirst('home-next.js');
 const APP_ICON = readFileSync(join(SITE_DIR, 'app-icon.png'));
+const MOKI_ICON = readFileSync(join(SITE_DIR, 'mokidown-icon.png'));
+const MOKI_WORDMARK = readFileSync(join(SITE_DIR, 'mokidown-wordmark.webp'));
 const FAVICON = readFileSync(join(SITE_DIR, 'favicon.ico'));
 const APP_DIR = existsSync(join(PUBLIC_DIR, 'app')) ? join(PUBLIC_DIR, 'app') : join(SITE_DIR, 'app');
 const SERVER_VERSION = process.env.MDE_SERVER_VERSION || '0.1.0';
@@ -119,6 +121,20 @@ export class HomeController {
     } catch {
       response.status(502).send('Upstream unavailable');
     }
+  }
+
+  @Get('assets/mokidown-icon.png')
+  @Header('Content-Type', 'image/png')
+  @Header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+  getMokiIcon(@Res() response: Response): void {
+    response.status(200).send(MOKI_ICON);
+  }
+
+  @Get('assets/mokidown-wordmark.webp')
+  @Header('Content-Type', 'image/webp')
+  @Header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+  getMokiWordmark(@Res() response: Response): void {
+    response.status(200).send(MOKI_WORDMARK);
   }
 
   @Get('assets/app-icon.png')

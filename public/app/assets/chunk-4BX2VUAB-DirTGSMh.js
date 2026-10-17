@@ -1,1 +1,0 @@
-import{_ as c}from"./markdown-preview-zjWXQX5y.js";function e(c,e){c.accDescr&&e.setAccDescription?.(c.accDescr),c.accTitle&&e.setAccTitle?.(c.accTitle),c.title&&e.setDiagramTitle?.(c.title)}c(e,"populateCommonDb");export{e as p};

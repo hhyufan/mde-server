@@ -123,13 +123,18 @@
       .feature-block-host {
         scroll-margin-top: 80px;
       }
-    </style>
+      .brand { display: inline-flex; align-items: center; gap: 10px; }
+      .brand__icon { width: 32px; height: 32px; border-radius: 8px; display: block; }
+      .brand__wordmark { height: 20px; width: auto; display: block; }
+      .site-footer .brand { margin-bottom: 8px; }
+      .site-footer .brand__icon { width: 26px; height: 26px; }
+      .site-footer .brand__wordmark { height: 16px; }    </style>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="#top" aria-label="MokiDown 首页">
-        <span class="brand__mark">M</span>
-        <span class="brand__name">MokiDown</span>
+        <img class="brand__icon" src="/assets/mokidown-icon.png" alt="" />
+        <img class="brand__wordmark" src="/assets/mokidown-wordmark.webp" alt="MokiDown" />
       </a>
       <nav class="header-nav" aria-label="主导航">
         <a href="#demo">TRY IT NOW</a><a href="#why-mde">HOW MokiDown WORKS</a>
@@ -174,7 +179,6 @@
           </div>
         </div>
 
-        <div class="demo-frame demo-frame--live"><iframe class="demo-app-frame" src="/app/index.html" title="MokiDown 实时预览"></iframe></div>
 
         <a class="scroll-cue" id="scroll-cue" href="#why-mde">
           <span>继续了解 MokiDown</span>
@@ -198,7 +202,7 @@
     </main>
 
     <footer class="site-footer section-shell">
-      <div class="brand"><span class="brand__mark">M</span><span class="brand__name">MokiDown</span></div>
+      <div class="brand"><img class="brand__icon" src="/assets/mokidown-icon.png" alt="" /><img class="brand__wordmark" src="/assets/mokidown-wordmark.webp" alt="MokiDown" /></div>
       <p>本地优先、所见即所得的 Markdown 写作工作台。</p>
       <div>
         <a href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">桌面端</a>
