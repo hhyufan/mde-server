@@ -36,12 +36,17 @@ ensureDnsServers();
 export function setupApp(app: INestApplication): void {
   // The static homepage (and the embedded app build) uses a tiny inline
   // `window.process` shim before their bundles run, so allow inline scripts.
+  // The live demo is iframed from GitHub Pages, which needs frame-src/connect-src.
   app.use(
     helmet({
       crossOriginResourcePolicy: { policy: 'cross-origin' },
       contentSecurityPolicy: {
         useDefaults: true,
-        directives: { 'script-src': ["'self'", "'unsafe-inline'"] },
+        directives: {
+          'script-src': ["'self'", "'unsafe-inline'"],
+          'frame-src': ["'self'", 'https://hhyufan.github.io'],
+          'connect-src': ["'self'", 'https://hhyufan.github.io'],
+        },
       },
     }),
   );
