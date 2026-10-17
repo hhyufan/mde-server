@@ -34,7 +34,17 @@ ensureDnsServers();
  * 共用的 Nest 应用配置。
  */
 export function setupApp(app: INestApplication): void {
-  app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+  // The static homepage (and the embedded app build) uses a tiny inline
+  // `window.process` shim before their bundles run, so allow inline scripts.
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: { 'script-src': ["'self'", "'unsafe-inline'"] },
+      },
+    }),
+  );
   app.use((req, res, next) => {
     if (req.path.startsWith('/sync')) {
       res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');

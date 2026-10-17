@@ -11,6 +11,7 @@ const HOME_CSS = readFileSync(join(SITE_DIR, 'home.css'), 'utf8');
 const HOME_JS = readFileSync(join(SITE_DIR, 'home.js'), 'utf8');
 const MOKI_SITE_JS = readFileSync(join(SITE_DIR, 'moki-site.js'), 'utf8');
 const MOKI_SITE_CSS = readFileSync(join(SITE_DIR, 'moki-site.css'), 'utf8');
+const HOME_NEXT_JS = readFileSync(join(SITE_DIR, 'home-next.js'), 'utf8');
 const APP_ICON = readFileSync(join(SITE_DIR, 'app-icon.png'));
 const FAVICON = readFileSync(join(SITE_DIR, 'favicon.ico'));
 const APP_DIR = join(SITE_DIR, 'app');
@@ -59,6 +60,13 @@ export class HomeController {
 
   // Interactive marketing bundle: the five feature scenes built from the
   // installer components (see mokidown's site/ project).
+  @Get('assets/home-next.js')
+  @Header('Content-Type', 'application/javascript; charset=utf-8')
+  @Header('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400')
+  getHomeNextScript(@Res() response: Response): void {
+    response.status(200).send(HOME_NEXT_JS);
+  }
+
   @Get('assets/moki-site.js')
   @Header('Content-Type', 'application/javascript; charset=utf-8')
   @Header('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400')
