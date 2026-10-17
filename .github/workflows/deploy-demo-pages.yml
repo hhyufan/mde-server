@@ -21,7 +21,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public/app
+          publish_dir: ./public
           publish_branch: gh-pages
           force_orphan: true
           commit_message: 'deploy demo app (CI)'
