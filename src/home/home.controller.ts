@@ -95,7 +95,9 @@ export class HomeController {
       response
         .status(200)
         .setHeader('Content-Type', CONTENT_TYPES[extname(resolved)] || 'application/octet-stream')
-        .setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400')
+        // Do not let the CDN cache a stale demo build (hashed asset names are
+        // immutable, but index.html and the fallback path are not).
+        .setHeader('Cache-Control', 'no-store')
         .send(body);
     } catch {
       response.status(404).send('Not found');
