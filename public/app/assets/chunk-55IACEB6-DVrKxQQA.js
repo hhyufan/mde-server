@@ -1,0 +1,1 @@
+import{_ as e,d as o}from"./markdown-preview-zjWXQX5y.js";var a=e((e,a)=>{let t;"sandbox"===a&&(t=o("#i"+e));return o("sandbox"===a?t.nodes()[0].contentDocument.body:"body").select(`[id="${e}"]`)},"getDiagramElement");export{a as g};

@@ -117,13 +117,25 @@
     }
   }
 
+  function postTheme(next) {
+    try {
+      if (frame && frame.contentWindow) {
+        frame.contentWindow.postMessage({ type: 'moki:theme', theme: next }, '*');
+      }
+    } catch (_) {
+      /* iframe not ready */
+    }
+  }
+
   function syncAppToPageTheme() {
+    var theme = root.dataset.theme || 'light';
+    // Cross-origin iframe (GitHub Pages / OSS): postMessage is the only channel.
+    postTheme(theme);
     try {
       var doc = frame && frame.contentDocument;
-      if (!doc) return;
-      if (doc.documentElement.dataset.theme !== root.dataset.theme) appThemeButton()?.click();
+      if (doc && doc.documentElement.dataset.theme !== theme) appThemeButton()?.click();
     } catch (_) {
-      /* cross-origin or not ready */
+      /* cross-origin */
     }
   }
 
@@ -147,7 +159,7 @@
       });
       observer.observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     } catch (_) {
-      /* cross-origin */
+      /* cross-origin: the in-app toggle cannot notify the page */
     }
   }
 
