@@ -4,7 +4,7 @@
   "buildCommand": "rm -rf dist && npm run build",
   "functions": {
     "src/main.ts": {
-      "includeFiles": ["public/**"]
+      "includeFiles": "public/**"
     }
   }
 }
