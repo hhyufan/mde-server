@@ -88,29 +88,9 @@ export class HomeController {
     response.status(200).send(MOKI_SITE_CSS);
   }
 
-  // The live demo embeds the real app build under /app (vite --mode demo).
-  @Get('app/*')
-  getAppAsset(@Req() request: Request, @Res() response: Response): void {
-    const relative = decodeURIComponent(request.path.replace(/^\/app\/?/, ''));
-    const resolved = join(APP_DIR, relative);
-    if (!relative || !resolved.startsWith(APP_DIR)) {
-      response.status(404).send('Not found');
-      return;
-    }
-    try {
-      const body = readFileSync(resolved);
-      response
-        .status(200)
-        .setHeader('Content-Type', CONTENT_TYPES[extname(resolved)] || 'application/octet-stream')
-        // Do not let the CDN cache a stale demo build (hashed asset names are
-        // immutable, but index.html and the fallback path are not).
-        .setHeader('Cache-Control', 'no-store')
-        .send(body);
-    } catch {
-      response.status(404).send('Not found');
-    }
-  }
-
+  // The live demo is served from public/app by Vercel's static file layer.
+  // Serving it from the Node function would make Vercel compile the ESM bundle
+  // to CommonJS (exports is not defined), so there is deliberately no route.
   @Get('assets/app-icon.png')
   @Header('Content-Type', 'image/png')
   @Header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
