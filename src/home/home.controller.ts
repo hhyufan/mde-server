@@ -88,24 +88,36 @@ export class HomeController {
     response.status(200).send(MOKI_SITE_CSS);
   }
 
-  // The live demo embeds the real app build (vite --mode demo).
+  // The live demo embeds the real app build (vite --mode demo). Vercel compiles
+  // ESM under src/ to CommonJS, so the build lives on GitHub Pages and is
+  // proxied here to keep the iframe same-origin (File System Access API works).
   @Get('app/*')
-  getAppAsset(@Req() request: Request, @Res() response: Response): void {
+  async getAppAsset(@Req() request: Request, @Res() response: Response): Promise<void> {
     const relative = decodeURIComponent(request.path.replace(/^\/app\/?/, ''));
-    const resolved = join(APP_DIR, relative);
-    if (!relative || !resolved.startsWith(APP_DIR)) {
+    if (!relative || relative.includes('..')) {
       response.status(404).send('Not found');
       return;
     }
     try {
-      const body = readFileSync(resolved);
+      const upstream = await fetch(`https://hhyufan.github.io/mde-server/app/${relative}`, {
+        cache: 'no-store',
+      });
+      if (!upstream.ok) {
+        response.status(upstream.status).send('Not found');
+        return;
+      }
+      const contentType =
+        upstream.headers.get('content-type') ||
+        CONTENT_TYPES[extname(relative)] ||
+        'application/octet-stream';
+      const body = Buffer.from(await upstream.arrayBuffer());
       response
         .status(200)
-        .setHeader('Content-Type', CONTENT_TYPES[extname(resolved)] || 'application/octet-stream')
+        .setHeader('Content-Type', contentType)
         .setHeader('Cache-Control', 'no-store')
         .send(body);
     } catch {
-      response.status(404).send('Not found');
+      response.status(502).send('Upstream unavailable');
     }
   }
 
