@@ -36,16 +36,26 @@ ensureDnsServers();
 export function setupApp(app: INestApplication): void {
   // The static homepage (and the embedded app build) uses a tiny inline
   // `window.process` shim before their bundles run, so allow inline scripts.
-  // The live demo is iframed from GitHub Pages, which needs frame-src/connect-src.
+  // The live demo needs: WASM (Shiki), blob images/workers (Monaco), and the
+  // update manifest hosts for the installer download resolver.
   app.use(
     helmet({
       crossOriginResourcePolicy: { policy: 'cross-origin' },
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'script-src': ["'self'", "'unsafe-inline'"],
+          'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+          'img-src': ["'self'", 'data:', 'blob:'],
+          'worker-src': ["'self'", 'blob:'],
           'frame-src': ["'self'", 'https://hhyufan.github.io'],
-          'connect-src': ["'self'", 'https://hhyufan.github.io'],
+          'connect-src': [
+            "'self'",
+            'https://hhyufan.github.io',
+            'https://mokidown-updates.oss-cn-hangzhou.aliyuncs.com',
+            'https://mokidown-updates.oss-accelerate.aliyuncs.com',
+            'https://api.github.com',
+            'https://github.com',
+          ],
         },
       },
     }),
