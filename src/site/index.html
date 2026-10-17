@@ -164,7 +164,13 @@
     </header>
 
     <main id="top">
-      <section class="hero-demo section-shell" id="demo">
+      
+
+      <section class="product-story section-shell" id="why-mde" aria-labelledby="product-story-title">
+
+        <div data-moki-features></div>
+      </section>
+    <section class="hero-demo section-shell" id="demo">
         <div class="hero-demo__intro">
           <div class="hero-demo__title">
             <span class="section-kicker">TRY IT NOW</span>
@@ -180,26 +186,8 @@
         </div>
 
 
-        <a class="scroll-cue" id="scroll-cue" href="#why-mde">
-          <span>继续了解 MokiDown</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
-        </a>
-      </section>
-
-      <section class="product-story section-shell" id="why-mde" aria-labelledby="product-story-title">
-        <header class="story-intro reveal-block" data-reveal>
-          <div>
-            <span class="section-kicker">HOW MokiDown WORKS</span>
-            <h2 id="product-story-title">五个部分，都是 MokiDown 的真实能力。</h2>
-          </div>
-          <div class="story-intro__aside">
-            <a class="story-source-link" href="https://github.com/hhyufan/mde-tauri" target="_blank" rel="noreferrer">查看源代码 <span>→</span></a>
-          </div>
-        </header>
-
-        <div data-moki-features></div>
-      </section>
-    </main>
+        <div class="demo-frame demo-frame--live"><iframe class="demo-app-frame" src="/app/index.html" title="MokiDown 实时预览"></iframe></div>
+      
 
     <footer class="site-footer section-shell">
       <div class="brand"><img class="brand__icon" src="/assets/mokidown-icon.png" alt="" /><img class="brand__wordmark" src="/assets/mokidown-wordmark.webp" alt="MokiDown" /></div>
@@ -209,6 +197,8 @@
         <a href="https://github.com/hhyufan/mde-server" target="_blank" rel="noreferrer">服务端</a>
       </div>
     </footer>
+  </section>
+</main>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>

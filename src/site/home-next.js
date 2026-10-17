@@ -55,6 +55,8 @@
     while ((node = walker.nextNode())) {
       var text = node.nodeValue.trim();
       if (!text || !dict[text]) continue;
+      // Keep the demo scenes Chinese; translate the copy column beside them.
+      if (node.parentElement && node.parentElement.closest('.feature-block__stage, .feature-scene')) continue;
       node.nodeValue = node.nodeValue.replace(text, dict[text]);
     }
     document.querySelectorAll('[title], [aria-label], [placeholder]').forEach(function (element) {
@@ -72,6 +74,7 @@
     applyLocaleButton();
     translate(next);
     postLocale(next);
+    window.dispatchEvent(new CustomEvent('moki:locale', { detail: next }));
   }
 
   function postLocale(next) {
@@ -189,4 +192,9 @@
 
   applyLocaleButton();
   translate(locale);
+  // React renders the carousel after this script; re-apply to the static page
+  // once more so a saved English locale is honoured on first load.
+  window.setTimeout(function () {
+    translate(locale);
+  }, 700);
 })();
