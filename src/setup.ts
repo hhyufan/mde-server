@@ -65,11 +65,18 @@ export function setupApp(app: INestApplication): void {
     'tauri://localhost',
     'http://localhost:1420',
     'http://localhost:1421',
+    'http://localhost:3300',
+    'https://www.miaogu.xyz',
+    'https://miaogu.xyz',
     ...configuredOrigins,
   ]);
   app.enableCors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.has(origin)) return callback(null, true);
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.has(origin)) return callback(null, true);
+      // Preview deployments (Vercel) and their static module requests carry an
+      // Origin header; the embedded app bundle is served from the same site.
+      if (/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)) return callback(null, true);
       return callback(new Error('Origin is not allowed by CORS'), false);
     },
     credentials: true,
