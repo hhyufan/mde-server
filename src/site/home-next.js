@@ -13,19 +13,7 @@
       event.preventDefault();
       var target = document.querySelector(element.getAttribute('data-scroll'));
       if (!target) return;
-      // Smooth scrolling fights scroll-snap-type: y proximity and visibly
-      // jumps between snap points; suspend snapping for the duration.
-      var root = document.documentElement;
-      var previous = root.style.scrollSnapType;
-      root.style.scrollSnapType = 'none';
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      var timer = setTimeout(restore, 900);
-      function restore() {
-        clearTimeout(timer);
-        root.style.scrollSnapType = previous;
-        if ('onscrollend' in window) window.removeEventListener('scrollend', restore);
-      }
-      if ('onscrollend' in window) window.addEventListener('scrollend', restore, { once: true });
     });
   });
   var frame = document.querySelector('.demo-app-frame');

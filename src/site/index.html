@@ -128,12 +128,10 @@
       .brand__wordmark { height: 20px; width: auto; display: block; }
       .site-footer .brand { margin-bottom: 8px; }
       .site-footer .brand__icon { width: 26px; height: 26px; }
-      .site-footer .brand__wordmark { height: 16px; }      /* Reserve the carousel's first screen before React renders it, so the
-         initial paint does not show the #demo section underneath. */
-      /* Reserve all five pager screens so React rendering never changes the
-         page height (the old single-screen placeholder caused a snap jump). */
+      .site-footer .brand__wordmark { height: 16px; }      /* Reserve only the first screen; the React pager then grows the document
+         naturally (no fixed 5-screen placeholder, no extra scroll range). */
       [data-moki-features] {
-        min-height: calc(100svh * 5);
+        min-height: 100svh;
       }
 
     </style>
