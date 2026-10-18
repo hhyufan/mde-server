@@ -130,13 +130,16 @@
       .site-footer .brand__icon { width: 26px; height: 26px; }
       .site-footer .brand__wordmark { height: 16px; }    </style>
     <script>
-      // Start on the first pager screen: disable scroll restoration and reset
-      // before the carousel mounts (avoids a flash of the last screen).
+      // Always open on the first pager screen. A leftover #demo hash (from the
+      // "TRY IT NOW" nav link) or restored scroll position used to land on the
+      // last screen first and then jump back.
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-      if (!location.hash) {
-        window.scrollTo(0, 0);
-        document.addEventListener('DOMContentLoaded', function () { window.scrollTo(0, 0); });
+      if (location.hash === '#demo' || location.hash === '#why-mde') {
+        history.replaceState(null, '', location.pathname + location.search);
       }
+      window.scrollTo(0, 0);
+      document.addEventListener('DOMContentLoaded', function () { window.scrollTo(0, 0); });
+      window.addEventListener('load', function () { window.scrollTo(0, 0); });
     </script>
   </head>
   <body>
