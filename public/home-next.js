@@ -1,7 +1,20 @@
 // Home-page behaviour that used to live in home.js: locale switching, page
 // theme, reveal animation, and theme synchronisation with the embedded app.
 (function () {
+  // Always start on the first pager screen; browsers otherwise restore the
+  // last scroll position (which used to land on TRY IT NOW).
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   var root = document.documentElement;
+
+  // Nav uses JS scrolling so the URL never gains a #demo hash (a stale hash
+  // made the browser open on the last pager screen before snapping back).
+  document.querySelectorAll('[data-scroll]').forEach(function (element) {
+    element.addEventListener('click', function (event) {
+      event.preventDefault();
+      var target = document.querySelector(element.getAttribute('data-scroll'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
   var frame = document.querySelector('.demo-app-frame');
 
   var EN = {
@@ -55,6 +68,8 @@
     while ((node = walker.nextNode())) {
       var text = node.nodeValue.trim();
       if (!text || !dict[text]) continue;
+      // Keep the demo scenes Chinese; translate the copy column beside them.
+      if (node.parentElement && node.parentElement.closest('.feature-block__stage, .feature-scene')) continue;
       node.nodeValue = node.nodeValue.replace(text, dict[text]);
     }
     document.querySelectorAll('[title], [aria-label], [placeholder]').forEach(function (element) {
@@ -69,9 +84,12 @@
   function setLocale(next) {
     locale = next;
     localStorage.setItem('mokidown-home-locale', next);
-    applyLocaleButton();
+  
+
+  applyLocaleButton();
     translate(next);
     postLocale(next);
+    window.dispatchEvent(new CustomEvent('moki:locale', { detail: next }));
   }
 
   function postLocale(next) {
@@ -117,13 +135,25 @@
     }
   }
 
+  function postTheme(next) {
+    try {
+      if (frame && frame.contentWindow) {
+        frame.contentWindow.postMessage({ type: 'moki:theme', theme: next }, '*');
+      }
+    } catch (_) {
+      /* iframe not ready */
+    }
+  }
+
   function syncAppToPageTheme() {
+    var theme = root.dataset.theme || 'light';
+    // Cross-origin iframe (GitHub Pages / OSS): postMessage is the only channel.
+    postTheme(theme);
     try {
       var doc = frame && frame.contentDocument;
-      if (!doc) return;
-      if (doc.documentElement.dataset.theme !== root.dataset.theme) appThemeButton()?.click();
+      if (doc && doc.documentElement.dataset.theme !== theme) appThemeButton()?.click();
     } catch (_) {
-      /* cross-origin or not ready */
+      /* cross-origin */
     }
   }
 
@@ -147,7 +177,7 @@
       });
       observer.observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     } catch (_) {
-      /* cross-origin */
+      /* cross-origin: the in-app toggle cannot notify the page */
     }
   }
 
@@ -175,6 +205,39 @@
     observer.observe(block);
   });
 
+  // Hold the viewport at the top until React has rendered all pager screens,
+  // then jump straight to the first screen and release the lock.
+  var bootLock = window.setInterval(function () {
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
+  }, 30);
+  var bootDone = false;
+  function finishBoot() {
+    if (bootDone) return;
+    bootDone = true;
+    window.clearInterval(bootLock);
+    var first = document.querySelector('.feature-block-host');
+    var top = first ? first.getBoundingClientRect().top + window.scrollY : 0;
+    window.scrollTo({ top: top, left: 0, behavior: 'instant' });
+    window.setTimeout(function () {
+      document.documentElement.classList.remove('is-booting');
+    }, 60);
+  }
+  var bootCheck = window.setInterval(function () {
+    if (document.querySelectorAll('.feature-block-host').length >= 5) {
+      window.clearInterval(bootCheck);
+      finishBoot();
+    }
+  }, 50);
+  window.setTimeout(function () {
+    window.clearInterval(bootCheck);
+    finishBoot();
+  }, 8000);
+
   applyLocaleButton();
   translate(locale);
+  // React renders the carousel after this script; re-apply to the static page
+  // once more so a saved English locale is honoured on first load.
+  window.setTimeout(function () {
+    translate(locale);
+  }, 700);
 })();
