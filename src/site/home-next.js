@@ -5,6 +5,16 @@
   // last scroll position (which used to land on TRY IT NOW).
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   var root = document.documentElement;
+
+  // Nav uses JS scrolling so the URL never gains a #demo hash (a stale hash
+  // made the browser open on the last pager screen before snapping back).
+  document.querySelectorAll('[data-scroll]').forEach(function (element) {
+    element.addEventListener('click', function (event) {
+      event.preventDefault();
+      var target = document.querySelector(element.getAttribute('data-scroll'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
   var frame = document.querySelector('.demo-app-frame');
 
   var EN = {
