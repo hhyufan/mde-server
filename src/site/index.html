@@ -133,11 +133,18 @@
       [data-moki-features] {
         min-height: 100svh;
       }
+
+      /* Lock scrolling while the first paint settles; released on window load. */
+      html.is-booting {
+        overflow: hidden;
+        scroll-snap-type: none;
+      }
     </style>
     <script>
       // Always open on the first pager screen. A leftover #demo hash (from the
       // "TRY IT NOW" nav link) or restored scroll position used to land on the
       // last screen first and then jump back.
+      document.documentElement.classList.add('is-booting');
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       if (location.hash === '#demo' || location.hash === '#why-mde') {
         history.replaceState(null, '', location.pathname + location.search);

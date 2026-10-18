@@ -84,7 +84,35 @@
   function setLocale(next) {
     locale = next;
     localStorage.setItem('mokidown-home-locale', next);
-    applyLocaleButton();
+    // Hold the viewport at the top until React has rendered all pager screens,
+  // then jump straight to the first screen and release the lock.
+  var bootLock = window.setInterval(function () {
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
+  }, 30);
+  var bootDone = false;
+  function finishBoot() {
+    if (bootDone) return;
+    bootDone = true;
+    window.clearInterval(bootLock);
+    var first = document.querySelector('.feature-block-host');
+    var top = first ? first.getBoundingClientRect().top + window.scrollY : 0;
+    window.scrollTo({ top: top, left: 0, behavior: 'instant' });
+    window.setTimeout(function () {
+      document.documentElement.classList.remove('is-booting');
+    }, 60);
+  }
+  var bootCheck = window.setInterval(function () {
+    if (document.querySelectorAll('.feature-block-host').length >= 5) {
+      window.clearInterval(bootCheck);
+      finishBoot();
+    }
+  }, 50);
+  window.setTimeout(function () {
+    window.clearInterval(bootCheck);
+    finishBoot();
+  }, 8000);
+
+  applyLocaleButton();
     translate(next);
     postLocale(next);
     window.dispatchEvent(new CustomEvent('moki:locale', { detail: next }));
@@ -202,6 +230,34 @@
   document.querySelectorAll('[data-reveal]').forEach(function (block) {
     observer.observe(block);
   });
+
+  // Hold the viewport at the top until React has rendered all pager screens,
+  // then jump straight to the first screen and release the lock.
+  var bootLock = window.setInterval(function () {
+    if (window.scrollY !== 0) window.scrollTo(0, 0);
+  }, 30);
+  var bootDone = false;
+  function finishBoot() {
+    if (bootDone) return;
+    bootDone = true;
+    window.clearInterval(bootLock);
+    var first = document.querySelector('.feature-block-host');
+    var top = first ? first.getBoundingClientRect().top + window.scrollY : 0;
+    window.scrollTo({ top: top, left: 0, behavior: 'instant' });
+    window.setTimeout(function () {
+      document.documentElement.classList.remove('is-booting');
+    }, 60);
+  }
+  var bootCheck = window.setInterval(function () {
+    if (document.querySelectorAll('.feature-block-host').length >= 5) {
+      window.clearInterval(bootCheck);
+      finishBoot();
+    }
+  }, 50);
+  window.setTimeout(function () {
+    window.clearInterval(bootCheck);
+    finishBoot();
+  }, 8000);
 
   applyLocaleButton();
   translate(locale);
