@@ -1,6 +1,15 @@
 // Home-page behaviour that used to live in home.js: locale switching, page
 // theme, reveal animation, and theme synchronisation with the embedded app.
 (function () {
+  // Always start on the first pager screen; browsers otherwise restore the
+  // last scroll position (which used to land on TRY IT NOW).
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+    window.addEventListener('load', function () {
+      window.scrollTo(0, 0);
+    });
+  }
   var root = document.documentElement;
   var frame = document.querySelector('.demo-app-frame');
 
