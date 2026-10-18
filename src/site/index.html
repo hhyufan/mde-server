@@ -129,6 +129,15 @@
       .site-footer .brand { margin-bottom: 8px; }
       .site-footer .brand__icon { width: 26px; height: 26px; }
       .site-footer .brand__wordmark { height: 16px; }    </style>
+    <script>
+      // Start on the first pager screen: disable scroll restoration and reset
+      // before the carousel mounts (avoids a flash of the last screen).
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      if (!location.hash) {
+        window.scrollTo(0, 0);
+        document.addEventListener('DOMContentLoaded', function () { window.scrollTo(0, 0); });
+      }
+    </script>
   </head>
   <body>
     <header class="site-header">
