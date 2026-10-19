@@ -53,6 +53,22 @@ export class HomeController {
     response.status(200).send(HOME_HTML);
   }
 
+  @Get(['docs/plugins', 'docs/plugins/', 'docs/plugins/*'])
+  getPluginDocumentation(@Req() request: Request, @Res() response: Response): void {
+    const filename = request.path.replace(/^\/docs\/plugins\/?/, '') || 'index.html';
+    // The documentation build emits a flat directory; no arbitrary paths.
+    if (!/^[a-zA-Z0-9_.-]+$/.test(filename) || filename.includes('..')) {
+      response.status(404).send('Not found'); return;
+    }
+    const publicFile = join(PUBLIC_DIR, 'docs', 'plugins', filename);
+    const file = existsSync(publicFile) ? publicFile : join(SITE_DIR, 'docs', 'plugins', filename);
+    if (!existsSync(file)) { response.status(404).send('Not found'); return; }
+    response.status(200)
+      .setHeader('Content-Type', filename.endsWith('.d.ts') ? 'text/plain; charset=utf-8' : CONTENT_TYPES[extname(filename)] || 'application/octet-stream')
+      .setHeader('Cache-Control', 'public, max-age=0, must-revalidate')
+      .send(readFileSync(file));
+  }
+
   @Get('assets/home.css')
   @Header('Content-Type', 'text/css; charset=utf-8')
   @Header('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400')
