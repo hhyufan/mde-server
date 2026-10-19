@@ -1,0 +1,1 @@
+import{W as s,a,b as e,c as n,d as o}from"./monaco-vendor-D3iNRgyn.js";self.MonacoEnvironment={getWorker:(r,c)=>"json"===c?new s:"css"===c||"scss"===c||"less"===c?new a:"html"===c||"handlebars"===c||"razor"===c?new e:"typescript"===c||"javascript"===c?new n:new o};

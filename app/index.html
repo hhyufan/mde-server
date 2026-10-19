@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>window.process = { env: { NODE_ENV: "production" } };</script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+    <title>MokiDown</title>
+
+    <!--
+      Critical styles — inlined so the very first paint of the WebView is the
+      user's persisted theme color, not the default white. This eliminates the
+      "white flash" during WebView2 / WKWebView / WebKitGTK startup before
+      our app's CSS bundle is parsed.
+    -->
+    <style>
+      html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+      html { background: #f5f5f7; }
+      html[data-theme='dark'] { background: #121212; }
+      #root { height: 100%; }
+
+      /* Visible fallback for fatal startup errors. Without this, any
+         uncaught error before React mounts (or any error during the
+         first render with no error boundary) results in a totally blank
+         screen — especially painful on Android where you can't easily
+         open devtools. */
+      #__startup_error__ {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        padding: 16px;
+        overflow: auto;
+        font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        color: #fff;
+        background: #b71c1c;
+        white-space: pre-wrap;
+        word-break: break-word;
+        -webkit-user-select: text;
+        user-select: text;
+      }
+      #__startup_error__ h2 {
+        margin: 0 0 8px;
+        font: 600 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+    </style>
+
+    <!-- The native window is visible from creation, so startup errors are visible too. -->
+    <script>
+      (function () {
+        // ---- Startup error capture --------------------------------------
+        // Any uncaught error before React mounts (or while React is
+        // mounting with no error boundary) gets surfaced into a visible
+        // overlay. This is critical on Android where opening devtools
+        // requires USB + chrome://inspect.
+        function showStartupError(msg, kind) {
+          try {
+            // React 挂载完成后，后续运行时错误应交给组件级错误边界处理，
+            // 不再用全屏启动遮罩覆盖仍可工作的应用。
+            if (appMounted) {
+              console.error(msg);
+              return;
+            }
+            var box = document.getElementById('__startup_error__');
+            if (!box) {
+              box = document.createElement('pre');
+              box.id = '__startup_error__';
+              var heading = document.createElement('h2');
+              heading.textContent = 'Startup error';
+              box.appendChild(heading);
+              var body = document.createElement('div');
+              body.id = '__startup_error_body__';
+              box.appendChild(body);
+              (document.body || document.documentElement).appendChild(box);
+            }
+            // A timeout is only a diagnostic hint: the development server may
+            // still be transforming the initial module graph. Real runtime
+            // errors must remain visible until the app is restarted.
+            box.dataset.kind = kind || 'error';
+            var body = document.getElementById('__startup_error_body__');
+            var line = document.createElement('div');
+            line.textContent = String(msg);
+            body.appendChild(line);
+            box.style.display = 'block';
+          } catch (_) { /* swallow — overlay is best effort */ }
+        }
+        var appMounted = false;
+        // Errors that should never reach the visible overlay. Monaco
+        // (and a couple of other Microsoft libs) throw `CancellationError`
+        // — name === 'Canceled' — as the standard mechanism for aborting
+        // in-flight async work whenever a model is swapped out, the user
+        // saves while a hover/format request is pending, etc. They are
+        // *not* failures, just cooperative cancellation. Same goes for
+        // any rejection whose reason is literally 'Canceled' or a thrown
+        // AbortError. Surfacing them in a red full-screen overlay would
+        // make every save look like a crash.
+        function isBenignCancellation(reason) {
+          if (!reason) return false;
+          var name = reason.name || (typeof reason === 'object' && reason.constructor && reason.constructor.name);
+          if (name === 'Canceled' || name === 'CancellationError' || name === 'AbortError') return true;
+          var msg = (reason.message || String(reason || '')).toLowerCase();
+          return msg === 'canceled' || msg === 'canceled: canceled' || msg === 'aborted';
+        }
+        window.addEventListener('error', function (e) {
+          if (isBenignCancellation(e && e.error)) return;
+          var msg = (e && (e.message || (e.error && e.error.stack))) || 'Unknown error';
+          if (e && e.filename) msg += '\n  at ' + e.filename + ':' + e.lineno + ':' + e.colno;
+          if (e && e.error && e.error.stack) msg += '\n' + e.error.stack;
+          showStartupError(msg);
+        });
+        window.addEventListener('unhandledrejection', function (e) {
+          var reason = e && e.reason;
+          if (isBenignCancellation(reason)) {
+            if (typeof e.preventDefault === 'function') e.preventDefault();
+            return;
+          }
+          var msg = reason && (reason.stack || reason.message) ? (reason.stack || reason.message) : String(reason);
+          showStartupError('Unhandled promise rejection: ' + msg);
+        });
+        // Fail-safe: a cold Vite development start can spend more than a few
+        // seconds transforming the initial dependency graph. Wait long enough
+        // to avoid flagging normal startup as a crash, and automatically clear
+        // this diagnostic if React subsequently mounts successfully.
+        var startupTimeoutMs = 30000;
+        var startupTimer = setTimeout(function () {
+          var root = document.getElementById('root');
+          if (root && root.childElementCount === 0 && !document.getElementById('__startup_error__')) {
+            showStartupError(
+              'App did not render within ' + (startupTimeoutMs / 1000) + ' s.\n' +
+              'UA: ' + (navigator && navigator.userAgent) + '\n' +
+              'Tauri internals present: ' + !!window.__TAURI_INTERNALS__,
+              'timeout'
+            );
+          }
+        }, startupTimeoutMs);
+
+        window.addEventListener('DOMContentLoaded', function () {
+          var root = document.getElementById('root');
+          if (!root) return;
+
+          function handleReactMount() {
+            // Suspense 的启动占位节点并不代表应用已经可用；只有 App 根容器
+            // 出现后才结束启动错误捕获。
+            if (!root.querySelector('.app')) return false;
+            appMounted = true;
+            clearTimeout(startupTimer);
+            var box = document.getElementById('__startup_error__');
+            if (box && box.dataset.kind === 'timeout') box.remove();
+            return true;
+          }
+
+          if (handleReactMount()) return;
+          var observer = new MutationObserver(function () {
+            if (handleReactMount()) observer.disconnect();
+          });
+          observer.observe(root, { childList: true });
+        });
+
+        // 1. Apply persisted theme to <html> so the inline CSS picks it up.
+        try {
+          var raw = localStorage.getItem('mokidown-theme');
+          // 品牌更名（MDE → MokiDown）后的兼容读取：新键还没有值时回退到旧键，
+          // 避免首屏先按系统主题闪一下；真正的复制迁移在
+          // src/utils/storageMigration.js，由 src/main.jsx 最先执行。
+          if (raw === null) raw = localStorage.getItem('mde-theme');
+          var theme = raw && JSON.parse(raw)?.state?.theme;
+          if (!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = theme;
+        } catch (_) { /* noop — fall back to light */ }
+
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-D4hYPg0k.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DmafelnP.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
