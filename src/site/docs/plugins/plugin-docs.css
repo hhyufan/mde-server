@@ -29,3 +29,65 @@ html[data-theme='dark'] .theme-icon--moon { display: block; }
   font-weight: 600;
   letter-spacing: 0.04em;
 }
+
+/* Language switch, same glyph animation as the homepage. */
+.language-button {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-sec);
+  background: transparent;
+  cursor: pointer;
+  transition: color .15s, background-color .15s;
+}
+
+.language-button:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+
+.language-icon {
+  width: 25px;
+  height: 22px;
+  overflow: visible;
+}
+
+.language-icon__glyph {
+  fill: currentColor;
+  text-anchor: middle;
+  dominant-baseline: central;
+  transform-box: view-box;
+  transform-origin: 0 0;
+  transition: transform .42s cubic-bezier(.2,.85,.25,1), opacity .24s ease, fill .24s ease;
+}
+
+.language-icon__glyph--zh {
+  font: 600 14px var(--font-app, system-ui, sans-serif);
+  transform: translate(9px, 9px) scale(1);
+}
+
+.language-icon__glyph--en {
+  font: 700 15.5px var(--font-editor, system-ui, monospace);
+  transform: translate(21px, 18px) scale(.58);
+  opacity: .72;
+}
+
+.language-button[data-locale='en'] .language-icon__glyph--zh {
+  transform: translate(21px, 18px) scale(.62);
+  opacity: .72;
+}
+
+.language-button[data-locale='en'] .language-icon__glyph--en {
+  transform: translate(9px, 9px) scale(1.18);
+  opacity: 1;
+  fill: var(--accent);
+}
+
+.language-button[data-locale='zh'] .language-icon__glyph--zh {
+  fill: var(--accent);
+}

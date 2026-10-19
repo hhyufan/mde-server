@@ -25,7 +25,7 @@
     document.querySelectorAll('[data-ph-zh]').forEach((el) => {
       el.placeholder = lang === 'zh-CN' ? el.dataset.phZh : el.dataset.phEn;
     });
-    langButton.textContent = lang === 'zh-CN' ? 'EN' : '中';
+    langButton.dataset.locale = lang === 'zh-CN' ? 'zh' : 'en';
     langButton.setAttribute('aria-label', lang === 'zh-CN' ? 'Switch to English' : '切换到中文');
   };
   applyLang(root.lang === 'en-US' ? 'en-US' : 'zh-CN');
