@@ -20,7 +20,7 @@
       window.process = { env: { NODE_ENV: 'production' } };
     </script>
     <script src="/assets/moki-site.js" defer></script>
-    <script src="/assets/home-next.js" defer></script>
+    <script src="/assets/home-next.js?v=87fe6f7c5476" defer></script>
     <style>
       /* The live editor replaces the old simulated window but keeps the hero
          frame's rounded surface and size. */
@@ -143,10 +143,7 @@
       if (location.hash === '#demo' || location.hash === '#why-mde') {
         history.replaceState(null, '', location.pathname + location.search);
       }
-      window.scrollTo(0, 0);
-      document.addEventListener('DOMContentLoaded', function () { window.scrollTo(0, 0); });
-      window.addEventListener('load', function () { window.scrollTo(0, 0); });
-    </script>
+      window.scrollTo(0, 0);    </script>
   </head>
   <body>
     <header class="site-header">
@@ -182,7 +179,7 @@
     </header>
 
     <main id="top">
-      
+
 
       <section class="product-story section-shell" id="why-mde" aria-labelledby="product-story-title">
 
@@ -205,7 +202,7 @@
 
 
         <div class="demo-frame demo-frame--live"><iframe class="demo-app-frame" src="/app/index.html" title="MokiDown 实时预览"></iframe></div>
-      
+
 
     <footer class="site-footer section-shell">
       <div class="brand"><img class="brand__icon" src="/assets/mokidown-icon.png" alt="" /><img class="brand__wordmark" src="/assets/mokidown-wordmark.webp" alt="MokiDown" /></div>
@@ -218,8 +215,5 @@
   </section>
 </main>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-    <script>
-  
   </body>
 </html>

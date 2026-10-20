@@ -55,6 +55,7 @@ export class HomeController {
 
   @Get(['docs/plugins', 'docs/plugins/', 'docs/plugins/*'])
   getPluginDocumentation(@Req() request: Request, @Res() response: Response): void {
+    if (request.path === '/docs/plugins') { response.redirect(308, '/docs/plugins/'); return; }
     const filename = request.path.replace(/^\/docs\/plugins\/?/, '') || 'index.html';
     // The documentation build emits a flat directory; no arbitrary paths.
     if (!/^[a-zA-Z0-9_.-]+$/.test(filename) || filename.includes('..')) {

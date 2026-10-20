@@ -123,23 +123,19 @@
   });
 
   // ---- page theme + embedded app theme ------------------------------------
-  var storedTheme = localStorage.getItem('mokidown-home-theme');
+  var storedTheme;
+  try { storedTheme = localStorage.getItem('mokidown-home-theme'); } catch (_) {}
   if (storedTheme === 'dark' || storedTheme === 'light') root.dataset.theme = storedTheme;
 
-  function appThemeButton() {
-    try {
-      return frame && frame.contentDocument
-        ? frame.contentDocument.querySelector('.sidebar__footer-btn')
-        : null;
-    } catch (_) {
-      return null;
-    }
-  }
-
+  var themeRequest = 0;
+  var pendingTheme = null;
+  var messageThemeBridge = false;
+  var appThemeObserver;
   function postTheme(next) {
     try {
       if (frame && frame.contentWindow) {
-        frame.contentWindow.postMessage({ type: 'moki:theme', theme: next }, '*');
+        pendingTheme = next;
+        frame.contentWindow.postMessage({ type: 'moki:theme', theme: next, requestId: ++themeRequest }, '*');
       }
     } catch (_) {
       /* iframe not ready */
@@ -147,36 +143,50 @@
   }
 
   function syncAppToPageTheme() {
-    var theme = root.dataset.theme || 'light';
-    // Cross-origin iframe (GitHub Pages / OSS): postMessage is the only channel.
-    postTheme(theme);
-    try {
-      var doc = frame && frame.contentDocument;
-      if (doc && doc.documentElement.dataset.theme !== theme) appThemeButton()?.click();
-    } catch (_) {
-      /* cross-origin */
-    }
+    postTheme(root.dataset.theme || 'light');
+    // Set a target theme. Clicking the iframe toggle also starts an asynchronous
+    // View Transition, which can invert a theme already applied by postMessage.
   }
+
+  window.addEventListener('message', function (event) {
+    if (!frame || event.source !== frame.contentWindow) return;
+    var data = event.data;
+    if (data?.type === 'moki:theme-ready') {
+      messageThemeBridge = true;
+      appThemeObserver?.disconnect();
+      syncAppToPageTheme();
+    } else if (data?.type === 'moki:theme-changed' && (data.theme === 'dark' || data.theme === 'light')) {
+      if (data.requestId !== undefined && data.requestId !== themeRequest) return;
+      if (pendingTheme && data.theme !== pendingTheme) return;
+      pendingTheme = null;
+      root.dataset.theme = data.theme;
+      try { localStorage.setItem('mokidown-home-theme', data.theme); } catch (_) {}
+    }
+  });
 
   document.getElementById('theme-toggle')?.addEventListener('click', function () {
     var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
     root.dataset.theme = next;
-    localStorage.setItem('mokidown-home-theme', next);
+    try { localStorage.setItem('mokidown-home-theme', next); } catch (_) {}
     syncAppToPageTheme();
   });
 
   function watchAppTheme() {
     try {
       var doc = frame && frame.contentDocument;
-      if (!doc) return;
-      var observer = new MutationObserver(function () {
+      if (!doc || messageThemeBridge) return;
+      appThemeObserver?.disconnect();
+      if (doc.documentElement.dataset.theme === root.dataset.theme) pendingTheme = null;
+      appThemeObserver = new MutationObserver(function () {
         var theme = doc.documentElement.dataset.theme;
+        if (pendingTheme && theme !== pendingTheme) return;
+        if (theme === pendingTheme) pendingTheme = null;
         if ((theme === 'dark' || theme === 'light') && theme !== root.dataset.theme) {
           root.dataset.theme = theme;
-          localStorage.setItem('mokidown-home-theme', theme);
+          try { localStorage.setItem('mokidown-home-theme', theme); } catch (_) {}
         }
       });
-      observer.observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      appThemeObserver.observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     } catch (_) {
       /* cross-origin: the in-app toggle cannot notify the page */
     }
@@ -206,33 +216,8 @@
     observer.observe(block);
   });
 
-  // Hold the viewport at the top until React has rendered all pager screens,
-  // then jump straight to the first screen and release the lock.
-  var bootLock = window.setInterval(function () {
-    if (window.scrollY !== 0) window.scrollTo(0, 0);
-  }, 30);
-  var bootDone = false;
-  function finishBoot() {
-    if (bootDone) return;
-    bootDone = true;
-    window.clearInterval(bootLock);
-    var first = document.querySelector('.feature-block-host');
-    var top = first ? first.getBoundingClientRect().top + window.scrollY : 0;
-    window.scrollTo({ top: top, left: 0, behavior: 'instant' });
-    window.setTimeout(function () {
-      document.documentElement.classList.remove('is-booting');
-    }, 60);
-  }
-  var bootCheck = window.setInterval(function () {
-    if (document.querySelectorAll('.feature-block-host').length >= 5) {
-      window.clearInterval(bootCheck);
-      finishBoot();
-    }
-  }, 50);
-  window.setTimeout(function () {
-    window.clearInterval(bootCheck);
-    finishBoot();
-  }, 8000);
+  // Let the first user scroll proceed without delayed boot/load resets.
+  root.classList.remove('is-booting');
 
   applyLocaleButton();
   translate(locale);

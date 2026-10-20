@@ -5,7 +5,7 @@
   setTheme(root.dataset.theme);
   themeButton.addEventListener('click', () => {
     const theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; setTheme(theme);
-    try { localStorage.setItem('mokidown-home-theme', theme); } catch {}
+    try { localStorage.setItem('mokidown-home-theme', theme); } catch { /* The document also works when browser storage is unavailable. */ }
   });
   const sidebar = document.querySelector('.docs-sidebar'), menu = document.getElementById('menu-toggle');
   menu.addEventListener('click', () => { const open = sidebar.classList.toggle('is-open'); menu.setAttribute('aria-expanded', String(open)); });
@@ -29,7 +29,7 @@
   document.addEventListener('keydown', event => { if (event.key === '/' && !/input|textarea|select/i.test(document.activeElement?.tagName)) { event.preventDefault(); sidebar.classList.add('is-open'); menu.setAttribute('aria-expanded','true'); search.focus(); } if (event.key === 'Escape') { sidebar.classList.remove('is-open'); menu.setAttribute('aria-expanded','false'); search.blur(); } });
   document.getElementById('api-filter').addEventListener('input', event => {
     const query = event.target.value.toLowerCase().trim(); let count = 0;
-    for (const card of document.querySelectorAll('.api-card')) { card.hidden = !card.textContent.toLowerCase().includes(query); if (!card.hidden) count++; }
+    for (const card of document.querySelectorAll('.api-card')) { card.hidden = !(card.dataset.capability + ' ' + card.textContent).toLowerCase().includes(query); if (!card.hidden) count++; }
     document.getElementById('api-empty').hidden = count !== 0;
   });
   for (const button of document.querySelectorAll('[data-copy]')) button.addEventListener('click', async () => {
