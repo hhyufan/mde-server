@@ -1009,3 +1009,29 @@ body::before {
   height: 46px;
   stroke-width: 1.3;
 }
+
+/* Sidebar follows the content transparency too (the tree panel used to paint
+   an opaque surface over it). */
+.notes-sidebar .moki-tree,
+.notes-sidebar .moki-tree__scroll,
+.notes-sidebar .moki-tree__canvas,
+.notes-sidebar .notes-panel {
+  background: transparent !important;
+}
+
+.notes-sidebar {
+  background: color-mix(in srgb, var(--sidebar) calc(var(--notes-surface-opacity, 96) * 1%), transparent) !important;
+  border-right: 1px solid var(--border);
+}
+
+/* Divider band masks the background image between the two panes. */
+.notes-resizer {
+  flex: 0 0 7px;
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  box-shadow: inset 1px 0 0 var(--border), inset -1px 0 0 var(--border);
+}
+
+.notes-resizer:hover,
+.notes-resizer.is-dragging {
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg));
+}
