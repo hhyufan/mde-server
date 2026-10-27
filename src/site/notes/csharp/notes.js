@@ -34,6 +34,23 @@
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 
+  const CODE_KEYWORDS = {
+    csharp: 'using|namespace|class|struct|interface|record|public|private|protected|internal|static|readonly|const|void|int|string|bool|double|decimal|var|new|return|if|else|for|foreach|while|switch|case|break|continue|try|catch|finally|throw|async|await|Task|List|Dictionary|IEnumerable|System|true|false|null',
+    bash: 'dotnet|nuget|git|npm|node|cd|mkdir|copy|echo|set|export',
+    json: 'true|false|null',
+    xml: '',
+  };
+
+  const highlightCode = (code, lang) => {
+    const source = escapeHtml(code);
+    const words = CODE_KEYWORDS[lang] || '';
+    return source
+      .replace(/(\/\/[^\n]*)/g, '<span class="tok-comment">$1</span>')
+      .replace(/(&quot;[^&]*?&quot;)/g, '<span class="tok-string">$1</span>')
+      .replace(/(\b\d+(?:\.\d+)?\b)/g, '<span class="tok-number">$1</span>')
+      .replace(words ? new RegExp(`\\b(${words})\\b`, "g") : /$^/, '<span class="tok-keyword">$1</span>');
+  };
+
   const renderMarkdown = (markdown) => {
     const lines = String(markdown).replace(/\r\n/g, '\n').split('\n');
     const html = [];
@@ -56,7 +73,7 @@
       const fence = line.match(/^```(\w*)\s*$/);
       if (fence) {
         if (inCode) {
-          html.push(`<pre><code data-lang="${escapeHtml(codeLang)}">${escapeHtml(codeLines.join('\n'))}</code></pre>`);
+          html.push(`<pre><code data-lang="${escapeHtml(codeLang)}">${highlightCode(codeLines.join('\n'), codeLang)}</code></pre>`);
           inCode = false; codeLines = []; codeLang = '';
         } else {
           flush(); closeList(); closeQuote();
@@ -123,7 +140,7 @@
       if (/^---+$/.test(line.trim())) { flush(); html.push('<hr />'); continue; }
       paragraph.push(line.trim());
     }
-    if (inCode) html.push(`<pre><code>${escapeHtml(codeLines.join('\n'))}</code></pre>`);
+    if (inCode) html.push(`<pre><code>${highlightCode(codeLines.join('\n'), '')}</code></pre>`);
     flush(); closeList(); closeQuote();
     return html.join('\n');
   };
@@ -157,59 +174,23 @@
   // ── Tree ────────────────────────────────────────────────────────────────
   const countNodes = (nodes) => nodes.reduce((sum, node) => sum + 1 + countNodes(node.children || []), 0);
 
+  let treeViewer = null;
+  let markdownViewer = null;
+
+  const buildNodes = (nodes, parentKey = "") => nodes.map((node) => {
+    const key = parentKey ? `${parentKey}/${node.title}` : node.title;
+    return { key, title: node.title, jump: node.jump || null, children: buildNodes(node.children || [], key) };
+  });
+
   const renderTree = (tree) => {
     countEl.textContent = String(countNodes(tree));
-    treeEl.replaceChildren();
-    if (!tree.length) {
-      const empty = document.createElement('li');
-      empty.className = 'notes-tree__empty';
-      empty.textContent = '这篇笔记没有大纲';
-      treeEl.append(empty);
-      return;
-    }
-    const walk = (items, container) => {
-      for (const node of items) {
-        const li = document.createElement('li');
-        li.className = 'notes-node';
-        const row = document.createElement('div');
-        row.className = 'notes-node__row';
-
-        const toggle = document.createElement('button');
-        toggle.type = 'button';
-        toggle.className = 'notes-node__toggle';
-        toggle.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 3 5 5-5 5"/></svg>';
-        if (!node.children || !node.children.length) toggle.classList.add('is-leaf');
-        toggle.addEventListener('click', (event) => {
-          event.stopPropagation();
-          const key = nodeKey(node);
-          if (state.expanded.has(key)) state.expanded.delete(key);
-          else state.expanded.add(key);
-          renderTree(state.note?.tree || []);
-        });
-
-        const title = document.createElement('button');
-        title.type = 'button';
-        title.className = 'notes-node__title';
-        renderTitle(title, node.title);
-        title.title = node.title;
-        title.addEventListener('click', () => jumpToNode(node));
-
-        row.append(toggle, title);
-        li.append(row);
-
-        if (node.children && node.children.length) {
-          const open = state.expanded.has(nodeKey(node));
-          li.classList.toggle('is-open', open);
-          const ul = document.createElement('ul');
-          ul.className = 'notes-node__children';
-          if (!open) ul.hidden = true;
-          walk(node.children, ul);
-          li.append(ul);
-        }
-        container.append(li);
-      }
-    };
-    walk(tree, treeEl);
+    const viewer = window.MokiNotesViewer;
+    if (!viewer) return;
+    if (treeViewer) treeViewer.unmount();
+    treeViewer = viewer.mountTree(treeEl, buildNodes(tree), [...state.expanded], {
+      onExpand: (keys) => { state.expanded = new Set(keys); },
+      onSelect: (node) => jumpToNode(node),
+    });
   };
 
   // Outline titles may contain inline code (`global.json`); render it as a chip.
@@ -249,6 +230,7 @@
     prevBtn.disabled = state.index <= 0;
     nextBtn.disabled = state.index >= state.notes.length - 1;
     if (state.note) treeTitleEl.textContent = state.note.title || '知识树';
+    if (state.note && fileLabel) fileLabel.textContent = `${state.note.title || state.note.name}.mgtree`;
   };
 
   const applyScale = () => {
@@ -268,16 +250,11 @@
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       state.note = { ...entry, ...data };
+      // The viewer auto-expands the first two levels when no keys are given.
       state.expanded = new Set();
-      // Auto-expand the first two levels so the outline is useful immediately.
-      const expand = (nodes, depth) => {
-        for (const node of nodes) {
-          if (depth < 2 && node.children?.length) state.expanded.add(nodeKey(node));
-          if (node.children?.length) expand(node.children, depth + 1);
-        }
-      };
-      expand(data.tree || [], 0);
-      previewEl.innerHTML = renderMarkdown(data.markdown || '');
+      if (markdownViewer) markdownViewer.unmount();
+      markdownViewer = window.MokiNotesViewer ? window.MokiNotesViewer.mountMarkdown(previewEl, data.markdown || '') : null;
+      if (!markdownViewer) previewEl.textContent = data.markdown || '';
       renderTree(data.tree || []);
       scrollEl.scrollTop = 0;
       syncChrome();
@@ -324,6 +301,13 @@
   resizerEl.addEventListener('pointercancel', endDrag);
   resizerEl.addEventListener('lostpointercapture', endDrag);
   resizerEl.addEventListener('dblclick', () => applyWidth(272));
+
+  const expandAllBtn = document.getElementById('notes-expand-all');
+  const collapseAllBtn = document.getElementById('notes-collapse-all');
+  const collectKeys = (nodes, out = []) => { for (const node of nodes) { if (node.children?.length) { out.push(nodeKey(node)); collectKeys(node.children, out); } } return out; };
+  expandAllBtn?.addEventListener('click', () => { state.expanded = new Set(collectKeys(state.note?.tree || [])); renderTree(state.note?.tree || []); });
+  collapseAllBtn?.addEventListener('click', () => { state.expanded = new Set(); renderTree(state.note?.tree || []); });
+  const fileLabel = document.getElementById('notes-file');
 
   // ── Zoom gestures ───────────────────────────────────────────────────────
   let pinchStart = 0;

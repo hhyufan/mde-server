@@ -77,10 +77,10 @@ export class HomeController {
     response.status(200).send(readFileSync(join(SITE_DIR, 'notes', 'csharp', 'index.html')));
   }
 
-  @Get(['notes/csharp/notes.css', 'notes/csharp/notes.js', 'notes/csharp/markdown-preview.css'])
+  @Get(['notes/csharp/notes.css', 'notes/csharp/notes.js', 'notes/csharp/markdown-preview.css', 'notes/csharp/notes-viewer.js', 'notes/csharp/notes-viewer.css'])
   getCSharpNotesAsset(@Req() request: Request, @Res() response: Response): void {
     const name = request.path.split('/').pop() || 'notes.css';
-    if (!['notes.css', 'notes.js', 'markdown-preview.css'].includes(name)) { response.status(404).send('Not found'); return; }
+    if (!['notes.css', 'notes.js', 'markdown-preview.css', 'notes-viewer.js', 'notes-viewer.css'].includes(name)) { response.status(404).send('Not found'); return; }
     response.status(200)
       .setHeader('Content-Type', CONTENT_TYPES[extname(name)] || 'application/octet-stream')
       .setHeader('Cache-Control', 'public, max-age=0, must-revalidate')
