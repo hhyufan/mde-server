@@ -363,43 +363,48 @@
     }
   });
 
-  // ── Appearance (background image + per-theme mask opacity) ───────────────
+  // ── Appearance (background image, editor-style transparency) ─────────────
   const settingsBtn = document.getElementById('notes-settings');
   const appearance = document.getElementById('notes-appearance');
   const bgFile = document.getElementById('notes-bg-file');
-  const maskLight = document.getElementById('notes-mask-light');
-  const maskDark = document.getElementById('notes-mask-dark');
+  const bgEnabled = document.getElementById('notes-bg-enabled');
+  const bgLight = document.getElementById('notes-bg-light');
+  const bgDark = document.getElementById('notes-bg-dark');
   const bgClear = document.getElementById('notes-bg-clear');
   const BG_KEY = 'mokidown-notes-bg';
-  const MASK_LIGHT_KEY = 'mokidown-notes-mask-light';
-  const MASK_DARK_KEY = 'mokidown-notes-mask-dark';
+  const BG_ENABLED_KEY = 'mokidown-notes-bg-enabled';
+  const BG_LIGHT_KEY = 'mokidown-notes-bg-light';
+  const BG_DARK_KEY = 'mokidown-notes-bg-dark';
   const applyAppearance = () => {
+    const enabled = localStorage.getItem(BG_ENABLED_KEY) !== '0';
     const image = localStorage.getItem(BG_KEY) || '';
-    const light = Number(localStorage.getItem(MASK_LIGHT_KEY) || 55);
-    const dark = Number(localStorage.getItem(MASK_DARK_KEY) || 60);
+    const light = Number(localStorage.getItem(BG_LIGHT_KEY) ?? 40);
+    const dark = Number(localStorage.getItem(BG_DARK_KEY) ?? 40);
     const rootStyle = document.documentElement.style;
-    rootStyle.setProperty('--notes-bg-image', image ? `url("${image}")` : 'none');
-    rootStyle.setProperty('--notes-mask-light', String(light / 100));
-    rootStyle.setProperty('--notes-mask-dark', String(dark / 100));
-    if (maskLight) maskLight.value = String(light);
-    if (maskDark) maskDark.value = String(dark);
+    rootStyle.setProperty('--notes-bg-image', image && enabled ? `url("${image}")` : 'none');
+    rootStyle.setProperty('--notes-bg-light', String((100 - light) / 100));
+    rootStyle.setProperty('--notes-bg-dark', String((100 - dark) / 100));
+    if (bgEnabled) bgEnabled.checked = enabled;
+    if (bgLight) bgLight.value = String(light);
+    if (bgDark) bgDark.value = String(dark);
   };
   applyAppearance();
   settingsBtn?.addEventListener('click', () => { appearance.hidden = !appearance.hidden; });
+  bgEnabled?.addEventListener('change', () => { localStorage.setItem(BG_ENABLED_KEY, bgEnabled.checked ? '1' : '0'); applyAppearance(); });
   bgFile?.addEventListener('change', () => {
     const file = bgFile.files && bgFile.files[0];
     if (!file) return;
     if (file.size > 3 * 1024 * 1024) { window.alert('图片太大，请选择 3MB 以内的图片'); return; }
     const reader = new FileReader();
     reader.onload = () => {
-      try { localStorage.setItem(BG_KEY, String(reader.result)); } catch { window.alert('浏览器存储空间不足，无法保存背景图'); }
+      try { localStorage.setItem(BG_KEY, String(reader.result)); localStorage.setItem(BG_ENABLED_KEY, '1'); } catch { window.alert('浏览器存储空间不足，无法保存背景图'); }
       applyAppearance();
     };
     reader.readAsDataURL(file);
   });
-  maskLight?.addEventListener('input', () => { localStorage.setItem(MASK_LIGHT_KEY, maskLight.value); applyAppearance(); });
-  maskDark?.addEventListener('input', () => { localStorage.setItem(MASK_DARK_KEY, maskDark.value); applyAppearance(); });
-  bgClear?.addEventListener('click', () => { localStorage.removeItem(BG_KEY); if (bgFile) bgFile.value = ''; applyAppearance(); });
+  bgLight?.addEventListener('input', () => { localStorage.setItem(BG_LIGHT_KEY, bgLight.value); applyAppearance(); });
+  bgDark?.addEventListener('input', () => { localStorage.setItem(BG_DARK_KEY, bgDark.value); applyAppearance(); });
+  bgClear?.addEventListener('click', () => { localStorage.removeItem(BG_KEY); localStorage.removeItem(BG_ENABLED_KEY); if (bgFile) bgFile.value = ''; applyAppearance(); });
 
   // ── Boot ────────────────────────────────────────────────────────────────
   (async () => {

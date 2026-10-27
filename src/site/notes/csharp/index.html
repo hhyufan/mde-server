@@ -78,17 +78,21 @@ try {
     </div>
 
     <div class="notes-appearance" id="notes-appearance" hidden>
+      <label class="notes-appearance__row notes-appearance__row--switch">
+        <span>启用背景图</span>
+        <input type="checkbox" id="notes-bg-enabled" checked>
+      </label>
       <label class="notes-appearance__row">
         <span>背景图片</span>
         <input type="file" id="notes-bg-file" accept="image/*">
       </label>
       <label class="notes-appearance__row">
-        <span>明亮遮罩</span>
-        <input type="range" id="notes-mask-light" min="0" max="100" step="1" value="55">
+        <span>明亮透明度</span>
+        <input type="range" id="notes-bg-light" min="0" max="100" step="1" value="40">
       </label>
       <label class="notes-appearance__row">
-        <span>暗色遮罩</span>
-        <input type="range" id="notes-mask-dark" min="0" max="100" step="1" value="60">
+        <span>暗色透明度</span>
+        <input type="range" id="notes-bg-dark" min="0" max="100" step="1" value="40">
       </label>
       <button type="button" class="notes-appearance__clear" id="notes-bg-clear">清除背景</button>
     </div>

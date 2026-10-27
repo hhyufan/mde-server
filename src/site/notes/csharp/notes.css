@@ -1099,44 +1099,45 @@ body::before {
   opacity: 0.55;
 }
 
-/* Background image + a theme-owned mask layer. Content surfaces stay solid. */
+/* Background image visible through the panes (editor's background mode). */
 body::before {
-  opacity: 1 !important;
-  background-image: var(--notes-bg-image, none);
-}
-
-body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: var(--bg);
-  opacity: var(--notes-mask-opacity, 0.55);
+  background: var(--notes-bg-image, none) center / cover no-repeat;
+  opacity: var(--notes-bg-opacity, 0);
 }
 
-html[data-theme='dark'] body::after {
-  background: #0d0d0f;
-  opacity: var(--notes-mask-dark, 0.6);
-}
+html[data-theme='light'] body::before { opacity: var(--notes-bg-light, 0.6); }
+html[data-theme='dark'] body::before { opacity: var(--notes-bg-dark, 0.6); }
 
-html[data-theme='light'] body::after {
-  background: var(--bg);
-  opacity: var(--notes-mask-light, 0.55);
+.notes-layout {
+  position: relative;
+  z-index: 1;
 }
 
 .notes-sidebar,
-.notes-main,
 .notes-sidebar .moki-tree,
 .notes-panel,
 .moki-tree__scroll,
 .moki-tree__canvas {
-  background: var(--surface) !important;
+  background: transparent !important;
 }
 
 .notes-sidebar {
-  background: var(--sidebar) !important;
+  background: color-mix(in srgb, var(--sidebar) 62%, transparent) !important;
   border-right: 0;
+}
+
+.notes-main {
+  background: transparent !important;
+}
+
+/* Reading pane keeps a light glass plate for contrast over the image. */
+.notes-preview-scroll {
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
 }
 
 /* Resize grip: invisible 8px hit area with the 0.5px line in the middle. */
@@ -1151,4 +1152,8 @@ html[data-theme='light'] body::after {
   left: 50%;
   transform: translateX(-50%) scaleX(0.5);
   width: 1px;
+}
+
+.notes-appearance__row--switch input {
+  accent-color: var(--accent);
 }
