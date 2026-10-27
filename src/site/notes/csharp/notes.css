@@ -1035,3 +1035,30 @@ body::before {
 .notes-resizer.is-dragging {
   background: color-mix(in srgb, var(--accent) 18%, var(--bg));
 }
+
+/* Divider is a hairline, not a band. The drag target is widened invisibly. */
+.notes-resizer {
+  position: relative;
+  flex: 0 0 1px;
+  width: 1px;
+  background: var(--border) !important;
+  box-shadow: none !important;
+}
+
+.notes-resizer::before {
+  display: none !important;
+}
+
+.notes-resizer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -4px;
+  right: -4px;
+}
+
+.notes-resizer:hover,
+.notes-resizer.is-dragging {
+  background: var(--accent) !important;
+}
