@@ -1167,3 +1167,19 @@ html[data-theme='dark'] body::after {
 body::before {
   opacity: 1 !important;
 }
+
+/* Chip hugs the title text (the editor's TreeNodeRow layout), not the row edge. */
+.notes-panel .moki-tree__node .moki-tree__title {
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+.notes-panel .moki-tree__node .moki-tree__reference {
+  margin-left: 2px;
+}
+
+.notes-panel .moki-tree__node {
+  justify-content: flex-start;
+}
