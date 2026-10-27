@@ -241,6 +241,14 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .knowledge-tree__list {
   flex: 1;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.notes-panel .moki-tree__scroll {
+  flex: 1;
+  min-height: 0;
   overflow: auto;
 }
 
@@ -490,6 +498,60 @@ html[data-theme='dark'] .md-preview pre code .tok-number { color: #d19a66; }
   min-width: fit-content;
 }
 
-.notes-panel .knowledge-tree__list {
-  overflow: auto;
+/* Scrollbars: the editor's own skin (thin blue thumb, transparent track). */
+:root {
+  --moki-scrollbar-thumb: rgba(64, 145, 255, 0.25);
+  --moki-scrollbar-thumb-hover: rgba(64, 145, 255, 0.42);
+  --moki-scrollbar-thumb-active: rgba(64, 145, 255, 0.55);
+  --moki-scrollbar-track: transparent;
+  --moki-scrollbar-fade-in: 100ms;
+  --moki-scrollbar-fade-out: 800ms;
+  --moki-scrollbar-color: transparent;
+}
+
+html[data-theme='dark'] {
+  --moki-scrollbar-thumb: rgba(64, 145, 255, 0.42);
+  --moki-scrollbar-thumb-hover: rgba(64, 145, 255, 0.6);
+  --moki-scrollbar-thumb-active: rgba(64, 145, 255, 0.72);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--moki-scrollbar-color) var(--moki-scrollbar-track);
+}
+
+*:hover {
+  --moki-scrollbar-color: var(--moki-scrollbar-thumb);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--moki-scrollbar-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--moki-scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--moki-scrollbar-thumb-active);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
