@@ -190,7 +190,7 @@
         const title = document.createElement('button');
         title.type = 'button';
         title.className = 'notes-node__title';
-        title.textContent = node.title;
+        renderTitle(title, node.title);
         title.title = node.title;
         title.addEventListener('click', () => jumpToNode(node));
 
@@ -210,6 +210,20 @@
       }
     };
     walk(tree, treeEl);
+  };
+
+  // Outline titles may contain inline code (`global.json`); render it as a chip.
+  const renderTitle = (element, title) => {
+    for (const part of String(title).split(/(`[^`]+`)/g)) {
+      if (!part) continue;
+      if (part.length > 2 && part.startsWith('`') && part.endsWith('`')) {
+        const code = document.createElement('code');
+        code.textContent = part.slice(1, -1);
+        element.append(code);
+      } else {
+        element.append(document.createTextNode(part));
+      }
+    }
   };
 
   // Keys are text based: the API does not expose line numbers.
@@ -258,7 +272,7 @@
       // Auto-expand the first two levels so the outline is useful immediately.
       const expand = (nodes, depth) => {
         for (const node of nodes) {
-          if (depth < 1 && node.children?.length) state.expanded.add(nodeKey(node));
+          if (depth < 2 && node.children?.length) state.expanded.add(nodeKey(node));
           if (node.children?.length) expand(node.children, depth + 1);
         }
       };

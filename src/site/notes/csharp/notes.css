@@ -203,7 +203,7 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .notes-node__children {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 14px;
+  padding: 0 0 0 10px;
 }
 
 .notes-node__row {
@@ -235,17 +235,16 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .notes-node__title {
   flex: 1;
   min-width: 0;
-  height: 26px;
-  padding: 0 6px;
+  padding: 4px 6px;
   border: 0;
   background: transparent;
   color: var(--text);
   font: inherit;
   font-size: 12.5px;
+  line-height: 1.45;
   text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
   cursor: pointer;
 }
 
@@ -269,9 +268,10 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 }
 
 .md-preview {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 40px 48px 96px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 32px 48px 96px;
   font-family: var(--font-app);
   font-size: 14.5px;
   line-height: 1.78;
@@ -323,4 +323,14 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 
   .notes-header__divider { display: none; }
   .md-preview { padding: 24px 20px 64px; }
+}
+
+/* Inline code inside outline titles. */
+.notes-node__title code {
+  padding: 0 3px;
+  border-radius: 3px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-family: var(--font-editor);
+  font-size: 11.5px;
 }
