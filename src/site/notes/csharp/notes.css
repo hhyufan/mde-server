@@ -1062,3 +1062,39 @@ body::before {
 .notes-resizer.is-dragging {
   background: var(--accent) !important;
 }
+
+/* Hairline like the editor: zero-width gap, 0.5px painted line, faint colour. */
+.notes-resizer {
+  flex: 0 0 0 !important;
+  width: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.notes-resizer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--border-light);
+  transform: scaleX(0.5);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.notes-resizer::before {
+  display: none !important;
+}
+
+.notes-resizer:hover,
+.notes-resizer.is-dragging {
+  background: transparent !important;
+}
+
+.notes-resizer:hover::after,
+.notes-resizer.is-dragging::after {
+  background: var(--accent);
+  opacity: 0.55;
+}
