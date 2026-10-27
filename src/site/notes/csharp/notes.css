@@ -1098,3 +1098,57 @@ body::before {
   background: var(--accent);
   opacity: 0.55;
 }
+
+/* Background image + a theme-owned mask layer. Content surfaces stay solid. */
+body::before {
+  opacity: 1 !important;
+  background-image: var(--notes-bg-image, none);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg);
+  opacity: var(--notes-mask-opacity, 0.55);
+}
+
+html[data-theme='dark'] body::after {
+  background: #0d0d0f;
+  opacity: var(--notes-mask-dark, 0.6);
+}
+
+html[data-theme='light'] body::after {
+  background: var(--bg);
+  opacity: var(--notes-mask-light, 0.55);
+}
+
+.notes-sidebar,
+.notes-main,
+.notes-sidebar .moki-tree,
+.notes-panel,
+.moki-tree__scroll,
+.moki-tree__canvas {
+  background: var(--surface) !important;
+}
+
+.notes-sidebar {
+  background: var(--sidebar) !important;
+  border-right: 0;
+}
+
+/* Resize grip: invisible 8px hit area with the 0.5px line in the middle. */
+.notes-resizer {
+  flex: 0 0 8px !important;
+  width: 8px !important;
+  background: transparent !important;
+  cursor: col-resize;
+}
+
+.notes-resizer::after {
+  left: 50%;
+  transform: translateX(-50%) scaleX(0.5);
+  width: 1px;
+}

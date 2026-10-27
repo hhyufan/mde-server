@@ -363,26 +363,26 @@
     }
   });
 
-  // ── Appearance (background image + transparency) ─────────────────────────
+  // ── Appearance (background image + per-theme mask opacity) ───────────────
   const settingsBtn = document.getElementById('notes-settings');
   const appearance = document.getElementById('notes-appearance');
   const bgFile = document.getElementById('notes-bg-file');
-  const bgOpacity = document.getElementById('notes-bg-opacity');
-  const surfaceOpacity = document.getElementById('notes-surface-opacity');
+  const maskLight = document.getElementById('notes-mask-light');
+  const maskDark = document.getElementById('notes-mask-dark');
   const bgClear = document.getElementById('notes-bg-clear');
   const BG_KEY = 'mokidown-notes-bg';
-  const BG_OPACITY_KEY = 'mokidown-notes-bg-opacity';
-  const SURFACE_OPACITY_KEY = 'mokidown-notes-surface-opacity';
+  const MASK_LIGHT_KEY = 'mokidown-notes-mask-light';
+  const MASK_DARK_KEY = 'mokidown-notes-mask-dark';
   const applyAppearance = () => {
     const image = localStorage.getItem(BG_KEY) || '';
-    const bg = Number(localStorage.getItem(BG_OPACITY_KEY) || 35) / 100;
-    const surface = Number(localStorage.getItem(SURFACE_OPACITY_KEY) || 96);
+    const light = Number(localStorage.getItem(MASK_LIGHT_KEY) || 55);
+    const dark = Number(localStorage.getItem(MASK_DARK_KEY) || 60);
     const rootStyle = document.documentElement.style;
     rootStyle.setProperty('--notes-bg-image', image ? `url("${image}")` : 'none');
-    rootStyle.setProperty('--notes-bg-opacity', String(bg));
-    rootStyle.setProperty('--notes-surface-opacity', String(surface));
-    if (bgOpacity) bgOpacity.value = String(Math.round(bg * 100));
-    if (surfaceOpacity) surfaceOpacity.value = String(surface);
+    rootStyle.setProperty('--notes-mask-light', String(light / 100));
+    rootStyle.setProperty('--notes-mask-dark', String(dark / 100));
+    if (maskLight) maskLight.value = String(light);
+    if (maskDark) maskDark.value = String(dark);
   };
   applyAppearance();
   settingsBtn?.addEventListener('click', () => { appearance.hidden = !appearance.hidden; });
@@ -397,8 +397,8 @@
     };
     reader.readAsDataURL(file);
   });
-  bgOpacity?.addEventListener('input', () => { localStorage.setItem(BG_OPACITY_KEY, bgOpacity.value); applyAppearance(); });
-  surfaceOpacity?.addEventListener('input', () => { localStorage.setItem(SURFACE_OPACITY_KEY, surfaceOpacity.value); applyAppearance(); });
+  maskLight?.addEventListener('input', () => { localStorage.setItem(MASK_LIGHT_KEY, maskLight.value); applyAppearance(); });
+  maskDark?.addEventListener('input', () => { localStorage.setItem(MASK_DARK_KEY, maskDark.value); applyAppearance(); });
   bgClear?.addEventListener('click', () => { localStorage.removeItem(BG_KEY); if (bgFile) bgFile.value = ''; applyAppearance(); });
 
   // ── Boot ────────────────────────────────────────────────────────────────
