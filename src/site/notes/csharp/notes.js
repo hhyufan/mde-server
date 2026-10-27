@@ -280,7 +280,8 @@
   const sidebarEl = document.getElementById('notes-sidebar');
   const WIDTH_KEY = 'mokidown-notes-csharp-sidebar';
   const applyWidth = (width) => {
-    const clamped = Math.round(Math.max(220, Math.min(520, width)));
+    const limit = Math.max(360, Math.min(860, window.innerWidth - 320));
+    const clamped = Math.round(Math.max(220, Math.min(limit, width)));
     document.documentElement.style.setProperty('--notes-sidebar', clamped + 'px');
     try { localStorage.setItem(WIDTH_KEY, String(clamped)); } catch {}
   };
