@@ -250,7 +250,12 @@
     rootStyle.setProperty('--notes-scale', String(unified));
     rootStyle.setProperty('--notes-content-scale', String(mode === 'separate' ? content : unified));
     rootStyle.setProperty('--notes-tree-scale', String(mode === 'separate' ? tree : unified));
-    if (zoomLabel) zoomLabel.textContent = `${Math.round(unified * 100)}%`;
+    if (zoomLabel) {
+      zoomLabel.textContent = mode === 'separate' ? `${Math.round(content * 100)}%` : `${Math.round(unified * 100)}%`;
+    }
+    if (typeof treeZoomLabel !== 'undefined' && treeZoomLabel) {
+      treeZoomLabel.textContent = mode === 'separate' ? `${Math.round(tree * 100)}%` : `${Math.round(unified * 100)}%`;
+    }
   };
 
   const loadNote = async (index) => {
@@ -283,8 +288,50 @@
 
   prevBtn.addEventListener('click', () => step(-1));
   nextBtn.addEventListener('click', () => step(1));
-  zoomOut.addEventListener('click', () => { state.scale = Math.max(0.7, state.scale - 0.1); applyScale(); });
-  zoomIn.addEventListener('click', () => { state.scale = Math.min(2, state.scale + 0.1); applyScale(); });
+  const clampScale = (value) => Math.min(2, Math.max(0.7, Math.round(value * 100) / 100));
+  const stepZoom = (delta) => {
+    if (state.zoomMode === 'separate') {
+      state.treeScale = clampScale((state.treeScale || 1) + delta);
+      state.contentScale = clampScale((state.contentScale || 1) + delta);
+      localStorage.setItem(TREE_SCALE_KEY, String(Math.round(state.treeScale * 100)));
+      localStorage.setItem(CONTENT_SCALE_KEY, String(Math.round(state.contentScale * 100)));
+    } else {
+      state.scale = clampScale(state.scale + delta);
+      localStorage.setItem(SCALE_KEY, String(state.scale));
+    }
+    applyScale();
+    if (typeof applyZoomUI === "function") applyZoomUI();
+  };
+  zoomOut.addEventListener('click', () => stepContentZoom(-0.1));
+  const treeZoomOut = document.getElementById('notes-tree-zoom-out');
+  const treeZoomIn = document.getElementById('notes-tree-zoom-in');
+  const treeZoomLabel = document.getElementById('notes-tree-zoom-label');
+  const stepTreeZoom = (delta) => {
+    if (state.zoomMode === 'separate') {
+      state.treeScale = clampScale((state.treeScale || 1) + delta);
+      localStorage.setItem(TREE_SCALE_KEY, String(Math.round(state.treeScale * 100)));
+    } else {
+      state.scale = clampScale(state.scale + delta);
+      localStorage.setItem(SCALE_KEY, String(state.scale));
+    }
+    applyScale();
+    if (typeof applyZoomUI === "function") applyZoomUI();
+  };
+  const stepContentZoom = (delta) => {
+    if (state.zoomMode === 'separate') {
+      state.contentScale = clampScale((state.contentScale || 1) + delta);
+      localStorage.setItem(CONTENT_SCALE_KEY, String(Math.round(state.contentScale * 100)));
+    } else {
+      state.scale = clampScale(state.scale + delta);
+      localStorage.setItem(SCALE_KEY, String(state.scale));
+    }
+    applyScale();
+    if (typeof applyZoomUI === "function") applyZoomUI();
+  };
+  treeZoomOut?.addEventListener('click', () => stepTreeZoom(-0.1));
+  treeZoomIn?.addEventListener('click', () => stepTreeZoom(0.1));
+  zoomIn.addEventListener('click', () => stepContentZoom(0.1));
+
 
   // ── Outline width (drag the divider) ────────────────────────────────────
   const resizerEl = document.getElementById('notes-resizer');

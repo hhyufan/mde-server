@@ -1211,3 +1211,23 @@ body::before {
   font: inherit;
   font-size: 11px;
 }
+
+/* Outline zoom controls live in the tree panel header. */
+.notes-tree-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  margin-left: auto;
+  margin-right: 4px;
+}
+
+.notes-tree-zoom .notes-action {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+}
+
+.notes-tree-zoom .notes-zoom__label {
+  min-width: 34px;
+  font-size: 10px;
+}
