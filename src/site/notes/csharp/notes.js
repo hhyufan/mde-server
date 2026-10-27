@@ -230,7 +230,7 @@
     positionEl.textContent = state.notes.length ? `${state.index + 1} / ${state.notes.length}` : '–';
     prevBtn.disabled = state.index <= 0;
     nextBtn.disabled = state.index >= state.notes.length - 1;
-    if (state.note) treeTitleEl.textContent = state.note.title || '知识树';
+    if (state.note && treeTitleEl) treeTitleEl.textContent = state.note.title || '知识树';
     if (state.note && fileLabel) fileLabel.textContent = `${state.note.title || state.note.name}.mgtree`;
   };
 
@@ -362,6 +362,44 @@
       event.preventDefault(); state.scale -= 0.1; applyScale();
     }
   });
+
+  // ── Appearance (background image + transparency) ─────────────────────────
+  const settingsBtn = document.getElementById('notes-settings');
+  const appearance = document.getElementById('notes-appearance');
+  const bgFile = document.getElementById('notes-bg-file');
+  const bgOpacity = document.getElementById('notes-bg-opacity');
+  const surfaceOpacity = document.getElementById('notes-surface-opacity');
+  const bgClear = document.getElementById('notes-bg-clear');
+  const BG_KEY = 'mokidown-notes-bg';
+  const BG_OPACITY_KEY = 'mokidown-notes-bg-opacity';
+  const SURFACE_OPACITY_KEY = 'mokidown-notes-surface-opacity';
+  const applyAppearance = () => {
+    const image = localStorage.getItem(BG_KEY) || '';
+    const bg = Number(localStorage.getItem(BG_OPACITY_KEY) || 35) / 100;
+    const surface = Number(localStorage.getItem(SURFACE_OPACITY_KEY) || 96);
+    const rootStyle = document.documentElement.style;
+    rootStyle.setProperty('--notes-bg-image', image ? `url("${image}")` : 'none');
+    rootStyle.setProperty('--notes-bg-opacity', String(bg));
+    rootStyle.setProperty('--notes-surface-opacity', String(surface));
+    if (bgOpacity) bgOpacity.value = String(Math.round(bg * 100));
+    if (surfaceOpacity) surfaceOpacity.value = String(surface);
+  };
+  applyAppearance();
+  settingsBtn?.addEventListener('click', () => { appearance.hidden = !appearance.hidden; });
+  bgFile?.addEventListener('change', () => {
+    const file = bgFile.files && bgFile.files[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) { window.alert('图片太大，请选择 3MB 以内的图片'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      try { localStorage.setItem(BG_KEY, String(reader.result)); } catch { window.alert('浏览器存储空间不足，无法保存背景图'); }
+      applyAppearance();
+    };
+    reader.readAsDataURL(file);
+  });
+  bgOpacity?.addEventListener('input', () => { localStorage.setItem(BG_OPACITY_KEY, bgOpacity.value); applyAppearance(); });
+  surfaceOpacity?.addEventListener('input', () => { localStorage.setItem(SURFACE_OPACITY_KEY, surfaceOpacity.value); applyAppearance(); });
+  bgClear?.addEventListener('click', () => { localStorage.removeItem(BG_KEY); if (bgFile) bgFile.value = ''; applyAppearance(); });
 
   // ── Boot ────────────────────────────────────────────────────────────────
   (async () => {

@@ -635,3 +635,377 @@ html[data-theme='dark'] {
 .notes-panel .moki-tree__node .moki-tree__icon {
   flex: 0 0 auto;
 }
+
+/* Header removed: pager arrows sit beside the article, actions top-right. */
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.notes-layout {
+  height: 100vh;
+}
+
+.notes-main {
+  position: relative;
+}
+
+.notes-pager {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 76px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  color: var(--text-sec);
+  font: inherit;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.notes-pager:hover:not(:disabled) {
+  opacity: 1;
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.notes-pager:disabled {
+  opacity: 0.15;
+  cursor: default;
+}
+
+.notes-pager--prev { left: 10px; }
+.notes-pager--next { right: 10px; }
+
+.notes-main__actions {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.notes-action {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-sec);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.notes-action:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.notes-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.notes-zoom__label {
+  min-width: 38px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-sec);
+  font-variant-numeric: tabular-nums;
+}
+
+.notes-position {
+  margin-right: 4px;
+  font-size: 11px;
+  color: var(--text-sec);
+  font-variant-numeric: tabular-nums;
+}
+
+.notes-main .theme-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Mobile: floating outline toggle, smaller pagers. */
+.notes-tree-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 30;
+  display: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .notes-tree-toggle { display: grid; }
+
+  .notes-pager {
+    width: 34px;
+    height: 56px;
+    font-size: 22px;
+    opacity: 0.8;
+  }
+
+  .notes-pager--prev { left: 4px; }
+  .notes-pager--next { right: 4px; }
+
+  .notes-main__actions {
+    top: 8px;
+    right: 8px;
+    padding: 2px 4px;
+  }
+
+  .notes-zoom__label,
+  .notes-position { display: none; }
+}
+
+/* Theme icons anywhere (the header rules no longer apply after removing it). */
+.theme-icon--moon { display: none; }
+html[data-theme='dark'] .theme-icon--sun { display: none; }
+html[data-theme='dark'] .theme-icon--moon { display: block; }
+
+/* Pager arrows need to be visible at a glance. */
+.notes-pager {
+  opacity: 0.85;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(42, 48, 61, 0.12);
+  color: var(--text-sec);
+}
+
+.notes-pager:hover:not(:disabled) {
+  opacity: 1;
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--surface);
+}
+
+.notes-pager:disabled {
+  opacity: 0.18;
+  box-shadow: none;
+}
+
+/* Higher-specificity override: bundle-wide svg resets otherwise win. */
+.notes-main .theme-icon {
+  width: 16px;
+  height: 16px;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Screen-edge pagers: only the arrow, shown while the pointer is on that edge. */
+.notes-pager-zone {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  min-width: 72px;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.notes-pager-zone--prev {
+  left: 0;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+.notes-pager-zone--next {
+  right: 0;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
+.notes-pager {
+  position: static;
+  transform: none;
+  top: auto;
+  left: auto;
+  right: auto;
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 180px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-sec);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.notes-pager-zone:hover .notes-pager,
+.notes-pager:focus-visible {
+  opacity: 0.7;
+}
+
+.notes-pager:hover:not(:disabled) {
+  opacity: 1;
+  color: var(--accent);
+  transform: scale(1.04);
+}
+
+.notes-pager:disabled {
+  opacity: 0;
+  cursor: default;
+}
+
+.notes-pager svg {
+  width: 52px;
+  height: 52px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Appearance panel (background image + transparencies). */
+.notes-appearance {
+  position: absolute;
+  top: 52px;
+  right: 14px;
+  z-index: 30;
+  width: 260px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow-lg, 0 24px 70px rgba(42, 48, 61, 0.15));
+  font-size: 12px;
+  color: var(--text);
+}
+
+.notes-appearance[hidden] {
+  display: none;
+}
+
+.notes-appearance__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.notes-appearance__row input[type='file'] {
+  max-width: 140px;
+  font-size: 11px;
+}
+
+.notes-appearance__row input[type='range'] {
+  width: 120px;
+  accent-color: var(--accent);
+}
+
+.notes-appearance__clear {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-sec);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.notes-appearance__clear:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Background image layer + translucent surfaces. */
+body {
+  position: relative;
+  background: var(--bg);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--notes-bg-image, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: var(--notes-bg-opacity, 0);
+  pointer-events: none;
+}
+
+.notes-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.notes-sidebar {
+  background: color-mix(in srgb, var(--sidebar) calc(var(--notes-surface-opacity, 96) * 1%), transparent);
+}
+
+.notes-main {
+  background: color-mix(in srgb, var(--surface) calc(var(--notes-surface-opacity, 96) * 1%), transparent);
+}
+
+/* Arrow only: no plate, no border, no shadow — translucent over the page. */
+.notes-pager,
+.notes-pager:hover:not(:disabled),
+.notes-pager:focus-visible {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.notes-pager-zone:hover .notes-pager {
+  opacity: 0.34;
+}
+
+.notes-pager:hover:not(:disabled) {
+  opacity: 0.62;
+  color: var(--text-sec);
+  transform: none;
+}
+
+.notes-pager:disabled {
+  opacity: 0 !important;
+}
+
+.notes-pager svg {
+  width: 46px;
+  height: 46px;
+  stroke-width: 1.3;
+}
