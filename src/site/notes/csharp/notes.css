@@ -96,8 +96,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 30px;
-  height: 28px;
+  min-width: 34px;
+  height: 32px;
   padding: 0 8px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -499,6 +499,12 @@ html[data-theme='dark'] .md-preview pre code .tok-number { color: #d19a66; }
 }
 
 /* Scrollbars: the editor's own skin (thin blue thumb, transparent track). */
+@property --moki-scrollbar-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
 :root {
   --moki-scrollbar-thumb: rgba(64, 145, 255, 0.25);
   --moki-scrollbar-thumb-hover: rgba(64, 145, 255, 0.42);
@@ -506,7 +512,6 @@ html[data-theme='dark'] .md-preview pre code .tok-number { color: #d19a66; }
   --moki-scrollbar-track: transparent;
   --moki-scrollbar-fade-in: 100ms;
   --moki-scrollbar-fade-out: 800ms;
-  --moki-scrollbar-color: transparent;
 }
 
 html[data-theme='dark'] {
@@ -515,13 +520,35 @@ html[data-theme='dark'] {
   --moki-scrollbar-thumb-active: rgba(64, 145, 255, 0.72);
 }
 
+@media (hover: hover) {
+  * {
+    --moki-scrollbar-color: transparent;
+    transition: --moki-scrollbar-color var(--moki-scrollbar-fade-out) linear;
+  }
+
+  *:hover {
+    --moki-scrollbar-color: var(--moki-scrollbar-thumb);
+    transition-duration: var(--moki-scrollbar-fade-in);
+  }
+}
+
 * {
+  --moki-scrollbar-color: transparent;
   scrollbar-width: thin;
   scrollbar-color: var(--moki-scrollbar-color) var(--moki-scrollbar-track);
 }
 
-*:hover {
-  --moki-scrollbar-color: var(--moki-scrollbar-thumb);
+@media (hover: none) {
+  * {
+    --moki-scrollbar-color: var(--moki-scrollbar-thumb);
+  }
+}
+
+@supports selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -554,4 +581,13 @@ html[data-theme='dark'] {
 
 ::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+
+/* Pager arrows are text glyphs; give them the editor's larger size. */
+#notes-prev,
+#notes-next {
+  font-size: 18px;
+  line-height: 1;
+  padding-bottom: 2px;
 }

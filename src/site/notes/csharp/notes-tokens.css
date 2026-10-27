@@ -1,0 +1,24 @@
+.token.comment,.token.prolog,.token.doctype,.token.cdata{color:#a0a1a7;font-style:italic}
+.token.punctuation{color:#383a42}
+.token.namespace{opacity:.7}
+.token.property,.token.tag,.token.boolean,.token.number,.token.constant,.token.symbol,.token.deleted{color:#e45649}
+.token.selector,.token.attr-name,.token.string,.token.char,.token.builtin,.token.inserted{color:#50a14f}
+.token.operator,.token.entity,.token.url,.language-css .token.string,.style .token.string{color:#0184bc;background:none}
+.token.atrule,.token.attr-value,.token.keyword{color:#a626a4}
+.token.function,.token.class-name{color:#c18401}
+.token.regex,.token.important,.token.variable{color:#e45649}
+.token.important,.token.bold{font-weight:700}
+.token.italic{font-style:italic}
+.token.entity{cursor:help}
+[data-theme=dark] .token.comment,[data-theme=dark] .token.prolog,[data-theme=dark] .token.doctype,[data-theme=dark] .token.cdata{color:#5c6370;font-style:italic}
+[data-theme=dark] .token.punctuation{color:#abb2bf}
+[data-theme=dark] .token.namespace{opacity:.7}
+[data-theme=dark] .token.property,[data-theme=dark] .token.tag,[data-theme=dark] .token.boolean,[data-theme=dark] .token.number,[data-theme=dark] .token.constant,[data-theme=dark] .token.symbol,[data-theme=dark] .token.deleted{color:#e06c75}
+[data-theme=dark] .token.selector,[data-theme=dark] .token.attr-name,[data-theme=dark] .token.string,[data-theme=dark] .token.char,[data-theme=dark] .token.builtin,[data-theme=dark] .token.inserted{color:#98c379}
+[data-theme=dark] .token.operator,[data-theme=dark] .token.entity,[data-theme=dark] .token.url,[data-theme=dark] .language-css .token.string,[data-theme=dark] .style .token.string{color:#56b6c2;background:none}
+[data-theme=dark] .token.atrule,[data-theme=dark] .token.attr-value,[data-theme=dark] .token.keyword{color:#c678dd}
+[data-theme=dark] .token.function,[data-theme=dark] .token.class-name{color:#e5c07b}
+[data-theme=dark] .token.regex,[data-theme=dark] .token.important,[data-theme=dark] .token.variable{color:#e06c75}
+[data-theme=dark] .token.important,[data-theme=dark] .token.bold{font-weight:700}
+[data-theme=dark] .token.italic{font-style:italic}
+[data-theme=dark] .token.entity{cursor:help}
