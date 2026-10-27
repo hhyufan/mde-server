@@ -1,0 +1,64 @@
+数组
+  概述
+    一组`相同类型`元素的定长容器
+    属于引用类型，变量存数组对象的引用
+    连续内存，索引访问 O(1)
+    长度创建后不可变
+    类型
+      `int[]` 一维数组
+      `int[,]` 多维矩形数组
+      `int[][]` 交错数组
+  引用语义 >csharp[1]
+    传参复制的是引用，方法内改元素影响原数组
+    方法内 `new` 只改本地变量
+    未 `new` 的数组变量为 null
+  创建
+    声明与初始化 >csharp[2]
+      `new int[3]` 只给长度，元素取默认值
+      `int[] a = { 1, 2, 3 }` 集合初始化器
+      `new[] { ... }` 由元素推断类型
+      先声明后赋值必须用 `new`
+    默认值 >csharp[3]
+      数值 0，`bool` 为 false
+      引用类型元素为 null
+      `DateTime` 为 0001-01-01
+      访问 null 数组抛 `NullReferenceException`
+  访问与遍历
+    `Length` 元素总数，合法索引 0 ~ Length-1
+    `arr[^1]` 末尾索引运算符
+    越界抛 `IndexOutOfRangeException` >csharp[4]
+    `for` 可读可写，需要索引时使用 >csharp[5]
+    `foreach` 只读，迭代变量不可赋值
+    `Array.ForEach` 委托式遍历
+  多维数组 >csharp[6]
+    矩形：每行等长、内存连续
+    `Rank` 维数
+    `Length` 元素总数
+    `GetLength(dim)` 某维长度
+    `GetUpperBound(dim)` 某维最大索引
+  交错数组 >csharp[7]
+    数组的数组，每行长度可不同
+    `new int[3][]` 只分配外层
+    `jagged[i].Length` 第 i 行长度
+    `new int[3][3]` 非法写法
+  `Array` 静态类
+    `Sort` 原地升序，可传 `Comparison<T>` >csharp[8]
+    `Reverse` 反转
+    `IndexOf` 找不到返回 -1
+    `BinarySearch` 要求先排序
+    `Clear` 指定区间置默认值
+    `Copy` 指定源索引与个数 >csharp[9]
+    `Clone` 浅复制出新数组
+    `Resize` 新建数组并复制，参数需 `ref`
+    频繁扩容应改用 `List<T>`
+  数组协变 >csharp[10]
+    引用类型数组可赋给父类型数组
+    写入不兼容类型抛 `ArrayTypeMismatchException`
+    值类型数组不协变
+    只读场景用 `IReadOnlyList<T>`
+  `Span<T>` 与 `stackalloc` >csharp[11]
+    `stackalloc` 栈上分配，不进 GC
+    `Span<T>` 是连续内存的切片视图，零拷贝
+    `AsSpan(start, length)` 取片段
+    `ReadOnlySpan<char>` 处理字符串片段
+    `Span<T>` 不能跨 `await`，改用 `Memory<T>`

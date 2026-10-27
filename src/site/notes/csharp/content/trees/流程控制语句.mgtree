@@ -1,0 +1,59 @@
+流程控制语句
+  三种结构
+    顺序：自上而下执行
+    分支：`if`、`switch`
+    循环：`for`、`foreach`、`while`
+  if 语句
+    条件必须是 `bool`
+    `else if` 自上而下匹配
+    `else` 就近匹配
+    嵌套过深用逻辑运算合并
+    卫语句提前 `return`
+    示例 >csharp[1]
+  switch 语句
+    按常量或枚举值匹配
+    多个 `case` 可共用分支
+    分支必须 `break`/`return`，不能贯穿
+    `when` 追加条件
+    `goto case` 跳转分支
+    整数状态分支示例 >csharp[2]
+  switch 表达式
+    `表达式 switch { 模式 => 结果 }`
+    `_` 兜底，注意穷尽性
+    关系、类型、属性模式
+    `when` 守卫
+    分支顺序从上到下
+    示例 >csharp[3]
+  for 循环
+    `for (初始化; 条件; 迭代)`
+    三段可省略，`for (;;)` 是死循环
+    循环变量作用域限于循环
+    已知次数、需要索引时用
+    示例 >csharp[4]
+  foreach 循环
+    遍历数组、集合、字典
+    本质调用 `GetEnumerator`
+    迭代变量只读
+    遍历中修改集合抛异常
+    只读遍历优先于 `for`
+    示例 >csharp[5]
+  while 与 do-while
+    `while` 先判断，可能不执行
+    `do-while` 至少执行一次
+    适合次数未知、依赖输入
+    `int.TryParse` 校验输入
+    示例 >csharp[6]
+  跳转语句
+    `break` 结束最近一层循环或 `switch`
+    `continue` 跳过本次迭代
+    `return` 结束方法
+    C# 没有带标签的 `break`
+    `goto` 可跳出多层，慎用
+    示例 >csharp[7]
+  嵌套循环
+    外层行、内层列
+    九九乘法表 >csharp[8]
+    素数判断试除到平方根 >csharp[9]
+    嵌套是性能热点
+  小结
+    分支看条件、循环看次数、跳转看层级

@@ -1,0 +1,102 @@
+变量和数据类型
+  变量
+    作用：在`内存`中保存`数据`
+    三要素：`类型`、`名称`、`值`
+    声明与赋值 >csharp[1]
+      先声明后赋值：int age; age = 22;
+      声明即赋值：int height = 180;
+      同时声明多个：int length = 100, width = 50;
+      局部变量必须赋值后使用，否则 CS0165
+  标识符
+    规则
+      组成：字母、数字、下划线 `_`，`@` 可作前缀
+      不能以数字开头
+      严格区分大小写
+      不能是关键字；`@class` 可用 `@` 转义
+    规范
+      局部变量、参数：小驼峰 `camelCase`
+      私有字段：`_camelCase`
+      类、方法、属性、常量：大驼峰 `PascalCase`
+      接口：`I` 前缀
+      常量用 `PascalCase`，不同于 Java 的 `UPPER_CASE`
+    示例 >csharp[2]
+  数据类型
+    值类型
+      基元类型、`struct`、`enum`
+      存栈或内联，赋值复制`整个值`
+    引用类型
+      `class`、`interface`、`array`、`delegate`、`string`、`object`
+      变量存引用，赋值复制`引用`
+      赋值差异示例 >csharp[3]
+      `string` 不可变，表现类似值类型
+    整数类型
+      `sbyte`(1) `byte`(1) `short`(2) `ushort`(2)
+      `int`(4) 默认整数类型
+      `uint`(4) 后缀 `U`
+      `long`(8) 后缀 `L`
+      `ulong`(8) 后缀 `UL`
+      `nint`/`nuint` 平台相关宽度
+    浮点与 decimal
+      `float`(4) 约 7 位，后缀 `f`
+      `double`(8) 约 15~17 位，默认浮点类型
+      `decimal`(16) 约 28 位，后缀 `m`，金额专用
+      浮点二进制存储，禁用 `==` 比较
+      精度差异示例 >csharp[4]
+    bool
+      只有 `true`/`false`
+      不能用 0/1 代替
+    char 与 string
+      `char` 单引号、2 字节、UTF-16 码元
+      `string` 双引号、不可变
+      转义字符：`\n` `\t` `\\`
+      逐字字符串 `@"..."` 不解析转义、可跨行
+      原始字符串 `"""..."""`（C# 11+）
+      插值字符串 `$"{x}"`
+      示例 >csharp[5]
+    default 默认值
+      字段、数组元素自动初始化
+      局部变量不初始化，必须赋值
+      示例 >csharp[6]
+  var 类型推断
+    编译期推断，仍是静态类型
+    必须同时初始化
+    右侧类型直观时使用，否则显式写类型
+    示例 >csharp[7]
+  可空类型
+    可空值类型 `int?` 等价 `Nullable<int>`
+      `HasValue` 判断是否有值
+      `??` 提供默认值
+      `is int age` 模式匹配顺带判空
+      示例 >csharp[8]
+    可空引用类型（C# 8+）
+      项目开启 `<Nullable>enable</Nullable>`
+      `string` 非空，`string?` 可能为空
+      `?.` 空条件、`??=` 空合并赋值、`!` 空包容
+      示例 >csharp[9]
+  常量与只读
+    `const`：编译期常量，只能字面量
+    `readonly`：运行期赋值一次，可在构造函数赋值
+    `static`：类型级共享一份
+    示例 >csharp[10]
+    `const` 会内联到调用方程序集，改值需重新编译
+  类型转换
+    隐式转换：小范围转大范围，自动完成
+    显式转换：`(类型)` 强转，可能丢精度
+      截断小数，不四舍五入
+      示例 >csharp[11]
+    checked 与 unchecked
+      默认 `unchecked`，溢出静默回绕
+      `checked` 抛 `OverflowException`
+      示例 >csharp[12]
+    字符串与数值互转
+      `Parse` 失败抛 `FormatException`
+      `Convert.ToInt32(null)` 返回 0
+      `TryParse` 最安全，失败返回 `false`
+      格式化：`N2` 千分位、`X` 十六进制、`F2` 保留两位
+      示例 >csharp[13]
+  装箱与拆箱
+    装箱：值类型转 `object`，堆上分配并复制
+    拆箱：`object` 转值类型，类型必须完全匹配
+    类型不匹配抛 `InvalidCastException`
+    泛型避免装箱，优于非泛型 `ArrayList`
+    示例 >csharp[14]

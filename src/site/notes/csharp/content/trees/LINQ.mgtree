@@ -1,0 +1,60 @@
+LINQ
+  本质
+    `IEnumerable<T>` 上的`扩展方法`，位于 `System.Linq.Enumerable`
+    统一查询：内存集合、数据库、XML
+    查询语法最终翻译成方法调用
+  两种语法
+    查询语法：`from ... where ... select` >csharp[1]
+    方法语法：`.Where().OrderBy()` 链式调用
+    查询语法必须以 `select` 或 `group by` 结尾
+  执行时机
+    延迟执行
+      `Where`/`Select`/`OrderBy` 只构建查询
+      遍历或物化时才逐个计算 >csharp[2]
+      捕获的是源集合本身，不是快照
+    立即执行
+      `ToList`/`ToArray`/`Count`/`Sum`/`First` >csharp[3]
+      多次枚举会重复执行，复用前先 `ToList()`
+  常用算子
+    筛选与投影
+      `Where` 按条件过滤 >csharp[4]
+      `Select` 投影成匿名类型
+      带索引重载 `Select((x, i) => ...)`
+    展开
+      `SelectMany` 把集合的集合压平 >csharp[5]
+      查询语法用两个 `from` 实现
+    排序
+      `OrderBy`/`OrderByDescending` >csharp[6]
+      多级排序必须 `ThenBy`，不能重复 `OrderBy`
+      `Reverse` 反转
+    分组
+      `GroupBy` 返回 `IGrouping<TKey, T>` >csharp[7]
+      `group ... by ... into g` 延续查询
+      分组上可继续 `Count`/`Average`/`Max`
+    连接
+      `join ... on ... equals ...` 内连接 >csharp[8]
+      左连接用 `into` + `DefaultIfEmpty()`
+    元素与量词
+      `First`/`FirstOrDefault`/`Last`/`ElementAt` >csharp[9]
+      `Single` 要求恰好一个，否则抛异常
+      `Any()` 判断存在，优于 `Count() > 0`
+      `All` 判断是否全部满足
+    集合运算
+      `Distinct`/`Union`/`Intersect`/`Except` >csharp[10]
+      `Concat` 只拼接不去重
+      默认按 `Equals`/`GetHashCode` 比较
+    分页与生成
+      `Skip`/`Take` 实现分页 >csharp[11]
+      `Chunk(n)` 按批切分（.NET 6+）
+      `Range`/`Repeat`/`Empty` 生成序列
+  实战
+    分组 + 聚合 + 排序生成报表 >csharp[12]
+    每组 Top N：`GroupBy` + `SelectMany` + `Take`
+  IEnumerable 与 IQueryable
+    `IQueryable` 用`表达式树`记录查询
+    EF Core 翻译为 SQL，`ToList()` 时才执行 >csharp[13]
+    物化之后 `Where` 变成内存过滤
+  常见陷阱
+    多次枚举：`yield` 序列每次重新生成 >csharp[14]
+    闭包捕获：`for` 循环变量共享最终值 >csharp[15]
+    `foreach` 在 C# 5 之后每次迭代是新变量

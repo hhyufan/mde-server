@@ -1,0 +1,35 @@
+开发环境准备
+  .NET 平台
+    .NET = 运行时 + 类库 + SDK
+    C# 编译为 IL，由 CLR 执行
+    JIT 即时编译，AOT 可提前编译
+    `.NET Framework` 仅 Windows，停止演进
+    .NET 10 为当前 LTS，.NET 8 仍受支持
+    C# 14 随 .NET 10 发布
+  SDK 安装与验证
+    安装 SDK，而非只装 Runtime
+    查看 SDK、运行时与 RID >bash[1]
+    多版本可共存，`global.json` 锁定版本
+    输出示例 >text[1]
+  第一个控制台项目
+    `dotnet new console -n HelloCSharp` >bash[2]
+    `dotnet run` 还原、编译、运行一步完成
+    顶层语句：直接写语句，自动生成 Main >csharp[1]
+    命令行参数 `args`，`--` 之后传参 >csharp[2]
+  项目结构
+    `Program.cs` 入口代码
+    `bin/` 编译输出，`obj/` 中间文件
+    `.csproj` 定义框架与编译开关 >xml[1]
+    `TargetFramework` 决定 API 与 C# 版本
+    `ImplicitUsings` 隐式引入常用命名空间
+    `Nullable` 开启可空引用检查
+    构建输出 `bin/Debug/net10.0/` >bash[3]
+  NuGet
+    包源 nuget.org，包引用写入 csproj
+    `dotnet add package` 添加依赖 >bash[4]
+    `dotnet restore` 还原，CI 常用
+    全局缓存 `~/.nuget/packages`
+  环境自检
+    打印框架、架构、运行时版本 >csharp[3]
+  小结
+    平台、SDK、CLI、项目结构、依赖五条线

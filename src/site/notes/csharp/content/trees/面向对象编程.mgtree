@@ -1,0 +1,83 @@
+面向对象编程
+  类与对象
+    `类`是引用类型模板，`对象`是堆上的实例
+    成员
+      字段：`_camelCase`，通常 `private`
+      属性：`PascalCase`，通常 `public`
+      方法、构造函数、索引器、运算符
+    字段 vs 属性 >csharp[1]
+      字段直接暴露，无法校验
+      属性本质是 `get` / `set` 方法
+      `{ get; private set; }` 外部只读
+    自动属性与 init >csharp[2]
+      `{ get; set; }` 可读可写
+      `{ get; }` 只读，构造或初始化时赋值
+      `{ get; init; }` 仅对象初始化器可写
+      表达式体属性 `=> 表达式`
+      字段用 `readonly` 才是真不可变
+  构造函数 >csharp[3]
+    与类同名、无返回类型
+    可重载，`this(...)` 复用同类构造
+    `base(...)` 调用父类构造
+    `static` 构造函数只执行一次
+    父类构造先于子类构造
+    手写构造后不再生成无参构造
+  访问修饰符
+    `public` 任何代码
+    `internal` 同一程序集，类型的默认值
+    `protected` 本类及派生类
+    `private` 仅本类，成员的默认值
+    `protected internal` 同程序集或派生类
+    `private protected` 同程序集且派生类
+    类只有 `public` / `internal` 两种顶层修饰
+  继承
+    单继承类、多实现接口
+    所有类派生自 `object`
+    派生与 base >csharp[4]
+      子类构造必须调用父类构造
+      `virtual` 允许子类重写
+      `override` 重写，`base.方法()` 调父类实现
+    virtual / override / new >csharp[5]
+      `override` 按运行时类型调用，多态
+      `new` 隐藏，按编译时类型调用
+      `new` 隐藏几乎总是 bug
+  抽象与封印
+    `abstract` 类不能实例化
+    `abstract` 成员只有签名没有实现
+    子类要么实现成员，要么自己也是 `abstract`
+    `sealed` 禁止继承或再重写 >csharp[6]
+  接口 >csharp[7]
+    定义行为规范，命名用 `I` 前缀
+    成员默认 `public abstract`
+    可含默认实现、静态方法
+    一个类可实现多个接口
+    显式实现只能经接口变量调用
+  静态成员 >csharp[8]
+    `static` 字段全类型共享一份
+    `static` 方法里没有 `this`
+    静态类不能实例化、不能继承
+    静态构造在首次访问类型时执行一次
+    别用静态字段存请求级状态
+  record >csharp[9]
+    默认按值比较，自动重写 `Equals` / `GetHashCode`
+    `with` 复制并改部分属性
+    位置记录 `record Point(int X, int Y)`
+    `required` 强制创建时赋值
+    还有 `record struct`，是值类型
+  struct 与 class >csharp[10]
+    值类型 vs 引用类型
+    赋值复制整个值 vs 复制引用
+    struct 不能继承类，也不能被继承
+    struct 默认全零，不会是 null
+    小、短命、不可变才用 struct
+    大 struct 复制成本高，用 `readonly struct`
+  索引器与运算符重载 >csharp[11]
+    `this[参数]` 让对象支持 `obj[i]`
+    索引器可重载、可多参数
+    `static 类型 operator 符号(...)` 重载运算符
+    重载 `>` 必须同时重载 `<`
+    重载 `==` 需配 `!=`、`Equals`、`GetHashCode`
+  partial 分部类 >csharp[12]
+    一个类拆到多个文件，编译时合并
+    各部分的修饰符与基类必须一致
+    设计器生成代码与人写代码分离

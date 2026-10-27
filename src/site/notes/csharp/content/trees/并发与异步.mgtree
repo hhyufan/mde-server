@@ -1,0 +1,73 @@
+并发与异步
+  线程与线程池
+    `Thread` 是手动线程
+    前台线程阻止进程退出
+    `IsBackground` 后台线程
+    `Join` 等待线程结束
+    线程池复用线程，适合短任务
+    示例 >csharp[1]
+  任务 Task
+    `Task` / `Task<T>` 表示异步操作
+    `Task.Run` 提交到线程池
+    `Status` 观察任务状态
+    `Result` 阻塞并包装异常
+    示例 >csharp[2]
+  async/await
+    编译器生成状态机
+    `await` 未完成时返回调用方
+    等待期间不占用线程
+    `async` 本身不开线程
+    示例 >csharp[3]
+  CPU 与 IO
+    CPU 密集用 `Task.Run`
+    IO 密集用原生异步 API
+    不要用 `Task.Run` 包同步 IO
+    示例 >csharp[4]
+  取消
+    `CancellationTokenSource` 管理取消
+    `CancelAfter` 定时取消
+    `ThrowIfCancellationRequested` 检查点
+    取消后 `Task` 状态为 `Canceled`
+    示例 >csharp[5]
+  组合任务
+    `Task.WhenAll` 等待全部
+    `Task.WhenAny` 等待第一个
+    WhenAll 结果按输入顺序
+    异常聚合在 `Task.Exception`
+    示例 >csharp[6]
+  线程同步
+    `lock` 等价 `Monitor.Enter/Exit`
+    `Interlocked` 无锁原子操作
+    锁对象用 `private readonly object`
+    持锁时不要做慢操作
+    示例 >csharp[7]
+  信号量
+    `SemaphoreSlim` 限制并发数
+    `WaitAsync` 异步等待
+    `Release` 放在 `finally`
+    适合控制下游压力
+    示例 >csharp[8]
+  并发集合
+    `ConcurrentDictionary`
+    `AddOrUpdate` / `GetOrAdd` 原子操作
+    `ConcurrentQueue` 无锁队列
+    `BlockingCollection` 生产者消费者
+    示例 >csharp[9]
+  并行
+    `Parallel.For` / `ForEach`
+    `MaxDegreeOfParallelism` 控制并发度
+    循环体必须线程安全
+    会阻塞到全部完成
+    示例 >csharp[10]
+  死锁
+    交叉加锁顺序不一致
+    同步阻塞异步 `.Result`
+    按相同顺序加锁预防
+    用超时 `Monitor.TryEnter`
+    示例 >csharp[11]
+  常见陷阱
+    `async void` 异常无法捕获
+    `.Result` / `.Wait()` 阻塞
+    `ConfigureAwait(false)` 不回到原上下文
+    `Task.Run` 不等于异步
+    示例 >csharp[12]

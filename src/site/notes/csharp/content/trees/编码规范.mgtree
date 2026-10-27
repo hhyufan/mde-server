@@ -1,0 +1,50 @@
+编码规范
+  命名规范
+    类型、方法、属性：`PascalCase`
+    局部变量、参数：`camelCase`
+    私有字段：`_camelCase`
+    接口：`I` 前缀，泛型参数 `T` 前缀
+    常量用 `PascalCase`，不是全大写
+    异步方法加 `Async` 后缀
+    布尔成员用 `Is`/`Has`/`Can` 开头
+    命名示例 >csharp[1]
+  代码风格
+    4 空格缩进，禁止 Tab
+    Allman：左大括号另起一行
+    一行一句，始终保留大括号
+    `using` 放在文件顶部
+    文件范围命名空间 `namespace X;`
+    命名空间与文件夹对应
+    using 指令示例 >csharp[2]
+  注释
+    `//` 单行、`/* */` 多行
+    `///` XML 文档注释
+    `<summary>`、`<param>`、`<returns>`
+    `<exception>`、`<see cref>`、`<inheritdoc/>`
+    注释解释为什么，不复述代码
+    XML 注释示例 >csharp[3]
+  可空引用类型
+    `<Nullable>enable</Nullable>`
+    `string` 非空，`string?` 可能为空
+    警告 CS8602、CS8618
+    优先 `?.`、`??`，慎用 `!`
+    `ArgumentNullException.ThrowIfNull`
+    示例 >csharp[4]
+  var 使用约定
+    右侧类型清晰时用 `var`
+    `new`、LINQ 结果适合 `var`
+    数值字面量用显式类型
+    公共 API 写显式类型
+    示例 >csharp[5]
+  团队约定
+    Region 少用，优先拆分
+    不写 `this.`，单行用表达式体
+    字符串插值优先于 `+`
+    字符串比较指定 `StringComparison`
+    不用魔法数字，异常不要吞
+  EditorConfig
+    `.editorconfig` 统一缩进与风格 >text[1]
+    `dotnet format` 自动格式化 >bash[1]
+    CI 用 `--verify-no-changes`
+  小结
+    命名、风格、注释、可空、var

@@ -1,0 +1,35 @@
+IDE开发与使用
+  工具选择
+    Visual Studio 2022：Windows 全功能
+    VS Code + C# Dev Kit：轻量跨平台
+    Rider：JetBrains，智能重构强
+    初学者选 VS 2022 社区版
+    VS Code 幕后仍调用 dotnet CLI
+  解决方案与项目
+    `.sln` 组织多个项目
+    `.csproj` 编译为一个程序集
+    创建解决方案与项目 >bash[1]
+    `dotnet add reference` 建立项目引用
+  常用快捷键
+    `F5` 调试，`Ctrl+F5` 直接运行
+    `F9` 断点，`F10` 逐过程
+    `F11` 逐语句，`Shift+F11` 跳出
+    `Ctrl+K Ctrl+D` 格式化文档
+    `Ctrl+.` 快速修复，`F12` 转到定义
+  断点调试
+    断点处查看局部变量、监视、调用堆栈
+    条件断点：满足表达式才暂停
+    整数除法求平均分的 bug >csharp[1]
+    `Debug.Assert` 检查不变量 >csharp[2]
+    “异常设置”可在抛出点中断
+  生成配置
+    Debug：不优化，定义 `DEBUG`
+    Release：优化，定义 `RELEASE`
+    `#if DEBUG` 条件编译 >csharp[3]
+    `Conditional("DEBUG")` 调用可被移除
+    Release 配置下验证行为 >bash[2]
+  附加与热重载
+    `dotnet watch run` 自动重编译
+    “附加到进程”调试运行中的程序
+  小结
+    选工具、懂结构、会调试、分配置

@@ -1,0 +1,73 @@
+常用API
+  `string`
+    引用类型但不可变，任何修改都新建对象 >csharp[1]
+    `Length` 字符个数
+    `Substring` / `s[..5]` 取子串
+    `IndexOf` 找不到返回 -1，不抛异常
+    `Contains` / `StartsWith` / `EndsWith`
+    `Split` 与 `string.Join`
+    `Trim` / `ToUpper` / `ToLower`
+    判空用 `string.IsNullOrWhiteSpace`
+    比较用 `==` 或 `StringComparison.OrdinalIgnoreCase`
+    `ToLower()` 比较会多分配且受区域设置影响
+  `StringBuilder` >csharp[2]
+    可变缓冲区，`Append` 可链式调用
+    `Insert` / `Replace` / `Clear`
+    `ToString()` 时才生成最终字符串
+    循环拼接：`+` 是 O(n²)，它是 O(n)
+    少量拼接直接用 `+` 或插值
+  `Math` >csharp[3]
+    `Round` 默认银行家舍入 ToEven
+    四舍五入要传 `MidpointRounding.AwayFromZero`
+    `Ceiling` 向上、`Floor` 向下、`Truncate` 截断
+    `Pow` / `Sqrt` / `Abs`
+    `Clamp` 限定到区间
+    金额用 `decimal`，不用 `double`
+  日期与时间
+    `DateTime` >csharp[4]
+      `Now` 本地时间，`UtcNow` UTC
+      `Kind` 区分 Local / Utc / Unspecified
+      `ParseExact` 按指定格式解析
+      `AddDays` / `AddHours` 返回新值
+    `DateTimeOffset` 带时区偏移，跨时区首选
+    `TimeSpan` 表示间隔，用 `TotalHours` / `TotalDays`
+    `DateOnly` / `TimeOnly` 只有日期或只有时间
+    存库统一 UTC，展示时再转本地
+  `Guid` >csharp[5]
+    `NewGuid()` 生成 128 位唯一值
+    格式 `N` 无连字符、`D` 带连字符
+    `Guid.Empty` 为全零
+    `TryParse` 安全解析
+    非顺序，聚集索引不友好
+  `Random` >csharp[6]
+    `Next(min, max)` 左闭右开
+    `NextDouble()` 返回 [0,1)
+    `NextBytes` 填充字节数组
+    固定种子可复现结果
+    多线程用 `Random.Shared`
+    `Shuffle` 洗牌（.NET 8+）
+    种子用时间，同毫秒内 `new` 会重复
+    安全场景用 `RandomNumberGenerator`
+  `Regex` >csharp[7]
+    `IsMatch` / `Match` / `Matches` / `Replace` / `Split`
+    命名分组 `(?<name>...)`，取值用 `Groups["name"]`
+    缓存 `Regex` 实例，热路径加 `Compiled`
+    不可信输入必须设 `matchTimeout`
+  扩展方法 >csharp[8]
+    静态类 + 静态方法 + 首参 `this`
+    可像实例方法一样调用
+    本质是静态调用的语法糖
+    不能访问私有成员，也不能覆盖实例方法
+    实例方法优先于扩展方法
+  `Convert` 与格式化 >csharp[9]
+    `Convert.ToInt32(null)` 返回 0
+    `TryParse` 失败返回 false，最安全
+    数字格式 `F2` / `N2` / `P1` / `X` / `C`
+    日期格式 `yyyy-MM-dd HH:mm:ss`
+    解析显式传 `CultureInfo.InvariantCulture`
+  `Environment` 与 `GC`
+    `NewLine` 平台换行符
+    `GetEnvironmentVariable` 读环境变量
+    `Exit` 会跳过 `finally` 与 `Dispose`
+    `GC.GetTotalMemory` 观察托管堆
+    不要手动调用 `GC.Collect`

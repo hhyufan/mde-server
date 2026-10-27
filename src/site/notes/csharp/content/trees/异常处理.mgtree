@@ -1,0 +1,66 @@
+异常处理
+  概述
+    异常：运行期错误事件，打断正常流程
+    全部继承自 `System.Exception`
+    异常对象带 `Message`、`StackTrace`、`InnerException`
+    未捕获则打印堆栈并终止进程
+    C# 无 checked exception，不强制声明或捕获
+    常见运行时异常 >csharp[1]
+      `DivideByZeroException` 整数除零
+      `IndexOutOfRangeException` 数组越界
+      `NullReferenceException` 空引用
+      `FormatException` 解析失败
+  异常层次
+    `System.Exception` 为根
+    `ArgumentException` 参数非法
+      `ArgumentNullException`
+      `ArgumentOutOfRangeException`
+    `InvalidOperationException` 状态不允许该操作
+    `NotSupportedException` / `NotImplementedException`
+    `ObjectDisposedException` 使用了已释放对象
+    `FormatException` / `OverflowException`
+    `IOException` 及 `FileNotFoundException`
+    `TimeoutException` / `OperationCanceledException`
+    不要继承 `ApplicationException`
+  结构化处理
+    try / catch / finally 基本结构 >csharp[2]
+      `try` 只包可能抛异常的最小范围
+      `catch` 按类型匹配，可多个也可省略
+      `finally` 无论成败都执行
+      `finally` 里不要 `return` / `throw`
+    多个 catch >csharp[3]
+      子类在前、父类在后
+      顺序写反编译报 `CS0160`
+      只写 `catch (Exception)` 会丢细节
+  throw 与重抛
+    `throw new XxxException(msg)` 新建并抛出
+    `throw;` 保留原始堆栈 >csharp[4]
+    `throw ex;` 重置堆栈，禁止使用
+    跨层转换时原异常传 `InnerException`
+    参数非法抛 `ArgumentNullException`
+    `when` 异常过滤 >csharp[5]
+      条件为 false 时不进入 catch
+      堆栈不被破坏
+      优于 catch 内判断后再 `throw;`
+  自定义异常
+    继承 `Exception`，命名以 `Exception` 结尾
+    惯例提供无参、message、message+inner 三个构造
+    业务字段做成只读属性 >csharp[6]
+    业务异常基类带错误码 >csharp[7]
+      `catch (BusinessException)` 统一处理
+  资源释放
+    `IDisposable` 与 `Dispose()`
+    手写 `try/finally` 释放 >csharp[8]
+    `using` 语句与 `using` 声明
+    `await using` 配 `IAsyncDisposable`
+    释放顺序与声明顺序相反
+  `ExceptionDispatchInfo` >csharp[9]
+    `Capture(ex)` 保存原始堆栈
+    `Throw()` 原样重抛
+    用于跨线程、异步转同步
+  不要用异常控制流程 >csharp[10]
+    异常开销：构造对象 + 抓栈 + 展开
+    可预期失败用 `TryParse` / `TryGetValue`
+    找不到返回 null / false / 空集合
+    调用方 bug 才抛异常
+    catch 中不要空实现

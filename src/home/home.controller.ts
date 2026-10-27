@@ -70,6 +70,23 @@ export class HomeController {
       .send(readFileSync(file));
   }
 
+  @Get(['notes/csharp', 'notes/csharp/'])
+  @Header('Content-Type', 'text/html; charset=utf-8')
+  @Header('Cache-Control', 'public, max-age=0, must-revalidate')
+  getCSharpNotes(@Res() response: Response): void {
+    response.status(200).send(readFileSync(join(SITE_DIR, 'notes', 'csharp', 'index.html')));
+  }
+
+  @Get(['notes/csharp/notes.css', 'notes/csharp/notes.js', 'notes/csharp/markdown-preview.css'])
+  getCSharpNotesAsset(@Req() request: Request, @Res() response: Response): void {
+    const name = request.path.split('/').pop() || 'notes.css';
+    if (!['notes.css', 'notes.js', 'markdown-preview.css'].includes(name)) { response.status(404).send('Not found'); return; }
+    response.status(200)
+      .setHeader('Content-Type', CONTENT_TYPES[extname(name)] || 'application/octet-stream')
+      .setHeader('Cache-Control', 'public, max-age=0, must-revalidate')
+      .send(readFileSync(join(SITE_DIR, 'notes', 'csharp', name)));
+  }
+
   @Get('assets/home.css')
   @Header('Content-Type', 'text/css; charset=utf-8')
   @Header('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400')

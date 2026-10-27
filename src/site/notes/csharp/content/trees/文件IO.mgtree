@@ -1,0 +1,71 @@
+文件IO
+  路径 Path
+    `Path.Combine` 跨平台拼接
+    `GetFileName` / `GetExtension` / `GetDirectoryName`
+    `GetFullPath` 相对转绝对
+    `GetRelativePath` 计算相对路径
+    `GetTempPath` 系统临时目录
+    示例 >csharp[1]
+  静态 API
+    `Directory.CreateDirectory` 自动建多级
+    `File.WriteAllText` / `ReadAllText`
+    `File.Copy` / `Move` / `Delete`
+    `Directory.GetFiles` 支持通配符
+    `Directory.Delete` 非空需 recursive
+    示例 >csharp[2]
+  实例 API
+    `FileInfo` / `DirectoryInfo` 封装路径
+    属性有缓存，需 `Refresh()`
+    `Length`、`CreationTime`、`DirectoryName`
+    `info.Create()` 返回 `FileStream`
+    示例 >csharp[3]
+  字节流
+    `FileStream` 读写字节
+    `FileMode` 决定打开方式
+    `FileAccess` / `FileShare`
+    `Read` / `Write` / `Seek`
+    示例 >csharp[4]
+  字符流
+    `StreamReader` / `StreamWriter`
+    `ReadLine` / `WriteLine`
+    `append: true` 追加
+    有缓冲，`Dispose` 才落盘
+    示例 >csharp[5]
+  资源释放
+    实现 `IDisposable`
+    `using` 语句 / `using` 声明
+    `Dispose` 释放非托管资源
+    异步资源用 `await using`
+    示例 >csharp[6]
+  编码与 BOM
+    默认 UTF-8 无 BOM
+    `new UTF8Encoding(true)` 写 BOM
+    BOM 字节 `EF BB BF`
+    读取时自动跳过 BOM
+    GBK 需注册代码页
+    示例 >csharp[7]
+  便捷读写
+    `ReadAllText` / `WriteAllText`
+    `AppendAllText` 追加
+    `ReadAllLines` 返回数组
+    `ReadLines` 惰性逐行
+    示例 >csharp[8]
+  异步 IO
+    `ReadAllTextAsync` / `WriteAllTextAsync`
+    `FileStream(useAsync: true)`
+    `CopyToAsync`
+    `await using` 异步释放
+    示例 >csharp[9]
+  JSON
+    `JsonSerializer.Serialize` / `Deserialize`
+    `JsonSerializerOptions` 控制格式
+    `WriteIndented` / `CamelCase`
+    `[JsonPropertyName]` 自定义字段名
+    示例 >csharp[10]
+  临时文件与异常
+    `Path.GetTempPath` + `Guid` 命名
+    `DirectoryNotFoundException`
+    `FileNotFoundException`
+    `IOException` 文件被占用
+    `finally` 清理临时文件
+    示例 >csharp[11]

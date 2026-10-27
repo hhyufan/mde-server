@@ -1,0 +1,77 @@
+集合
+  集合 vs 数组
+    数组长度固定，集合长度可变
+    集合有完整增删改查与集合运算
+    泛型集合放值类型不装箱
+  接口层次 >csharp[1]
+    `IEnumerable<T>` 只能遍历
+    `ICollection<T>` 增加 `Add` / `Remove` / `Count`
+    `IList<T>` 增加索引器
+    `IDictionary<K,V>` 键值对
+    `ISet<T>` 集合运算
+    参数尽量声明为 `IEnumerable<T>` 或 `IReadOnlyList<T>`
+  `List<T>` >csharp[2]
+    底层是可扩容数组
+    索引访问 O(1)
+    中间插入删除 O(n)
+    `Add` / `AddRange` / `Insert`
+    `Remove` / `RemoveAt` / `RemoveAll`
+    `Contains` / `IndexOf` / `Count`
+    已知数量时用容量预分配
+    `Sort` 原地排序，`OrderBy` 返回新序列
+  `Dictionary<K,V>` >csharp[3]
+    哈希表，按 key 查找平均 O(1)
+    key 唯一，遍历顺序不保证
+    索引器赋值：不存在即新增
+    `TryGetValue` 缺失不抛异常
+    缺失 key 用索引器会抛 `KeyNotFoundException`
+    自定义 key 需重写 `Equals` / `GetHashCode`
+    `record` 做 key 天然可用
+  `HashSet<T>` >csharp[4]
+    元素不重复，自动去重
+    `Add` 返回 false 表示已存在
+    `Contains` 平均 O(1)
+    `IntersectWith` 交集
+    `UnionWith` 并集
+    `ExceptWith` 差集
+  `Queue<T>` / `Stack<T>` >csharp[5]
+    Queue 先进先出 FIFO
+      `Enqueue` 入队
+      `Dequeue` 出队
+    Stack 后进先出 LIFO
+      `Push` 入栈
+      `Pop` 出栈
+    `Peek` 只看不出
+    空集合用 `TryDequeue` / `TryPop`
+    并发场景用 `ConcurrentQueue` / `ConcurrentStack`
+  `LinkedList<T>` >csharp[6]
+    双向链表，节点分散、缓存不友好
+    持有节点时插删 O(1)
+    按索引查找 O(n)
+    `AddFirst` / `AddLast` / `AddAfter` / `AddBefore`
+    `Find` 返回节点，`Remove(node)` 删节点
+    多数场景 `List<T>` 更合适
+  泛型与约束 >csharp[7]
+    `where T : class` 引用类型
+    `where T : struct` 值类型
+    `where T : new()` 公共无参构造
+    `where T : 基类或接口`
+    `new()` 约束必须放最后
+    约束换来类型安全与零装箱
+  迭代器 yield return >csharp[8]
+    编译器生成状态机
+    每取一个元素才执行一段
+    惰性求值，省内存
+    `yield break` 提前结束
+    `foreach` 对 `List<T>` 用 struct 枚举器，不装箱
+  遍历时修改集合 >csharp[9]
+    `List<T>` 内部有 `_version` 计数器
+    遍历中增删抛 `InvalidOperationException`
+    倒序 `for` 删除
+    `RemoveAll(predicate)` 一次删完
+    或先 `ToArray()` 复制再遍历
+  复杂度速查
+    `List<T>` 索引 O(1)、查找 O(n)
+    `Dictionary` / `HashSet` 查找平均 O(1)
+    `LinkedList` 插删 O(1)、查找 O(n)
+    `Queue` / `Stack` 入出均 O(1)

@@ -1,0 +1,59 @@
+委托与Lambda
+  委托基础
+    委托是类型安全的函数指针
+    `delegate` 声明定义方法签名 >csharp[1]
+    三种实例化：new、方法组、Lambda
+    委托是不可变引用类型
+    可作参数、字段、返回值
+  内置委托
+    `Action`：无返回值
+    `Func<T, TResult>`：有返回值
+    `Predicate<T>`：返回 bool
+    `Action<T>` / `Func<...>` 最多 16 个参数
+    示例 >csharp[2]
+  多播委托
+    `+=` 追加，`-=` 移除最后一个匹配
+    按添加顺序依次执行
+    返回值只保留最后一个
+    某个订阅者抛异常会中断后续
+    `GetInvocationList()` 查看调用列表 >csharp[3]
+  匿名方法
+    `delegate (参数) { ... }`（C# 2）
+    可省略参数列表
+    支持 `ref`/`out`，Lambda 不支持
+    示例 >csharp[4]
+  Lambda 表达式
+    `(参数) => 表达式` 表达式体
+    `(参数) => { 语句 }` 语句体
+    单参数可省略括号
+    显式参数类型帮助重载解析
+    示例 >csharp[5]
+  闭包
+    捕获的是`变量`而不是值
+    编译器生成闭包类，变量提升为字段
+    捕获会延长变量生命周期
+    `for` 循环共享变量导致陷阱
+    循环内复制局部变量解决
+    `foreach` 每轮新变量（C# 5+）
+    示例 >csharp[6]
+  事件
+    `event` 封装委托字段
+    外部只能 `+=` / `-=`
+    只有声明类型内部能触发
+    `EventHandler` / `EventHandler<T>`
+    签名 `(object? sender, T e)`
+    `?.Invoke` 避免空订阅列表
+    示例 >csharp[7]
+    及时退订，防止内存泄漏
+  表达式树
+    `Expression<Func<T, bool>>` 是数据结构
+    可读取 `Body`、`Parameters`、`NodeType`
+    `Compile()` 生成可执行委托
+    用途：ORM 翻译成 SQL
+    只能是表达式体 Lambda
+    示例 >csharp[8]
+  委托与接口
+    单方法、无状态：委托更轻
+    多方法、有状态：接口更合适
+    委托签名公开后难演进
+    示例 >csharp[9]

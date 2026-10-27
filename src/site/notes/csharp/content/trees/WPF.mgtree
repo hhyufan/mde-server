@@ -1,0 +1,84 @@
+WPF
+  定位
+    仅 Windows 的桌面 UI 框架，.NET 8/10 都支持
+    与 WinForms 的差异
+      XAML 声明式，界面与逻辑分离
+      矢量渲染、硬件加速、缩放不失真
+      自适应布局，不用绝对坐标
+      数据绑定 + MVVM
+      样式模板可彻底重写外观
+    跨平台可考虑 Avalonia，微软新方案是 WinUI 3
+  创建与运行
+    `dotnet new wpf -n WpfDemo` >bash[1]
+    Visual Studio 2022 选「WPF 应用程序」，F5 运行
+    需要「.NET 桌面开发」工作负载
+  项目结构
+    `.csproj` 中的 `<UseWPF>true</UseWPF>`
+    `App.xaml`：入口与全局资源
+    `MainWindow.xaml` + `.xaml.cs`：界面与代码后置
+  XAML 基础
+    XML 描述控件树，一个元素就是一个对象
+    `x:Class` 关联代码后置类
+    `x:Name` 生成同名字段
+    基本窗口示例 >xml[1]
+    代码后置必须是 `partial class` >csharp[1]
+      `InitializeComponent()` 构建控件树
+      WPF 不能用顶层语句，入口是 `StartupUri`
+  布局
+    `Grid`：行列网格，最常用
+      行高列宽：`Auto`、`*`、固定像素 >xml[2]
+      `Grid.Row`/`Grid.Column`/`Span` 定位
+    `StackPanel`：按 `Orientation` 顺序堆叠
+    `DockPanel`：按四边停靠
+    `WrapPanel`：排满自动换行
+    `Canvas`：绝对坐标
+  常用控件
+    文本：`TextBlock`/`TextBox`/`PasswordBox`
+    按钮：`Button`/`ToggleButton`
+    选择：`CheckBox`/`RadioButton`/`ComboBox`/`Slider`
+    列表：`ListView`/`DataGrid`/`TreeView`
+    容器：`Border`/`GroupBox`/`TabControl`
+    表单示例 >xml[3]
+    事件处理写在代码后置 >csharp[2]
+      签名固定为 `(object sender, RoutedEventArgs e)`
+      用 `MessageBox` 做输入校验提示
+  数据绑定
+    `{Binding 属性名}` 从 `DataContext` 取值
+    `Mode`：`OneWay`/`TwoWay`/`OneTime`
+    `UpdateSourceTrigger=PropertyChanged` 即时回写
+    `INotifyPropertyChanged` 通知 UI 刷新 >csharp[3]
+      `[CallerMemberName]` 自动填属性名
+      集合用 `ObservableCollection<T>`
+    绑定到界面控件 >xml[4]
+      `ItemsSource` 配 `DisplayMemberPath`
+    值转换器 `IValueConverter` >csharp[4]
+      `Convert` 源转界面，`ConvertBack` 反向
+      XAML 中用 `Converter={StaticResource ...}` 引用
+    命令 `ICommand` 替代事件 >csharp[5]
+      `RelayCommand` 封装 `Execute`/`CanExecute`
+      `CanExecuteChanged` 交给 `CommandManager`
+  样式与模板
+    `Style` + `Setter` 复用属性 >xml[5]
+      `x:Key` 显式引用，省略则成为隐式样式
+      `ControlTemplate` 彻底重写外观
+      `TemplateBinding` 绑定控件自身属性
+      `Style.Triggers` 按属性值切换
+    `DataTemplate` 定义数据项外观 >xml[6]
+    `ResourceDictionary` 集中管理资源
+      查找顺序：自身、父级、Window、App
+  路由事件
+    `PreviewXxx` 隧道由父到子，`Xxx` 冒泡由子到父
+    `e.Handled = true` 阻止继续传递
+  MVVM 实战
+    分层：`Model` / `ViewModel` / `View`
+    ViewModel 持有集合与命令 >csharp[6]
+      `AddCommand` 新增，`RemoveDoneCommand` 清理
+      遍历中改集合前先 `ToList()`
+    View 只做绑定，代码后置只设 `DataContext` >xml[7]
+  常见问题
+    跨线程改控件抛 `InvalidOperationException`
+      `await` 之后自动回到 UI 线程
+      `Dispatcher.Invoke` 手动切回 >csharp[7]
+    发布命令 >bash[2]
+      `--self-contained false` 框架依赖，体积小
+      `--self-contained true` 自包含，免装运行时
