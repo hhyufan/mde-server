@@ -382,8 +382,8 @@
     const dark = Number(localStorage.getItem(BG_DARK_KEY) ?? 40);
     const rootStyle = document.documentElement.style;
     rootStyle.setProperty('--notes-bg-image', image && enabled ? `url("${image}")` : 'none');
-    rootStyle.setProperty('--notes-bg-light', String((100 - light) / 100));
-    rootStyle.setProperty('--notes-bg-dark', String((100 - dark) / 100));
+    rootStyle.setProperty('--notes-mask-light', String(light / 100));
+    rootStyle.setProperty('--notes-mask-dark', String(dark / 100));
     if (bgEnabled) bgEnabled.checked = enabled;
     if (bgLight) bgLight.value = String(light);
     if (bgDark) bgDark.value = String(dark);
