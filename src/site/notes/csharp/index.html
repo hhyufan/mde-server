@@ -73,7 +73,7 @@ try {
         <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 14.4A8.9 8.9 0 0 1 9.6 3.2 8.9 8.9 0 1 0 20.8 14.4Z"/><path d="M17.6 3.2v2M16.6 4.2h2"/></svg>
       </button>
       <button id="notes-settings" class="notes-action" type="button" aria-label="外观设置" title="外观设置">
-        <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M5.2 18.8l1.6-1.6M17.2 6.8l1.6-1.6"/></svg>
+        <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H10a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V10a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
       </button>
     </div>
 
@@ -93,6 +93,22 @@ try {
       <label class="notes-appearance__row">
         <span>暗色遮罩</span>
         <input type="range" id="notes-bg-dark" min="0" max="100" step="1" value="40">
+      </label>
+      <div class="notes-appearance__section">缩放</div>
+      <label class="notes-appearance__row">
+        <span>缩放方式</span>
+        <select id="notes-zoom-mode">
+          <option value="unified">统一</option>
+          <option value="separate">分别控制</option>
+        </select>
+      </label>
+      <label class="notes-appearance__row">
+        <span>大纲缩放</span>
+        <input type="range" id="notes-tree-scale" min="70" max="200" step="5" value="100">
+      </label>
+      <label class="notes-appearance__row">
+        <span>正文缩放</span>
+        <input type="range" id="notes-content-scale" min="70" max="200" step="5" value="100">
       </label>
       <button type="button" class="notes-appearance__clear" id="notes-bg-clear">清除背景</button>
     </div>

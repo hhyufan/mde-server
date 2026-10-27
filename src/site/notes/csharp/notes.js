@@ -18,6 +18,9 @@
     index: 0,
     note: null,
     scale: Number(localStorage.getItem(SCALE_KEY)) || 1,
+    zoomMode: localStorage.getItem('mokidown-notes-zoom-mode') || 'unified',
+    treeScale: Number(localStorage.getItem('mokidown-notes-tree-scale')) / 100 || 1,
+    contentScale: Number(localStorage.getItem('mokidown-notes-content-scale')) / 100 || 1,
     expanded: new Set(),
   };
 
@@ -234,12 +237,20 @@
     if (state.note && fileLabel) fileLabel.textContent = `${state.note.title || state.note.name}.mgtree`;
   };
 
+  const ZOOM_MODE_KEY = 'mokidown-notes-zoom-mode';
+  const TREE_SCALE_KEY = 'mokidown-notes-tree-scale';
+  const CONTENT_SCALE_KEY = 'mokidown-notes-content-scale';
+
   const applyScale = () => {
-    const clamped = Math.min(1.8, Math.max(0.8, state.scale));
-    state.scale = Math.round(clamped * 100) / 100;
-    document.documentElement.style.setProperty('--notes-scale', String(state.scale));
-    zoomLabel.textContent = `${Math.round(state.scale * 100)}%`;
-    try { localStorage.setItem(SCALE_KEY, String(state.scale)); } catch {}
+    const mode = state.zoomMode || 'unified';
+    const unified = Math.min(2, Math.max(0.7, state.scale));
+    const tree = Math.min(2, Math.max(0.7, state.treeScale || 1));
+    const content = Math.min(2, Math.max(0.7, state.contentScale || 1));
+    const rootStyle = document.documentElement.style;
+    rootStyle.setProperty('--notes-scale', String(unified));
+    rootStyle.setProperty('--notes-content-scale', String(mode === 'separate' ? content : unified));
+    rootStyle.setProperty('--notes-tree-scale', String(mode === 'separate' ? tree : unified));
+    if (zoomLabel) zoomLabel.textContent = `${Math.round(unified * 100)}%`;
   };
 
   const loadNote = async (index) => {
@@ -272,8 +283,8 @@
 
   prevBtn.addEventListener('click', () => step(-1));
   nextBtn.addEventListener('click', () => step(1));
-  zoomOut.addEventListener('click', () => { state.scale -= 0.1; applyScale(); });
-  zoomIn.addEventListener('click', () => { state.scale += 0.1; applyScale(); });
+  zoomOut.addEventListener('click', () => { state.scale = Math.max(0.7, state.scale - 0.1); applyScale(); });
+  zoomIn.addEventListener('click', () => { state.scale = Math.min(2, state.scale + 0.1); applyScale(); });
 
   // ── Outline width (drag the divider) ────────────────────────────────────
   const resizerEl = document.getElementById('notes-resizer');
@@ -405,6 +416,20 @@
   bgLight?.addEventListener('input', () => { localStorage.setItem(BG_LIGHT_KEY, bgLight.value); applyAppearance(); });
   bgDark?.addEventListener('input', () => { localStorage.setItem(BG_DARK_KEY, bgDark.value); applyAppearance(); });
   bgClear?.addEventListener('click', () => { localStorage.removeItem(BG_KEY); localStorage.removeItem(BG_ENABLED_KEY); if (bgFile) bgFile.value = ''; applyAppearance(); });
+
+  // Zoom controls inside the panel.
+  const zoomModeSelect = document.getElementById('notes-zoom-mode');
+  const treeScaleRange = document.getElementById('notes-tree-scale');
+  const contentScaleRange = document.getElementById('notes-content-scale');
+  const applyZoomUI = () => {
+    if (zoomModeSelect) zoomModeSelect.value = state.zoomMode || 'unified';
+    if (treeScaleRange) treeScaleRange.value = String(Math.round((state.treeScale || 1) * 100));
+    if (contentScaleRange) contentScaleRange.value = String(Math.round((state.contentScale || 1) * 100));
+  };
+  zoomModeSelect?.addEventListener('change', () => { state.zoomMode = zoomModeSelect.value; localStorage.setItem(ZOOM_MODE_KEY, state.zoomMode); applyScale(); });
+  treeScaleRange?.addEventListener('input', () => { state.treeScale = Number(treeScaleRange.value) / 100; localStorage.setItem(TREE_SCALE_KEY, treeScaleRange.value); applyScale(); });
+  contentScaleRange?.addEventListener('input', () => { state.contentScale = Number(contentScaleRange.value) / 100; localStorage.setItem(CONTENT_SCALE_KEY, contentScaleRange.value); applyScale(); });
+  applyZoomUI();
 
   // ── Boot ────────────────────────────────────────────────────────────────
   (async () => {
