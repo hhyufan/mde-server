@@ -297,6 +297,34 @@
   zoomOut.addEventListener('click', () => { state.scale -= 0.1; applyScale(); });
   zoomIn.addEventListener('click', () => { state.scale += 0.1; applyScale(); });
 
+  // ── Outline width (drag the divider) ────────────────────────────────────
+  const resizerEl = document.getElementById('notes-resizer');
+  const sidebarEl = document.getElementById('notes-sidebar');
+  const WIDTH_KEY = 'mokidown-notes-csharp-sidebar';
+  const applyWidth = (width) => {
+    const clamped = Math.round(Math.max(220, Math.min(520, width)));
+    document.documentElement.style.setProperty('--notes-sidebar', clamped + 'px');
+    try { localStorage.setItem(WIDTH_KEY, String(clamped)); } catch {}
+  };
+  applyWidth(Number(localStorage.getItem(WIDTH_KEY)) || 272);
+  let dragging = null;
+  resizerEl.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    resizerEl.setPointerCapture(event.pointerId);
+    resizerEl.classList.add('is-dragging');
+    dragging = { x: event.clientX, width: sidebarEl.getBoundingClientRect().width };
+  });
+  resizerEl.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    applyWidth(dragging.width + event.clientX - dragging.x);
+  });
+  const endDrag = () => { dragging = null; resizerEl.classList.remove('is-dragging'); };
+  resizerEl.addEventListener('pointerup', endDrag);
+  resizerEl.addEventListener('pointercancel', endDrag);
+  resizerEl.addEventListener('lostpointercapture', endDrag);
+  resizerEl.addEventListener('dblclick', () => applyWidth(272));
+
   // ── Zoom gestures ───────────────────────────────────────────────────────
   let pinchStart = 0;
   let pinchBase = 1;

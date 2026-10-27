@@ -156,7 +156,7 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .notes-sidebar {
   display: flex;
   flex-direction: column;
-  width: 272px;
+  width: var(--notes-sidebar, 272px);
   flex: 0 0 auto;
   border-right: 1px solid var(--border);
   background: var(--sidebar);
@@ -203,7 +203,17 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .notes-node__children {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 10px;
+  padding: 0 0 0 12px;
+  position: relative;
+}
+
+.notes-node__children::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--border-light);
 }
 
 .notes-node__row {
@@ -235,13 +245,13 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .notes-node__title {
   flex: 1;
   min-width: 0;
-  padding: 4px 6px;
+  padding: 3px 6px;
   border: 0;
   background: transparent;
   color: var(--text);
   font: inherit;
-  font-size: 12.5px;
-  line-height: 1.45;
+  font-size: 12px;
+  line-height: 1.4;
   text-align: left;
   overflow-wrap: anywhere;
   white-space: normal;
@@ -333,4 +343,28 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
   color: var(--accent);
   font-family: var(--font-editor);
   font-size: 11.5px;
+}
+
+/* Draggable divider between outline and reader (MokiDown sidebar behaviour). */
+.notes-resizer {
+  position: relative;
+  flex: 0 0 6px;
+  cursor: col-resize;
+  background: transparent;
+  touch-action: none;
+  z-index: 5;
+}
+
+.notes-resizer::before {
+  content: '';
+  position: absolute;
+  inset: 0 2px;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+.notes-resizer:hover::before,
+.notes-resizer.is-dragging::before {
+  background: var(--accent);
+  opacity: 0.45;
 }
