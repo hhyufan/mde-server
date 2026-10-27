@@ -156,7 +156,7 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .notes-sidebar {
   display: flex;
   flex-direction: column;
-  width: var(--notes-sidebar, 272px);
+  width: var(--notes-sidebar, 320px);
   flex: 0 0 auto;
   border-right: 1px solid var(--border);
   background: var(--sidebar);
@@ -185,27 +185,19 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
   line-height: 16px;
 }
 
-.notes-card {
-  display: flex;
-  flex-direction: column;
+/* Panel structure mirrors the editor knowledge tree (moki-tree classes). */
+.notes-panel {
   flex: 1;
   min-height: 0;
-  margin: 8px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-  overflow: hidden;
-  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  background: transparent;
 }
 
-.notes-card__head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px 8px 12px;
+.notes-panel .moki-tree__toolbar {
+  padding: 8px 12px;
+  min-height: 40px;
   border-bottom: 1px solid var(--border-light);
-  color: var(--text-sec);
-  font-size: 12px;
 }
 
 .notes-card__file {
@@ -216,9 +208,13 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
   white-space: nowrap;
   font-family: var(--font-editor);
   font-size: 11.5px;
+  color: var(--text-sec);
 }
 
-.notes-card__actions { display: flex; gap: 2px; }
+.notes-card__actions {
+  display: flex;
+  gap: 2px;
+}
 
 .notes-card__actions button {
   display: grid;
@@ -232,81 +228,26 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
   cursor: pointer;
 }
 
-.notes-card__actions button:hover { background: var(--hover); color: var(--text); }
-.notes-card__actions svg { width: 13px; height: 13px; }
+.notes-card__actions button:hover {
+  background: var(--hover);
+  color: var(--text);
+}
 
-.notes-tree {
+.notes-card__actions svg {
+  width: 13px;
+  height: 13px;
+}
+
+.knowledge-tree__list {
   flex: 1;
   min-height: 0;
   overflow: auto;
-  padding: 6px 8px 16px;
 }
 
-.notes-node__row {
-  display: flex;
-  align-items: flex-start;
-  gap: 2px;
-  min-height: 26px;
-  padding-right: 6px;
-  border-radius: 5px;
+.notes-panel .moki-tree__canvas {
+  padding: 8px 8px 16px;
+  min-width: fit-content;
 }
-
-.notes-node__row:hover { background: var(--hover); }
-
-.notes-node__toggle {
-  display: grid;
-  place-items: center;
-  width: 18px;
-  height: 24px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--text-dim);
-  cursor: pointer;
-  flex: 0 0 18px;
-}
-
-.notes-node__toggle svg { width: 11px; height: 11px; transition: transform 0.16s ease; }
-.notes-node.is-open > .notes-node__row .notes-node__toggle svg { transform: rotate(90deg); }
-.notes-node__toggle.is-leaf { visibility: hidden; }
-
-.notes-node__title {
-  flex: 1;
-  min-width: 0;
-  padding: 3px 0;
-  border: 0;
-  background: transparent;
-  color: var(--text);
-  font: inherit;
-  font-size: 12px;
-  line-height: 1.4;
-  text-align: left;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  cursor: pointer;
-}
-
-.notes-node__title:hover { color: var(--accent); }
-
-.notes-node__ref {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  flex: 0 0 auto;
-  margin-top: 2px;
-  padding: 1px 5px;
-  border-radius: 4px;
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-size: 10.5px;
-  font-style: normal;
-}
-
-.notes-node__ref svg { width: 10px; height: 10px; }
-.notes-node__ref em { font-style: normal; opacity: 0.85; }
-.notes-node__ref b { font-weight: 600; }
-
-.notes-node__children { padding-left: 14px; }
 
 /* Syntax highlight tokens inside rendered code blocks. */
 .md-preview pre code .tok-comment { color: var(--code-comment); font-style: italic; }
@@ -488,4 +429,67 @@ html[data-theme='dark'] .md-preview pre code .tok-number { color: #d19a66; }
 .notes-resizer.is-dragging::before {
   background: var(--accent);
   opacity: 0.45;
+}
+
+/* Jump feedback, copied from the editor's knowledge tree styles. */
+.knowledge-tree .moki-tree__node--jumping {
+  animation: knowledge-node-arrival 4s ease-out both;
+  border-radius: 4px;
+}
+
+.md-preview .knowledge-tree-target {
+  position: relative;
+}
+
+.md-preview .knowledge-tree-target::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(110deg, color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--accent) 6%, transparent));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent);
+  animation: knowledge-code-arrival 4s ease-out both;
+}
+
+@keyframes knowledge-code-arrival {
+  0% { opacity: 0; }
+  8%, 55% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes knowledge-node-arrival {
+  0%, 25% { background-color: color-mix(in srgb, var(--accent) 16%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent); }
+  100% { background-color: transparent; box-shadow: inset 0 0 0 1px transparent; }
+}
+
+/* Match the editor: one line per outline node, chip stays on the right. */
+.notes-panel .ant-tree .ant-tree-title {
+  white-space: nowrap !important;
+}
+
+.notes-panel .ant-tree .ant-tree-node-content-wrapper {
+  min-width: 0;
+}
+
+.notes-panel .moki-tree__canvas {
+  min-width: fit-content;
+}
+
+/* Outline labels stay on one line; the chip follows the text. */
+.notes-panel .moki-tree__title {
+  white-space: nowrap;
+}
+
+.notes-panel .moki-tree__node {
+  min-width: 0;
+}
+
+.notes-panel .ant-tree {
+  min-width: fit-content;
+}
+
+.notes-panel .knowledge-tree__list {
+  overflow: auto;
 }

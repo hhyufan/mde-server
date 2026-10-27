@@ -211,17 +211,18 @@
   const nodeKey = (node) => `${node.title}@${node.level}@${(node.children || []).length}`;
 
   const jumpToNode = (node) => {
-    // A jump points at the n-th code block; otherwise look for a heading with
-    // the same text.
-    if (node.jump) {
+    // Tree nodes arrive either as API nodes (jump) or editor tree nodes
+    // (jumpLanguage/jumpIndex).
+    const jump = node.jump || (node.jumpLanguage ? { language: node.jumpLanguage, index: node.jumpIndex } : null);
+    if (jump) {
       const blocks = previewEl.querySelectorAll('pre');
-      const target = blocks[node.jump.index - 1];
-      if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); target.classList.add('is-flash'); setTimeout(() => target.classList.remove('is-flash'), 900); return; }
+      const target = blocks[jump.index - 1];
+      if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); target.classList.add('knowledge-tree-target'); setTimeout(() => target.classList.remove('knowledge-tree-target'), 4000); return; }
     }
     const clean = String(node.title).replace(/`/g, '').trim();
     const headings = [...previewEl.querySelectorAll('h1,h2,h3,h4,h5,h6')];
     const match = headings.find((heading) => heading.textContent.includes(clean));
-    if (match) { match.scrollIntoView({ behavior: 'smooth', block: 'start' }); match.classList.add('is-flash'); setTimeout(() => match.classList.remove('is-flash'), 900); }
+    if (match) { match.scrollIntoView({ behavior: 'smooth', block: 'start' }); match.classList.add('knowledge-tree-target'); setTimeout(() => match.classList.remove('knowledge-tree-target'), 4000); }
   };
 
   // ── Notes ───────────────────────────────────────────────────────────────
@@ -283,7 +284,7 @@
     document.documentElement.style.setProperty('--notes-sidebar', clamped + 'px');
     try { localStorage.setItem(WIDTH_KEY, String(clamped)); } catch {}
   };
-  applyWidth(Number(localStorage.getItem(WIDTH_KEY)) || 272);
+  applyWidth(Number(localStorage.getItem(WIDTH_KEY)) || 320);
   let dragging = null;
   resizerEl.addEventListener('pointerdown', (event) => {
     if (event.button !== 0) return;
