@@ -249,7 +249,8 @@ html[data-theme='dark'] .notes-header .theme-icon--moon { display: block; }
 .notes-panel .moki-tree__scroll {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .notes-panel .moki-tree__canvas {
@@ -474,7 +475,8 @@ html[data-theme='dark'] .md-preview pre code .tok-number { color: #d19a66; }
 
 /* Match the editor: one line per outline node, chip stays on the right. */
 .notes-panel .ant-tree .ant-tree-title {
-  white-space: nowrap !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
 }
 
 .notes-panel .ant-tree .ant-tree-node-content-wrapper {
@@ -482,12 +484,16 @@ html[data-theme='dark'] .md-preview pre code .tok-number { color: #d19a66; }
 }
 
 .notes-panel .moki-tree__canvas {
-  min-width: fit-content;
+  min-width: 0;
 }
 
 /* Outline labels stay on one line; the chip follows the text. */
 .notes-panel .moki-tree__title {
-  white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .notes-panel .moki-tree__node {
@@ -495,7 +501,7 @@ html[data-theme='dark'] .md-preview pre code .tok-number { color: #d19a66; }
 }
 
 .notes-panel .ant-tree {
-  min-width: fit-content;
+  min-width: 0;
 }
 
 /* Scrollbars: the editor's own skin (thin blue thumb, transparent track). */
@@ -601,4 +607,31 @@ html[data-theme='dark'] {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   word-break: break-word;
+}
+
+.notes-panel .ant-tree-title {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+.notes-panel .moki-tree__node .moki-tree__title {
+  flex: 1 1 8em;
+  min-width: 8em;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+/* Force the chip onto a new line instead of overflowing the panel. */
+.notes-panel .moki-tree__scroll .moki-tree__node {
+  flex-wrap: wrap !important;
+  align-items: flex-start;
+}
+
+.notes-panel .moki-tree__node .moki-tree__reference {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.notes-panel .moki-tree__node .moki-tree__icon {
+  flex: 0 0 auto;
 }
