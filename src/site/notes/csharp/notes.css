@@ -591,3 +591,14 @@ html[data-theme='dark'] {
   line-height: 1;
   padding-bottom: 2px;
 }
+
+/* Code blocks wrap instead of scrolling horizontally when squeezed. */
+.md-preview pre {
+  overflow-x: hidden;
+}
+
+.md-preview pre code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
