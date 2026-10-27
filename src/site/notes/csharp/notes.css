@@ -1183,3 +1183,9 @@ body::before {
 .notes-panel .moki-tree__node {
   justify-content: flex-start;
 }
+
+/* Zoom applies to the outline and the reader alike. */
+#notes-preview,
+.notes-panel .moki-tree__canvas {
+  zoom: var(--notes-scale, 1);
+}

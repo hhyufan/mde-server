@@ -237,7 +237,7 @@
   const applyScale = () => {
     const clamped = Math.min(1.8, Math.max(0.8, state.scale));
     state.scale = Math.round(clamped * 100) / 100;
-    previewEl.style.zoom = String(state.scale);
+    document.documentElement.style.setProperty('--notes-scale', String(state.scale));
     zoomLabel.textContent = `${Math.round(state.scale * 100)}%`;
     try { localStorage.setItem(SCALE_KEY, String(state.scale)); } catch {}
   };
@@ -280,7 +280,7 @@
   const sidebarEl = document.getElementById('notes-sidebar');
   const WIDTH_KEY = 'mokidown-notes-csharp-sidebar';
   const applyWidth = (width) => {
-    const limit = Math.max(360, Math.min(860, window.innerWidth - 320));
+    const limit = Math.max(360, Math.min(window.innerWidth * 0.5, window.innerWidth - 320));
     const clamped = Math.round(Math.max(220, Math.min(limit, width)));
     document.documentElement.style.setProperty('--notes-sidebar', clamped + 'px');
     try { localStorage.setItem(WIDTH_KEY, String(clamped)); } catch {}
